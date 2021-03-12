@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: /travel-checker/api/v1
+    context-path: /api/v1/travel-checker
 spring:
   h2:
     console:
