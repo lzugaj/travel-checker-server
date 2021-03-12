@@ -8,4 +8,6 @@
 
     <include file="db/changelog/db.changelog-ddl.sql" />
 
+    <include file="db/changelog/db.marker-ddl.sql" />
+
 </databaseChangeLog>
