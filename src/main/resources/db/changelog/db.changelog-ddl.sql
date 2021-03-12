@@ -3,8 +3,8 @@ drop table if exists "MARKER";
 
 create table "COORDINATE" (
     id bigserial not null,
-    longitude decimal(10, 9) not null,
-    latitude decimal(10, 9) not null,
+    longitude decimal(10, 2) not null,
+    latitude decimal(10, 2) not null,
     primary key (id)
 );
 

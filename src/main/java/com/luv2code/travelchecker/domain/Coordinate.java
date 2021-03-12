@@ -1,5 +1,6 @@
 package com.luv2code.travelchecker.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.luv2code.travelchecker.domain.base.BaseEntity;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class Coordinate extends BaseEntity implements Serializable {
     @Column(name = "latitude")
     private Double latitude;
 
+    @JsonBackReference
     @OneToOne(mappedBy = "coordinate")
     private Marker marker;
 }
