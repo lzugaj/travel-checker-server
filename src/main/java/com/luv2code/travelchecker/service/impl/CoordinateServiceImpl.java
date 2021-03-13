@@ -6,6 +6,7 @@ import com.luv2code.travelchecker.repository.CoordinateRepository;
 import com.luv2code.travelchecker.service.CoordinateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CoordinateServiceImpl implements CoordinateService {
 
     private final CoordinateRepository coordinateRepository;
 
+    @Autowired
     public CoordinateServiceImpl(final CoordinateRepository coordinateRepository) {
         this.coordinateRepository = coordinateRepository;
     }
