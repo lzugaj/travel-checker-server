@@ -20,3 +20,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
+luv2code:
+  travel-checker:
+    mapbox:
+      token: 'pk.eyJ1IjoibHp1Z2FqIiwiYSI6ImNrbHpnbGhvMjFraW0ybnBsdzR3OXN6bDAifQ.dBuHMH1r6dH22MsrXrCRUQ'
