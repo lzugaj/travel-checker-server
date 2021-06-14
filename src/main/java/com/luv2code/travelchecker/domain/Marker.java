@@ -1,6 +1,5 @@
 package com.luv2code.travelchecker.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -12,6 +11,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -45,11 +46,18 @@ public class Marker extends BaseEntity implements Serializable {
     @Column(name = "modified_date")
     private LocalDateTime modifiedDate;
 
-    @JsonManagedReference
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "coordinate_id",
-            referencedColumnName = "id"
-    )
+    @ManyToOne
+    @JoinColumn(name = "marker_id", nullable = false)
     private Coordinate coordinate;
+
+    @ManyToMany(mappedBy = "markers")
+    private List<User> users;
+
+    public void addUser(final User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+
+        users.add(user);
+    }
 }

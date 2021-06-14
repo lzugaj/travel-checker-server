@@ -8,6 +8,8 @@ public interface CoordinateService {
 
     Coordinate findById(final Long id);
 
+    Coordinate findByCoordinates(final Double longitude, final Double latitude);
+
     List<Coordinate> findAll();
 
 }

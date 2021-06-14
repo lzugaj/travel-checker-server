@@ -38,6 +38,13 @@ public class MarkerController {
         return new ResponseEntity<>(marker, HttpStatus.OK);
     }
 
+    @GetMapping("/coordinate/{longitude}/{latitude}")
+    private ResponseEntity<?> findByCoordinates(@PathVariable final Double longitude, @PathVariable final Double latitude) {
+        final Marker marker = markerService.findByCoordinate(longitude, latitude);
+        LOGGER.info("Successfully founded Marker with id: ´{}´.", marker.getId());
+        return new ResponseEntity<>(marker, HttpStatus.OK);
+    }
+
     @GetMapping
     public ResponseEntity<?> findAll() {
         final List<Marker> markers = markerService.findAll();

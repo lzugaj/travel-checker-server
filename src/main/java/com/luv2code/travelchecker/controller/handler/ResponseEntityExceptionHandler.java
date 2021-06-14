@@ -1,6 +1,7 @@
 package com.luv2code.travelchecker.controller.handler;
 
 import com.luv2code.travelchecker.controller.handler.response.ApiResponse;
+import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,12 @@ public class ResponseEntityExceptionHandler {
     public ResponseEntity<ApiResponse> handleNotFoundRequestException(final EntityNotFoundException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus notFound = HttpStatus.NOT_FOUND;
         return createResponseMessage(notFound, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = EntityAlreadyExistsException.class)
+    public ResponseEntity<ApiResponse> handleAlreadyExistsException(final EntityAlreadyExistsException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus alreadyExists = HttpStatus.BAD_REQUEST;
+        return createResponseMessage(alreadyExists, exception, httpServletRequest);
     }
 
     private ResponseEntity<ApiResponse> createResponseMessage(final HttpStatus httpStatus, final Exception exception, final HttpServletRequest httpServletRequest) {
