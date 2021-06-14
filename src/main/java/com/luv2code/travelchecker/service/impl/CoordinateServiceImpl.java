@@ -37,6 +37,19 @@ public class CoordinateServiceImpl implements CoordinateService {
     }
 
     @Override
+    public Coordinate findByCoordinates(final Double longitude, final Double latitude) {
+        LOGGER.info("Searching Coordinate by longitude and latitude: {}, {}", longitude, latitude);
+        final Optional<Coordinate> searchedCoordinate = coordinateRepository.findCoordinateByLongitudeAndLatitude(longitude, latitude);
+        if (searchedCoordinate.isPresent()) {
+            LOGGER.error("Searching Coordinate with longitude and latitude: {}, {}", longitude, latitude);
+            return searchedCoordinate.get();
+        } else {
+            LOGGER.error("Cannot find Coordinate with longitude and latitude: {}, {}", longitude, latitude);
+            throw new EntityNotFoundException("Coordinate", "longitude and latitude", longitude + ", " + latitude);
+        }
+    }
+
+    @Override
     public List<Coordinate> findAll() {
         final List<Coordinate> coordinates = coordinateRepository.findAll();
         LOGGER.info("Searching all Coordinates.");

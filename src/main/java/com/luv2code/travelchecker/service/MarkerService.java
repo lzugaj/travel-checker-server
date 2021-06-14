@@ -10,6 +10,8 @@ public interface MarkerService {
 
     Marker findById(final Long id);
 
+    Marker findByCoordinate(final Double longitude, final Double latitude);
+
     List<Marker> findAll();
 
     Marker update(final Marker oldMarker, final Marker newMarker);

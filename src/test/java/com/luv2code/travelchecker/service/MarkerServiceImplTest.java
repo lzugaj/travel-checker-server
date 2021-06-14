@@ -28,6 +28,9 @@ public class MarkerServiceImplTest {
     @Mock
     private MarkerRepository markerRepository;
 
+    @Mock
+    private CoordinateService coordinateService;
+
     private Marker firstMarker;
     private Marker secondMarker;
     private Marker thirdMarker;
@@ -76,12 +79,17 @@ public class MarkerServiceImplTest {
         thirdMarker.setShouldVisitAgain(true);
         thirdMarker.setCoordinate(dubrovnikCoordinate);
 
-        final List<Marker> markers = new ArrayList<>();
+        zagrebCoordinate.setMarker(firstMarker);
+        splitCoordinate.setMarker(secondMarker);
+        dubrovnikCoordinate.setMarker(thirdMarker);
+
+        List<Marker> markers = new ArrayList<>();
         markers.add(secondMarker);
         markers.add(thirdMarker);
 
         Mockito.when(markerRepository.save(firstMarker)).thenReturn(firstMarker);
         Mockito.when(markerRepository.findById(secondMarker.getId())).thenReturn(java.util.Optional.ofNullable(secondMarker));
+        Mockito.when(coordinateService.findByCoordinates(thirdMarker.getCoordinate().getLongitude(), thirdMarker.getCoordinate().getLatitude())).thenReturn(thirdMarker.getCoordinate());
         Mockito.when(markerRepository.findAll()).thenReturn(markers);
     }
 
@@ -135,10 +143,25 @@ public class MarkerServiceImplTest {
     }
 
     @Test
+    public void should_Return_Marker_When_Coordinates_Are_Valid() {
+        final Marker searchedMarker = markerService.findByCoordinate(thirdMarker.getCoordinate().getLongitude(), thirdMarker.getCoordinate().getLatitude());
+
+        Assertions.assertNotNull(searchedMarker);
+        Assertions.assertEquals("3", String.valueOf(searchedMarker.getId()));
+    }
+
+    @Test
     public void should_Return_All_Markers() {
         final List<Marker> markers = markerService.findAll();
 
         Assertions.assertNotNull(markers);
         Assertions.assertEquals(2, markers.size());
+    }
+
+    @Test
+    public void should_Delete_Marker_When_Id_Is_Valid() {
+        markerService.delete(secondMarker);
+
+        Mockito.verify(markerRepository, Mockito.times(1)).delete(secondMarker);
     }
 }

@@ -1,9 +1,11 @@
 package com.luv2code.travelchecker.service.impl;
 
+import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.MarkerRepository;
+import com.luv2code.travelchecker.service.CoordinateService;
 import com.luv2code.travelchecker.service.MarkerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,9 +23,13 @@ public class MarkerServiceImpl implements MarkerService {
 
     private final MarkerRepository markerRepository;
 
+    private final CoordinateService coordinateService;
+
     @Autowired
-    public MarkerServiceImpl(final MarkerRepository markerRepository) {
+    public MarkerServiceImpl(final MarkerRepository markerRepository,
+                             final CoordinateService coordinateService) {
         this.markerRepository = markerRepository;
+        this.coordinateService = coordinateService;
     }
 
     @Override
@@ -62,19 +68,46 @@ public class MarkerServiceImpl implements MarkerService {
     }
 
     @Override
+    public Marker findByCoordinate(final Double longitude, final Double latitude) {
+        final Coordinate searchedCoordinate = coordinateService.findByCoordinates(longitude, latitude);
+        LOGGER.info("Successfully founded Coordinate with longitude and latitude: {}, {}", longitude, latitude);
+        return searchedCoordinate.getMarker();
+    }
+
+    @Override
     public List<Marker> findAll() {
         final List<Marker> markers = markerRepository.findAll();
         LOGGER.info("Searching all Markers.");
         return markers;
     }
 
+    // TODO: @lzugaj => Refactor
     @Override
     public Marker update(final Marker oldMarker, final Marker newMarker) {
-        return null;
+        updateVariables(oldMarker, newMarker);
+        LOGGER.info("Successfully setup variables for Marker with id: ´{}´.", oldMarker.getId());
+
+        markerRepository.save(oldMarker);
+        LOGGER.info("Updating Marker with id: ´{}´.", oldMarker.getId());
+        return oldMarker;
     }
 
+    // TODO: @lzugaj => Refactor
+    private void updateVariables(final Marker oldMarker, final Marker newMarker) {
+        LOGGER.info("Setting up variables for Marker with id: ´{}´.", oldMarker.getId());
+        oldMarker.setName(newMarker.getName());
+        oldMarker.setDescription(newMarker.getDescription());
+        oldMarker.setEventDate(newMarker.getEventDate());
+        oldMarker.setShouldVisitAgain(newMarker.getShouldVisitAgain());
+        oldMarker.setGrade(newMarker.getGrade());
+        oldMarker.setCoordinate(newMarker.getCoordinate());
+        oldMarker.setModifiedDate(LocalDateTime.now());
+    }
+
+    // TODO: @lzugaj => Refactor
     @Override
     public void delete(final Marker marker) {
-
+        LOGGER.info("Deleting Marker with id: ´{}´.", marker.getId());
+        markerRepository.delete(marker);
     }
 }

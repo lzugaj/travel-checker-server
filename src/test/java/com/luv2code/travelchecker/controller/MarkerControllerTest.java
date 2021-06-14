@@ -42,7 +42,6 @@ public class MarkerControllerTest {
         objectMapper = new ObjectMapper();
 
         final Coordinate zagrebCoordinate = new Coordinate();
-        zagrebCoordinate.setId(1L);
         zagrebCoordinate.setLongitude(15.966568111);
         zagrebCoordinate.setLatitude(45.815399222);
 
@@ -89,6 +88,7 @@ public class MarkerControllerTest {
 
         BDDMockito.given(markerService.save(firstMarker)).willReturn(firstMarker);
         BDDMockito.given(markerService.findById(secondMarker.getId())).willReturn(secondMarker);
+        BDDMockito.given(markerService.findByCoordinate(firstMarker.getCoordinate().getLongitude(), firstMarker.getCoordinate().getLatitude())).willReturn(firstMarker);
         BDDMockito.given(markerService.findAll()).willReturn(markers);
     }
 
@@ -96,8 +96,8 @@ public class MarkerControllerTest {
         public void should_Create_Marker_When_Form_Is_Valid() throws Exception {
             this.mockMvc
                     .perform(MockMvcRequestBuilders.post("/markers")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(firstMarker)))
+                            .content(objectMapper.writeValueAsString(firstMarker))
+                            .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(MockMvcResultMatchers.status().isCreated())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.equalTo(1)));
         }
@@ -108,9 +108,20 @@ public class MarkerControllerTest {
                     .perform(MockMvcRequestBuilders.get("/markers/{id}", secondMarker.getId()))
                     .andDo(MockMvcResultHandlers.print())
                     .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andExpect(MockMvcResultMatchers.jsonPath("id").exists())
-                    .andExpect(MockMvcResultMatchers.jsonPath("id", CoreMatchers.is(2)));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(2)));
         }
+
+    @Test
+    public void should_Return_Marker_When_Coordinates_Are_Valid() throws Exception {
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/markers/coordinate/{longitude}/{latitude}",
+                        firstMarker.getCoordinate().getLongitude(), firstMarker.getCoordinate().getLatitude()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").exists())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(1)));
+    }
 
         @Test
         public void should_Return_All_Markers() throws Exception {
