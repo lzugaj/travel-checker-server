@@ -9,14 +9,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "IMAGE")
+@Table(name = "profile_image")
 public class ProfileImage extends BaseEntity implements Serializable {
 
     @Column(name = "name")
@@ -25,15 +24,9 @@ public class ProfileImage extends BaseEntity implements Serializable {
     @Column(name = "image_file_path")
     private String imageFilePath;
 
-    @Column(name = "extension")
+    @Column(name = "extension_type")
     @Enumerated(EnumType.STRING)
     private ExtensionType extensionType;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "modified_at")
-    private LocalDateTime modifiedAt;
 
     @OneToOne(mappedBy = "profileImage")
     private User user;

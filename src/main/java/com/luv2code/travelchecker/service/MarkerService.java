@@ -1,20 +1,21 @@
 package com.luv2code.travelchecker.service;
 
 import com.luv2code.travelchecker.domain.Marker;
+import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
+import com.luv2code.travelchecker.dto.marker.MarkerPostDto;
+import com.luv2code.travelchecker.dto.user.UserGetDto;
 
 import java.util.List;
 
 public interface MarkerService {
 
-    Marker save(final Marker marker);
+    MarkerGetDto save(final UserGetDto userGetDto, final MarkerPostDto markerPostDto);
 
-    Marker findById(final Long id);
+    MarkerGetDto findById(final Long id);
 
-    Marker findByCoordinate(final Double longitude, final Double latitude);
+    List<MarkerGetDto> findAll();
 
-    List<Marker> findAll();
-
-    Marker update(final Marker oldMarker, final Marker newMarker);
+//    Marker update(final Marker oldMarker, final MarkerPutDto markerPutDto);
 
     void delete(final Marker marker);
 

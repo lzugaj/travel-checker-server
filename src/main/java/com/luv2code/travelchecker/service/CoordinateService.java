@@ -1,15 +1,13 @@
 package com.luv2code.travelchecker.service;
 
-import com.luv2code.travelchecker.domain.Coordinate;
+import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
 
 import java.util.List;
 
 public interface CoordinateService {
 
-    Coordinate findById(final Long id);
+    CoordinateGetDto findById(final Long id);
 
-    Coordinate findByCoordinates(final Double longitude, final Double latitude);
-
-    List<Coordinate> findAll();
+    List<CoordinateGetDto> findAll();
 
 }

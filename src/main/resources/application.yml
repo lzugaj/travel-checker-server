@@ -4,7 +4,9 @@ server:
     context-path: /api/v1/travel-checker
 spring:
   profiles:
-    active: test
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
 luv2code:
   travel-checker:
     mapbox:
