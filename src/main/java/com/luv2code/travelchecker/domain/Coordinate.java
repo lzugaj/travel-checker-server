@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "COORDINATE")
+@Table(name = "coordinate")
 @EqualsAndHashCode(callSuper = true)
 public class Coordinate extends BaseEntity implements Serializable {
 

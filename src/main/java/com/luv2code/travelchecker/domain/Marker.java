@@ -19,7 +19,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "MARKER")
+@Table(name = "marker")
 @EqualsAndHashCode(callSuper = true)
 public class Marker extends BaseEntity implements Serializable {
 
@@ -40,16 +40,17 @@ public class Marker extends BaseEntity implements Serializable {
     @Column(name = "should_visit_again")
     private Boolean shouldVisitAgain;
 
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @Column(name = "modified_date")
-    private LocalDateTime modifiedDate;
+    @Column(name = "modified_at")
+    private LocalDateTime modifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "marker_id", nullable = false)
     private Coordinate coordinate;
 
+    @EqualsAndHashCode.Exclude
     @ManyToMany(mappedBy = "markers")
     private List<User> users;
 

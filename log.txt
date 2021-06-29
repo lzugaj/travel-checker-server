@@ -1,0 +1,124 @@
+2021-06-24 11:11:51.290  INFO 21164 --- [main] c.l.t.TravelCheckerApplication           : Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 21164 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+2021-06-24 11:11:51.293  INFO 21164 --- [main] c.l.t.TravelCheckerApplication           : The following profiles are active: dev
+2021-06-24 11:11:51.865  INFO 21164 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-24 11:11:51.948  INFO 21164 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 5 JPA repository interfaces.
+2021-06-24 11:11:52.423  INFO 21164 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-06-24 11:11:52.430  INFO 21164 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-06-24 11:11:52.430  INFO 21164 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-06-24 11:11:52.544  INFO 21164 --- [main] o.a.c.c.C.[.[.[/api/v1/travel-checker]   : Initializing Spring embedded WebApplicationContext
+2021-06-24 11:11:52.544  INFO 21164 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1210 ms
+2021-06-24 11:11:52.601  INFO 21164 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-06-24 11:11:52.689  INFO 21164 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-06-24 11:11:52.693  INFO 21164 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2021-06-24 11:11:54.935  INFO 21164 --- [main] l.lockservice.StandardLockService        : Successfully acquired change log lock
+2021-06-24 11:11:55.204  INFO 21164 --- [main] l.c.StandardChangeLogHistoryService      : Creating database history table with name: PUBLIC.DATABASECHANGELOG
+2021-06-24 11:11:55.206  INFO 21164 --- [main] l.c.StandardChangeLogHistoryService      : Reading from PUBLIC.DATABASECHANGELOG
+2021-06-24 11:11:55.276  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table role created
+2021-06-24 11:11:55.276  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-000-role-create.xml::20210624-000-1::lzugaj ran successfully in 27ms
+2021-06-24 11:11:55.290  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table profile_image created
+2021-06-24 11:11:55.290  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-001-profile-image-create.xml::20210624-001-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.292  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table user created
+2021-06-24 11:11:55.292  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-002-user-create.xml::20210624-002-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.300  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user (profile_image_id)
+2021-06-24 11:11:55.300  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-002-user-create.xml::20210624-002-2::lzugaj ran successfully in 7ms
+2021-06-24 11:11:55.302  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table user_role created
+2021-06-24 11:11:55.302  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-003-user-role-create.xml::20210624-003-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.304  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_role (user_id)
+2021-06-24 11:11:55.304  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-003-user-role-create.xml::20210624-003-2::lzugaj ran successfully in 2ms
+2021-06-24 11:11:55.306  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_role (role_id)
+2021-06-24 11:11:55.306  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-003-user-role-create.xml::20210624-003-3::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.308  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table coordinate created
+2021-06-24 11:11:55.308  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-004-coordinate-create.xml::20210624-004-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.310  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table marker created
+2021-06-24 11:11:55.310  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-005-marker-create.xml::20210624-005-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.312  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to marker (coordinate_id)
+2021-06-24 11:11:55.312  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-005-marker-create.xml::20210624-005-2::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.314  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Table user_marker created
+2021-06-24 11:11:55.314  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-006-user-marker-create.xml::20210624-003-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.316  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_marker (user_id)
+2021-06-24 11:11:55.316  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-006-user-marker-create.xml::20210624-006-2::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.318  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_marker (marker_id)
+2021-06-24 11:11:55.318  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-006-user-marker-create.xml::20210624-006-3::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.319  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : New row inserted into role
+2021-06-24 11:11:55.319  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : New row inserted into role
+2021-06-24 11:11:55.320  INFO 21164 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-007-role-insert.xml::20210624-007-1::lzugaj ran successfully in 1ms
+2021-06-24 11:11:55.321  INFO 21164 --- [main] l.lockservice.StandardLockService        : Successfully released change log lock
+2021-06-24 11:11:55.420  INFO 21164 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-24 11:11:55.460  INFO 21164 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-06-24 11:11:55.572  INFO 21164 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-24 11:11:55.662  INFO 21164 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-06-24 11:11:56.216  INFO 21164 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-24 11:11:56.225  INFO 21164 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-24 11:11:56.566  INFO 21164 --- [main] c.l.t.c.DatabaseConfiguration            : DB connection for DEV - H2
+2021-06-24 11:11:56.567  INFO 21164 --- [main] c.l.t.c.DatabaseConfiguration            : Driver class name: org.h2.Driver
+2021-06-24 11:11:56.567  INFO 21164 --- [main] c.l.t.c.DatabaseConfiguration            : URL: jdbc:h2:mem:testdb
+2021-06-24 11:11:56.567  INFO 21164 --- [main] c.l.t.c.DatabaseConfiguration            : Username: sa
+2021-06-24 11:11:56.567  INFO 21164 --- [main] c.l.t.c.DatabaseConfiguration            : Password: 
+2021-06-24 11:11:56.578  WARN 21164 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-24 11:11:57.374  INFO 21164 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api/v1/travel-checker'
+2021-06-24 11:11:57.383  INFO 21164 --- [main] c.l.t.TravelCheckerApplication           : Started TravelCheckerApplication in 6.625 seconds (JVM running for 8.295)
+2021-06-24 11:13:23.595  INFO 21164 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-06-24 11:13:23.598  INFO 21164 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-06-24 11:13:23.602  INFO 21164 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2021-06-24 11:13:28.068  INFO 24364 --- [main] c.l.t.TravelCheckerApplication           : Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 24364 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+2021-06-24 11:13:28.070  INFO 24364 --- [main] c.l.t.TravelCheckerApplication           : The following profiles are active: dev
+2021-06-24 11:13:28.678  INFO 24364 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-06-24 11:13:28.761  INFO 24364 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 76 ms. Found 5 JPA repository interfaces.
+2021-06-24 11:13:29.231  INFO 24364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2021-06-24 11:13:29.238  INFO 24364 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-06-24 11:13:29.239  INFO 24364 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.43]
+2021-06-24 11:13:29.375  INFO 24364 --- [main] o.a.c.c.C.[.[.[/api/v1/travel-checker]   : Initializing Spring embedded WebApplicationContext
+2021-06-24 11:13:29.375  INFO 24364 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1263 ms
+2021-06-24 11:13:29.435  INFO 24364 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-06-24 11:13:29.515  INFO 24364 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-06-24 11:13:29.520  INFO 24364 --- [main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2021-06-24 11:13:31.798  INFO 24364 --- [main] l.lockservice.StandardLockService        : Successfully acquired change log lock
+2021-06-24 11:13:32.066  INFO 24364 --- [main] l.c.StandardChangeLogHistoryService      : Creating database history table with name: PUBLIC.DATABASECHANGELOG
+2021-06-24 11:13:32.068  INFO 24364 --- [main] l.c.StandardChangeLogHistoryService      : Reading from PUBLIC.DATABASECHANGELOG
+2021-06-24 11:13:32.116  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table role created
+2021-06-24 11:13:32.116  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-000-role-create.xml::20210624-000-1::lzugaj ran successfully in 5ms
+2021-06-24 11:13:32.128  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table profile_image created
+2021-06-24 11:13:32.128  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-001-profile-image-create.xml::20210624-001-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.130  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table user created
+2021-06-24 11:13:32.130  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-002-user-create.xml::20210624-002-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.138  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user (profile_image_id)
+2021-06-24 11:13:32.138  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-002-user-create.xml::20210624-002-2::lzugaj ran successfully in 7ms
+2021-06-24 11:13:32.140  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table user_role created
+2021-06-24 11:13:32.140  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-003-user-role-create.xml::20210624-003-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.142  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_role (user_id)
+2021-06-24 11:13:32.142  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-003-user-role-create.xml::20210624-003-2::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.144  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_role (role_id)
+2021-06-24 11:13:32.144  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-003-user-role-create.xml::20210624-003-3::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.146  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table coordinate created
+2021-06-24 11:13:32.146  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-004-coordinate-create.xml::20210624-004-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.148  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table marker created
+2021-06-24 11:13:32.148  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-005-marker-create.xml::20210624-005-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.150  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to marker (coordinate_id)
+2021-06-24 11:13:32.150  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-005-marker-create.xml::20210624-005-2::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.151  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Table user_marker created
+2021-06-24 11:13:32.152  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-006-user-marker-create.xml::20210624-003-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.153  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_marker (user_id)
+2021-06-24 11:13:32.153  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-006-user-marker-create.xml::20210624-006-2::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.155  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : Foreign key constraint added to user_marker (marker_id)
+2021-06-24 11:13:32.155  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-006-user-marker-create.xml::20210624-006-3::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.156  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : New row inserted into role
+2021-06-24 11:13:32.157  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : New row inserted into role
+2021-06-24 11:13:32.157  INFO 24364 --- [main] liquibase.changelog.ChangeSet            : ChangeSet /db/changelog/changelog/20210624-007-role-insert.xml::20210624-007-1::lzugaj ran successfully in 1ms
+2021-06-24 11:13:32.158  INFO 24364 --- [main] l.lockservice.StandardLockService        : Successfully released change log lock
+2021-06-24 11:13:32.257  INFO 24364 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-06-24 11:13:32.295  INFO 24364 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.28.Final
+2021-06-24 11:13:32.400  INFO 24364 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-06-24 11:13:32.489  INFO 24364 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2021-06-24 11:13:33.068  INFO 24364 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-06-24 11:13:33.077  INFO 24364 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-06-24 11:13:33.419  INFO 24364 --- [main] c.l.t.c.DatabaseConfiguration            : DB connection for DEV - H2
+2021-06-24 11:13:33.419  INFO 24364 --- [main] c.l.t.c.DatabaseConfiguration            : Driver class name: org.h2.Driver
+2021-06-24 11:13:33.419  INFO 24364 --- [main] c.l.t.c.DatabaseConfiguration            : URL: jdbc:h2:mem:testdb
+2021-06-24 11:13:33.419  INFO 24364 --- [main] c.l.t.c.DatabaseConfiguration            : Username: sa
+2021-06-24 11:13:33.419  INFO 24364 --- [main] c.l.t.c.DatabaseConfiguration            : Password: 
+2021-06-24 11:13:33.429  WARN 24364 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-06-24 11:13:34.207  INFO 24364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api/v1/travel-checker'
+2021-06-24 11:13:34.216  INFO 24364 --- [main] c.l.t.TravelCheckerApplication           : Started TravelCheckerApplication in 6.721 seconds (JVM running for 8.448)
+2021-06-24 11:13:49.658  INFO 24364 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-06-24 11:13:49.661  INFO 24364 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-06-24 11:13:49.666  INFO 24364 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

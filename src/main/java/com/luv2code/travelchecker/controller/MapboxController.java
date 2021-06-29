@@ -1,5 +1,6 @@
 package com.luv2code.travelchecker.controller;
 
+import com.luv2code.travelchecker.dto.mapbox.MapboxGetDto;
 import com.luv2code.travelchecker.service.MapboxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mapbox")
 public class MapboxController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MarkerController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapboxController.class);
 
     private final MapboxService mapboxService;
 
@@ -27,6 +28,6 @@ public class MapboxController {
     public ResponseEntity<?> fetchToken() {
         final String mapboxToken = mapboxService.fetchToken();
         LOGGER.info("Successfully founded Mapbox token.");
-        return new ResponseEntity<>(mapboxToken, HttpStatus.OK);
+        return new ResponseEntity<>(new MapboxGetDto(mapboxToken), HttpStatus.OK);
     }
 }

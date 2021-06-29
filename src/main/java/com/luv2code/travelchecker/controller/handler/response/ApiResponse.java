@@ -4,13 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import java.time.ZonedDateTime;
+import java.util.List;
 
 @Getter
 @Builder
 public class ApiResponse {
 
-    private final ZonedDateTime zonedDateTime;
+    private final String localDateTime;
 
     private final Integer httpStatusCode;
 
@@ -20,15 +20,15 @@ public class ApiResponse {
 
     private final String path;
 
-    public ApiResponse(final ZonedDateTime zonedDateTime,
+    public ApiResponse(final String localDateTime,
                        final Integer httpStatusCode,
                        final HttpStatus httpStatus,
                        final String message,
                        final String path) {
-        this.zonedDateTime = zonedDateTime;
+        this.localDateTime = localDateTime;
         this.httpStatusCode = httpStatusCode;
-        this.message = message;
         this.httpStatus = httpStatus;
+        this.message = message;
         this.path = path;
     }
 }

@@ -5,12 +5,15 @@ import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @ControllerAdvice
 public class ResponseEntityExceptionHandler {
@@ -27,9 +30,29 @@ public class ResponseEntityExceptionHandler {
         return createResponseMessage(alreadyExists, exception, httpServletRequest);
     }
 
+    @ExceptionHandler(value = RuntimeException.class)
+    public ResponseEntity<ApiResponse> handleRuntimeException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        return createResponseMessage(badRequest, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = HttpClientErrorException.class)
+    public ResponseEntity<ApiResponse> handleUnauthorizedException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus unauthorizedRequest = HttpStatus.UNAUTHORIZED;
+        return createResponseMessage(unauthorizedRequest, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = HttpServerErrorException.class)
+    public ResponseEntity<ApiResponse> handleInternalServerException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus internalServerRequest = HttpStatus.INTERNAL_SERVER_ERROR;
+        return createResponseMessage(internalServerRequest, exception, httpServletRequest);
+    }
+
     private ResponseEntity<ApiResponse> createResponseMessage(final HttpStatus httpStatus, final Exception exception, final HttpServletRequest httpServletRequest) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        final LocalDateTime now = LocalDateTime.now();
         final ApiResponse apiResponse = ApiResponse.builder()
-                .zonedDateTime(ZonedDateTime.now(ZoneId.of("Z")))
+                .localDateTime(now.format(formatter))
                 .httpStatusCode(httpStatus.value())
                 .httpStatus(httpStatus)
                 .message(exception.getMessage())

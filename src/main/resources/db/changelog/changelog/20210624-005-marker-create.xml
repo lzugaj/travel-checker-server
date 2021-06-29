@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="20210624-005-1" author="lzugaj" >
+        <createTable tableName="marker">
+            <column name="id" autoIncrement="true" type="INT">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="VARCHAR(512)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="event_date" type="DATE">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="grade" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="should_visit_again" type="CHAR(1)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="modified_at" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="coordinate_id" type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20210624-005-2" author="lzugaj">
+        <addForeignKeyConstraint
+                constraintName="fk_marker_coordinate"
+                baseTableName="marker"
+                baseColumnNames="coordinate_id"
+                referencedTableName="coordinate"
+                referencedColumnNames="id"
+        />
+    </changeSet>
+
+</databaseChangeLog>

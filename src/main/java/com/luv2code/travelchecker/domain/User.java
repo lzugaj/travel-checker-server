@@ -1,13 +1,11 @@
 package com.luv2code.travelchecker.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.luv2code.travelchecker.domain.base.BaseEntity;
-import com.luv2code.travelchecker.domain.enums.StatusType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,12 +14,14 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "USER")
+@Table(name = "user")
 public class User extends BaseEntity implements Serializable {
 
     @Column(name = "first_name")
+    @NotBlank(message = "{validation.user.firstName.notBlank}")
     private String firstName;
 
     @Column(name = "last_name")
@@ -36,13 +36,6 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "number_of_markers")
-    private Integer numberOfMarkers;
-
-    @Column(name = "name")
-    @Enumerated(EnumType.STRING)
-    private StatusType status;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -56,6 +49,7 @@ public class User extends BaseEntity implements Serializable {
     private ProfileImage profileImage;
 
     @ManyToMany
+    @JsonManagedReference
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -75,13 +69,5 @@ public class User extends BaseEntity implements Serializable {
         }
 
         roles.add(role);
-    }
-
-    public void addMarker(final Marker marker) {
-        if (markers == null) {
-            markers = new ArrayList<>();
-        }
-
-        markers.add(marker);
     }
 }

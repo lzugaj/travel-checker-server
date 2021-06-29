@@ -1,15 +1,12 @@
 package com.luv2code.travelchecker.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.luv2code.travelchecker.domain.base.BaseEntity;
 import com.luv2code.travelchecker.domain.enums.RoleType;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +14,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ROLE")
+@Table(name = "role")
 public class Role extends BaseEntity implements Serializable {
 
     @Column(name = "name")
@@ -27,14 +24,9 @@ public class Role extends BaseEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @ToString.Exclude
+    @JsonBackReference
     @ManyToMany(mappedBy = "roles")
     private List<User> users;
 
-    public void addUser(final User user) {
-        if (users == null) {
-            users = new ArrayList<>();
-        }
-
-        users.add(user);
-    }
 }
