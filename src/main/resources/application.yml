@@ -2,9 +2,16 @@ server:
   port: 8080
   servlet:
     context-path: /api/v1/travel-checker
+    application-display-name: 'Travel Checker API'
 spring:
   profiles:
     active: dev
+springdoc:
+  api-docs:
+    path: /travel-checker-docs
+#  paths-to-match: /api/v1/travel-checker/**
+#  swagger-ui:
+#    path: /swagger-ui-travel-checker.html
 luv2code:
   travel-checker:
     mapbox:
