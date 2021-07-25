@@ -20,7 +20,7 @@ public class MapboxServiceImpl implements MapboxService {
     }
 
     @Override
-    public String fetchToken() {
+    public String getToken() {
         LOGGER.info("Fetching Mapbox token from configuration file.");
         return mapboxConfiguration.getToken();
     }

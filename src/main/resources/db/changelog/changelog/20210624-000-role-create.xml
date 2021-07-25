@@ -7,15 +7,15 @@
     <changeSet id="20210624-000-1" author="lzugaj">
         <createTable tableName="role">
             <column name="id" autoIncrement="true" type="INT">
-                <constraints primaryKey="true"/>
+                <constraints primaryKey="true" />
             </column>
 
             <column name="name" type="VARCHAR(10)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" />
             </column>
 
             <column name="description" type="VARCHAR(100)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>

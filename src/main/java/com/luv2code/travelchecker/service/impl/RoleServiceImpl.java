@@ -2,12 +2,9 @@ package com.luv2code.travelchecker.service.impl;
 
 import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.enums.RoleType;
-import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.RoleRepository;
 import com.luv2code.travelchecker.service.RoleService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,48 +20,41 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
-    private final ModelMapper modelMapper;
-
     @Autowired
-    public RoleServiceImpl(final RoleRepository roleRepository,
-                           final ModelMapper modelMapper) {
+    public RoleServiceImpl(final RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
-    public RoleGetDto findById(final Long id) {
-        final Optional<Role> role = roleRepository.findById(id);
-        if (role.isPresent()) {
+    public Role findById(final Long id) {
+        final Optional<Role> searchedRole = roleRepository.findById(id);
+        if (searchedRole.isPresent()) {
             LOGGER.info("Searching Role with id: ´{}´.", id);
-            return modelMapper.map(role.get(), RoleGetDto.class);
+            return searchedRole.get();
         } else {
             LOGGER.error("Cannot find Role with id: ´{}´.", id);
             throw new EntityNotFoundException(
-                    "Role", "id", String.valueOf(id)
-            );
+                    "Role", "id", String.valueOf(id));
         }
     }
 
     @Override
-    public RoleGetDto findByRoleType(final RoleType roleType) {
-        final Optional<Role> role = roleRepository.findByName(roleType);
-        if (role.isPresent()) {
+    public Role findByRoleType(final RoleType roleType) {
+        final Optional<Role> searchedRole = roleRepository.findByName(roleType);
+        if (searchedRole.isPresent()) {
             LOGGER.info("Searching Role with name: ´{}´.", roleType.name());
-            return modelMapper.map(role.get(), RoleGetDto.class);
+            return searchedRole.get();
         } else {
             LOGGER.error("Cannot find Role with name: ´{}´.", roleType.name());
             throw new EntityNotFoundException(
-                    "Role", "name", roleType.name()
-            );
+                    "Role", "name", roleType.name());
         }
     }
 
     @Override
-    public List<RoleGetDto> findAll() {
-        final List<Role> roles = roleRepository.findAll();
-        final TypeToken<List<RoleGetDto>> typeToken = new TypeToken<>() {};
+    public List<Role> findAll() {
+        final List<Role> searchedRoles = roleRepository.findAll();
         LOGGER.info("Searching all Roles.");
-        return modelMapper.map(roles, typeToken.getType());
+        return searchedRoles;
     }
 }

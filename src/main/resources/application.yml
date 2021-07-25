@@ -5,9 +5,11 @@ server:
 spring:
   profiles:
     active: dev
-  main:
-    allow-bean-definition-overriding: true
 luv2code:
   travel-checker:
     mapbox:
       token: 'pk.eyJ1IjoibHp1Z2FqIiwiYSI6ImNrbHpnbGhvMjFraW0ybnBsdzR3OXN6bDAifQ.dBuHMH1r6dH22MsrXrCRUQ'
+    locale:
+      baseName: messages/messages
+      defaultLocale: en
+      defaultEncoding: UTF-8

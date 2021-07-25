@@ -26,7 +26,7 @@ public class MapboxController {
 
     @GetMapping("/token")
     public ResponseEntity<?> fetchToken() {
-        final String mapboxToken = mapboxService.fetchToken();
+        final String mapboxToken = mapboxService.getToken();
         LOGGER.info("Successfully founded Mapbox token.");
         return new ResponseEntity<>(new MapboxGetDto(mapboxToken), HttpStatus.OK);
     }

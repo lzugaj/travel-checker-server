@@ -1,11 +1,13 @@
 package com.luv2code.travelchecker.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.luv2code.travelchecker.domain.base.BaseEntity;
+import com.luv2code.travelchecker.validation.Email;
+import com.luv2code.travelchecker.validation.Password;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,26 +16,33 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
 public class User extends BaseEntity implements Serializable {
 
-    @Column(name = "first_name")
-    @NotBlank(message = "{validation.user.firstName.notBlank}")
+    @Column(name = "first_name", nullable = false)
+    @NotBlank(message = "{user.firstName.blank}")
+    @Size(min = 2, message = "{user.firstName.size}")
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
+    @NotBlank(message = "{user.lastName.blank}")
+    @Size(min = 2, message = "{user.lastName.size}")
     private String lastName;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
+    @Email(message = "{user.email.invalid}")
     private String email;
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
+    @NotBlank(message = "{user.username.blank}")
+    @Size(min = 5, message = "{user.username.size}")
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
+    @NotBlank(message = "{user.password.blank}")
+    @Password(message = "{user.password.invalid}")
     private String password;
 
     @Column(name = "created_at")
@@ -42,21 +51,14 @@ public class User extends BaseEntity implements Serializable {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(
-            name = "profile_image_id",
-            referencedColumnName = "id")
-    private ProfileImage profileImage;
-
-    @ManyToMany
-    @JsonManagedReference
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_marker",
             joinColumns = @JoinColumn(name = "user_id"),

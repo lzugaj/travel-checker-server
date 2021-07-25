@@ -4,18 +4,18 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="20210624-001-1" author="lzugaj">
-        <createTable tableName="profile_image">
+    <changeSet id="20210624-003-1" author="lzugaj" >
+        <createTable tableName="coordinate">
             <column name="id" autoIncrement="true" type="INT">
-                <constraints primaryKey="true"/>
+                <constraints primaryKey="true" />
             </column>
 
-            <column name="image_file_path" type="VARCHAR(100)">
-                <constraints nullable="false"/>
+            <column name="longitude" type="DECIMAL(11,9)">
+                <constraints nullable="false" />
             </column>
 
-            <column name="extension_type" type="VARCHAR(10)">
-                <constraints nullable="false"/>
+            <column name="latitude" type="DECIMAL(11,9)">
+                <constraints nullable="false" />
             </column>
         </createTable>
     </changeSet>

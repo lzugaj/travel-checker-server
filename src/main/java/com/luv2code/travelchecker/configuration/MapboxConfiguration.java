@@ -4,13 +4,9 @@ import lombok.*;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Getter
-@Setter
-@Builder
-@ToString
-@Configuration
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Configuration
 @ConfigurationProperties(prefix = "luv2code.travel-checker.mapbox")
 public class MapboxConfiguration {
 

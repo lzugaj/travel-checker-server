@@ -1,12 +1,9 @@
 package com.luv2code.travelchecker.service.impl;
 
 import com.luv2code.travelchecker.domain.Coordinate;
-import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.CoordinateRepository;
 import com.luv2code.travelchecker.service.CoordinateService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +19,17 @@ public class CoordinateServiceImpl implements CoordinateService {
 
     private final CoordinateRepository coordinateRepository;
 
-    private final ModelMapper modelMapper;
-
     @Autowired
-    public CoordinateServiceImpl(final CoordinateRepository coordinateRepository,
-                                 final ModelMapper modelMapper) {
+    public CoordinateServiceImpl(final CoordinateRepository coordinateRepository) {
         this.coordinateRepository = coordinateRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
-    public CoordinateGetDto findById(final Long id) {
-        final Optional<Coordinate> coordinate = coordinateRepository.findById(id);
-        if (coordinate.isPresent()) {
+    public Coordinate findById(final Long id) {
+        final Optional<Coordinate> searchedCoordinate = coordinateRepository.findById(id);
+        if (searchedCoordinate.isPresent()) {
             LOGGER.info("Searching Coordinate with id: ´{}´.", id);
-            return modelMapper.map(coordinate.get(), CoordinateGetDto.class);
+            return searchedCoordinate.get();
         } else {
             LOGGER.error("Cannot find Coordinate with id: ´{}´.", id);
             throw new EntityNotFoundException("Coordinate", "id", String.valueOf(id));
@@ -44,10 +37,9 @@ public class CoordinateServiceImpl implements CoordinateService {
     }
 
     @Override
-    public List<CoordinateGetDto> findAll() {
-        final List<Coordinate> coordinates = coordinateRepository.findAll();
-        final TypeToken<List<CoordinateGetDto>> typeToken = new TypeToken<>() {};
+    public List<Coordinate> findAll() {
+        final List<Coordinate> searchedCoordinates = coordinateRepository.findAll();
         LOGGER.info("Searching all Coordinates.");
-        return modelMapper.map(coordinates, typeToken.getType());
+        return searchedCoordinates;
     }
 }

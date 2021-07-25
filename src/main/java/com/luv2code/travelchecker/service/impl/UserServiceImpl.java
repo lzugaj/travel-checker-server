@@ -1,15 +1,16 @@
 package com.luv2code.travelchecker.service.impl;
 
 import com.luv2code.travelchecker.domain.User;
-import com.luv2code.travelchecker.dto.user.UserGetDto;
+import com.luv2code.travelchecker.dto.password.PasswordUpdateDto;
 import com.luv2code.travelchecker.dto.user.UserPostDto;
 import com.luv2code.travelchecker.dto.user.UserPutDto;
 import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
+import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
+import com.luv2code.travelchecker.exception.PasswordNotEnteredRightException;
+import com.luv2code.travelchecker.mapper.UserMapper;
 import com.luv2code.travelchecker.repository.UserRepository;
 import com.luv2code.travelchecker.service.UserService;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,89 +26,113 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    private final ModelMapper modelMapper;
+    private final UserMapper userMapper;
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
-                           final ModelMapper modelMapper) {
+                           final UserMapper userMapper) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
-    public UserGetDto save(final UserPostDto userPostDto) {
-        if (usernameDoesNotExists(userPostDto.getUsername())) {
-            final User user = userRepository.save(modelMapper.map(userPostDto, User.class));
-            LOGGER.info("Creating new User with id: ´{}´.", user.getId());
-            return modelMapper.map(user, UserGetDto.class);
+    public User save(final UserPostDto userPostDto) {
+        if (checkDoesUsernameNotExists(userPostDto.getUsername())) {
+            final User user = userRepository.save(userMapper.dtoToEntity(userPostDto));
+            LOGGER.info("Creating new User with username: ´{}´.", userPostDto.getUsername());
+            return user;
         } else {
             LOGGER.error("User already exists with username: ´{}´.", userPostDto.getUsername());
             throw new EntityAlreadyExistsException(
-                    "User", "username", userPostDto.getUsername()
-            );
+                    "User", "username", userPostDto.getUsername());
         }
     }
 
     @Override
-    public UserGetDto findById(final Long id) {
+    public User findById(final Long id) {
         final Optional<User> searchedUser = userRepository.findById(id);
         if (searchedUser.isPresent()) {
             LOGGER.info("Searching User with id: ´{}´.", id);
-            return modelMapper.map(searchedUser.get(), UserGetDto.class);
+            return searchedUser.get();
         } else {
             LOGGER.error("Cannot find User with id: ´{}´.", id);
             throw new EntityNotFoundException(
-                    "User", "id", String.valueOf(id)
-            );
+                    "User", "id", String.valueOf(id));
         }
     }
 
     @Override
-    public UserGetDto findByUsername(final String username) {
+    public User findByUsername(final String username) {
         final Optional<User> searchedUser = userRepository.findByUsername(username);
         if (searchedUser.isPresent()) {
             LOGGER.info("Searching User with username: ´{}´.", username);
-            return modelMapper.map(searchedUser.get(), UserGetDto.class);
+            return searchedUser.get();
         } else {
             LOGGER.error("Cannot find User with username: ´{}´.", username);
             throw new EntityNotFoundException(
-                    "User", "username", username
-            );
+                    "User", "username", username);
         }
     }
 
     @Override
-    public List<UserGetDto> findAll() {
-        final List<User> users = userRepository.findAll();
-        final TypeToken<List<UserGetDto>> typeToken = new TypeToken<>() {};
+    public List<User> findAll() {
+        final List<User> searchedUsers = userRepository.findAll();
         LOGGER.info("Searching all Users.");
-        return modelMapper.map(users, typeToken.getType());
+        return searchedUsers;
     }
 
     @Override
-    public UserGetDto update(final String username, final UserPutDto newUser) {
-        User updatedUser = modelMapper.map(findByUsername(username), User.class);
-        if (usernameIsValid(updatedUser, newUser)) {
-            updatedUser = userRepository.save(modelMapper.map(newUser, User.class));
-            LOGGER.info("Updating User with id: ´{}´.", updatedUser.getId());
-            return modelMapper.map(updatedUser, UserGetDto.class);
+    public User update(final User oldUser, final UserPutDto newUser) {
+        if (checkDoesUsernamesAreEqual(oldUser, newUser)) {
+            final User updatedUser = userMapper.dtoToEntity(oldUser, newUser);
+            userRepository.save(updatedUser);
+            LOGGER.info("Updating User with username: ´{}´.", oldUser.getUsername());
+            return updatedUser;
         } else {
             LOGGER.error("User already exists with username: ´{}´.", newUser.getUsername());
-            throw new EntityAlreadyExistsException("User", "username", newUser.getUsername());
+            throw new EntityAlreadyExistsException(
+                    "User", "username", newUser.getUsername());
         }
     }
 
-    private boolean usernameIsValid(final User updatedUser, final UserPutDto newUser) {
-        if (!newUser.getUsername().equals(updatedUser.getUsername())) {
-            return usernameDoesNotExists(newUser.getUsername());
+    private boolean checkDoesUsernamesAreEqual(final User oldUser, final UserPutDto newUser) {
+        if (!newUser.getUsername().equals(oldUser.getUsername())) {
+            return checkDoesUsernameNotExists(newUser.getUsername());
         }
 
         return true;
     }
 
-    private boolean usernameDoesNotExists(final String username) {
-        final List<UserGetDto> users = findAll();
-        return users.stream()
+    private boolean checkDoesUsernameNotExists(final String username) {
+        final List<User> searchedUsers = findAll();
+        return searchedUsers.stream()
                 .noneMatch(user -> user.getUsername().equals(username));
+    }
+
+    @Override
+    public User changePassword(final User oldUser, final PasswordUpdateDto passwordUpdateDto) {
+        if (checkIsPasswordEnteredCorrect(oldUser, passwordUpdateDto)) {
+            if (checkIsPasswordConfirmedRight(passwordUpdateDto)) {
+                LOGGER.info("Updating new password for User with username: ´{}´.", oldUser.getUsername());
+                oldUser.setPassword(passwordUpdateDto.getNewPassword());
+                return userRepository.save(oldUser);
+            } else {
+                LOGGER.error("Password not confirmed right for Entity with username: ´{}´.", oldUser.getUsername());
+                throw new PasswordNotConfirmedRightException(
+                        "User", "password", passwordUpdateDto.getNewPassword());
+            }
+        } else {
+            LOGGER.error("Password not entered right for Entity with username: ´{}´.", oldUser.getUsername());
+            throw new PasswordNotEnteredRightException(
+                    "User", "password", passwordUpdateDto.getOldPassword());
+        }
+    }
+
+    private boolean checkIsPasswordEnteredCorrect(final User oldUser, final PasswordUpdateDto passwordUpdateDto) {
+        return oldUser.getPassword().equals(passwordUpdateDto.getOldPassword());
+    }
+
+    private boolean checkIsPasswordConfirmedRight(final PasswordUpdateDto passwordUpdateDto) {
+        return passwordUpdateDto.getNewPassword().equals(passwordUpdateDto.getConfirmedNewPassword());
     }
 }

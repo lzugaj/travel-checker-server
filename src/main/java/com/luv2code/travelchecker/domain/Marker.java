@@ -8,10 +8,12 @@ import com.luv2code.travelchecker.domain.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,10 +22,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "marker")
-@EqualsAndHashCode(callSuper = true)
 public class Marker extends BaseEntity implements Serializable {
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
+    @NotBlank(message = "{marker.name.blank}")
+    @Size(min = 2, message = "{marker.name.size}")
     private String name;
 
     @Column(name = "description")
@@ -34,10 +37,12 @@ public class Marker extends BaseEntity implements Serializable {
     @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate eventDate;
 
-    @Column(name = "grade")
+    @Column(name = "grade", nullable = false)
+    @NotNull(message = "{marker.grade.null}")
     private Integer grade;
 
-    @Column(name = "should_visit_again")
+    @Column(name = "should_visit_again", nullable = false)
+    @NotNull(message = "{marker.shouldVisitAgain.null}")
     private Boolean shouldVisitAgain;
 
     @Column(name = "created_at")
@@ -47,18 +52,10 @@ public class Marker extends BaseEntity implements Serializable {
     private LocalDateTime modifiedAt;
 
     @ManyToOne
-    @JoinColumn(name = "marker_id", nullable = false)
+    @JoinColumn(name = "coordinate_id", nullable = false)
     private Coordinate coordinate;
 
-    @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "markers")
+    @ManyToMany(mappedBy = "markers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
 
-    public void addUser(final User user) {
-        if (users == null) {
-            users = new ArrayList<>();
-        }
-
-        users.add(user);
-    }
 }

@@ -1,6 +1,7 @@
 package com.luv2code.travelchecker.service;
 
-import com.luv2code.travelchecker.dto.user.UserGetDto;
+import com.luv2code.travelchecker.domain.User;
+import com.luv2code.travelchecker.dto.password.PasswordUpdateDto;
 import com.luv2code.travelchecker.dto.user.UserPostDto;
 import com.luv2code.travelchecker.dto.user.UserPutDto;
 
@@ -8,14 +9,16 @@ import java.util.List;
 
 public interface UserService {
 
-    UserGetDto save(final UserPostDto userPostDto);
+    User save(final UserPostDto userPostDto);
 
-    UserGetDto findById(final Long id);
+    User findById(final Long id);
 
-    UserGetDto findByUsername(final String username);
+    User findByUsername(final String username);
 
-    List<UserGetDto> findAll();
+    List<User> findAll();
 
-    UserGetDto update(final String username, final UserPutDto newUser);
+    User update(final User updatedUser, final UserPutDto newUser);
+
+    User changePassword(final User updatedUser, final PasswordUpdateDto passwordUpdateDto);
 
 }

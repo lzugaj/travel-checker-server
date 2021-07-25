@@ -11,6 +11,6 @@ class TravelCheckerApplicationTests {
 
     @Test
     void contextLoads() {
+        TravelCheckerApplication.main(new String[] {});
     }
-
 }

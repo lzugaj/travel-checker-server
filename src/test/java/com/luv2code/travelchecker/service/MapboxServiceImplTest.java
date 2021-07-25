@@ -30,7 +30,7 @@ public class MapboxServiceImplTest {
 
     @Test
     public void should_Fetch_Mapbox_Token() {
-        final String mapboxToken = mapboxService.fetchToken();
+        final String mapboxToken = mapboxService.getToken();
 
         Assertions.assertNotNull(mapboxToken);
         Assertions.assertEquals(TOKEN, mapboxToken);

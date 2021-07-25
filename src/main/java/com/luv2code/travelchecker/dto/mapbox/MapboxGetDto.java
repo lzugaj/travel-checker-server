@@ -5,9 +5,8 @@ import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 public class MapboxGetDto {
 
     @JsonProperty("mapboxToken")
