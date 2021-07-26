@@ -5,7 +5,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Data
-@NoArgsConstructor
 @Configuration
 @ConfigurationProperties(prefix = "luv2code.travel-checker.mapbox")
 public class MapboxConfiguration {

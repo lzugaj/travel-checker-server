@@ -4,18 +4,6 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <!-- Create tables and constraints -->
-    <include file="/db/changelog/changelog/20210624-000-role-create.xml"/>
-    <include file="/db/changelog/changelog/20210624-001-user-create.xml"/>
-    <include file="/db/changelog/changelog/20210624-002-user-role-create.xml"/>
-    <include file="/db/changelog/changelog/20210624-003-coordinate-create.xml"/>
-    <include file="/db/changelog/changelog/20210624-004-marker-create.xml"/>
-    <include file="/db/changelog/changelog/20210624-005-user-marker-create.xml"/>
-
-    <!-- Insert into tables -->
-    <include file="/db/changelog/changelog/20210624-006-role-insert.xml"/>
-
-    <!-- Alter tables -->
-    <include file="/db/changelog/changelog/20210723-000-user-alter.xml"/>
+    <includeAll path="db/changelog/changelog"/>
 
 </databaseChangeLog>

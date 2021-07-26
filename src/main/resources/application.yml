@@ -6,12 +6,8 @@ server:
 spring:
   profiles:
     active: dev
-springdoc:
-  api-docs:
-    path: /travel-checker-docs
-#  paths-to-match: /api/v1/travel-checker/**
-#  swagger-ui:
-#    path: /swagger-ui-travel-checker.html
+  main:
+    allow-bean-definition-overriding: true
 luv2code:
   travel-checker:
     mapbox:
@@ -20,3 +16,13 @@ luv2code:
       baseName: messages/messages
       defaultLocale: en
       defaultEncoding: UTF-8
+    api-info:
+      title: 'Travel Checker API'
+      description: 'Spring Boot REST API for Travel Checker'
+      version: '1.0.0'
+      termsOfServiceUrl: 'https://github.com/lzugaj/travel-checker-server'
+      name: 'Luka Zugaj'
+      url: 'https://github.com/lzugaj'
+      email: 'luka.zugaj7@gmail.com'
+      license: 'Apache License Version 2.0'
+      licenseUrl: 'https://www.apache.org/licenses/LICENSE-2.0'
