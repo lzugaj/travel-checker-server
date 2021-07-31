@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +19,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@ControllerAdvice
+@RestControllerAdvice
 public class ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = RuntimeException.class)
+    @ExceptionHandler(value = {
+            RuntimeException.class,
+            NullPointerException.class
+    })
     public ResponseEntity<ApiResponse> handleRuntimeException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
-        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
-        return createResponseMessage(badRequest, exception, httpServletRequest);
-    }
-
-    @ExceptionHandler(value = NullPointerException.class)
-    public ResponseEntity<ApiResponse> handleNullPointerException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         return createResponseMessage(badRequest, exception, httpServletRequest);
     }
@@ -98,7 +95,7 @@ public class ResponseEntityExceptionHandler {
 
             message = String.join(",", messages);
         } else if (exception instanceof NullPointerException) {
-            message = "Something went wrong (NPE). Please investigate the cause of the problem in more depth.";
+            message = "Something went wrong. Please investigate the cause of the problem in more depth.";
         } else {
             message = exception.getMessage();
         }

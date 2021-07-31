@@ -1,10 +1,10 @@
 package com.luv2code.travelchecker.exception;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+@EqualsAndHashCode(callSuper = true)
 public abstract class AbstractEntityException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;

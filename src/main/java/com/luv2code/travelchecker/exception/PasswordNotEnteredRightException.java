@@ -11,9 +11,9 @@ public class PasswordNotEnteredRightException extends AbstractEntityException {
     }
 
     public PasswordNotEnteredRightException(final String entityName,
-                                              final String fieldName,
-                                              final String fieldValue,
-                                              final Throwable cause) {
+                                            final String fieldName,
+                                            final String fieldValue,
+                                            final Throwable cause) {
         super(entityName, fieldName, fieldValue, createMessage(entityName, fieldName, fieldValue), cause);
     }
 

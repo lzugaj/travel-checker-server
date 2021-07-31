@@ -34,7 +34,7 @@ public class MapboxControllerTest {
 
     private static final String FETCH_TOKEN_JSON = "{\n" +
             "   \"mapboxToken\":\"dsapodpmm32k1mpofjjfmpo213po21\"" +
-            "}\n";
+            "}";
 
     @BeforeEach
     public void setup() {

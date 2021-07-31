@@ -26,7 +26,7 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="should_visit_again" type="CHAR(1)">
+            <column name="should_visit_again" type="BOOLEAN">
                 <constraints nullable="false" />
             </column>
 

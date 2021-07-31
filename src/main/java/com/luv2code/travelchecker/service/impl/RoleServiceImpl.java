@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -27,34 +26,27 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role findById(final Long id) {
-        final Optional<Role> searchedRole = roleRepository.findById(id);
-        if (searchedRole.isPresent()) {
-            LOGGER.info("Searching Role with id: ´{}´.", id);
-            return searchedRole.get();
-        } else {
-            LOGGER.error("Cannot find Role with id: ´{}´.", id);
-            throw new EntityNotFoundException(
-                    "Role", "id", String.valueOf(id));
-        }
+        LOGGER.info("Searching Role with id: ´{}´.", id);
+        return roleRepository.findById(id)
+                .orElseThrow(() -> {
+                    LOGGER.error("Cannot find Role with id: ´{}´.", id);
+                    return new EntityNotFoundException("Role", "id", String.valueOf(id));
+                });
     }
 
     @Override
     public Role findByRoleType(final RoleType roleType) {
-        final Optional<Role> searchedRole = roleRepository.findByName(roleType);
-        if (searchedRole.isPresent()) {
-            LOGGER.info("Searching Role with name: ´{}´.", roleType.name());
-            return searchedRole.get();
-        } else {
-            LOGGER.error("Cannot find Role with name: ´{}´.", roleType.name());
-            throw new EntityNotFoundException(
-                    "Role", "name", roleType.name());
-        }
+        LOGGER.info("Searching Role with name: ´{}´.", roleType.name());
+        return roleRepository.findByName(roleType)
+                .orElseThrow(() -> {
+                    LOGGER.error("Cannot find Role with name: ´{}´.", roleType.name());
+                    return new EntityNotFoundException("Role", "name", roleType.name());
+                });
     }
 
     @Override
     public List<Role> findAll() {
-        final List<Role> searchedRoles = roleRepository.findAll();
         LOGGER.info("Searching all Roles.");
-        return searchedRoles;
+        return roleRepository.findAll();
     }
 }

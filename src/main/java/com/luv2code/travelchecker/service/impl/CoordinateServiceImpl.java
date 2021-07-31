@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CoordinateServiceImpl implements CoordinateService {
@@ -25,21 +24,23 @@ public class CoordinateServiceImpl implements CoordinateService {
     }
 
     @Override
+    public Coordinate save(final Coordinate coordinate) {
+        return coordinateRepository.save(coordinate);
+    }
+
+    @Override
     public Coordinate findById(final Long id) {
-        final Optional<Coordinate> searchedCoordinate = coordinateRepository.findById(id);
-        if (searchedCoordinate.isPresent()) {
-            LOGGER.info("Searching Coordinate with id: ´{}´.", id);
-            return searchedCoordinate.get();
-        } else {
-            LOGGER.error("Cannot find Coordinate with id: ´{}´.", id);
-            throw new EntityNotFoundException("Coordinate", "id", String.valueOf(id));
-        }
+        LOGGER.info("Searching Coordinate with id: ´{}´.", id);
+        return coordinateRepository.findById(id)
+                .orElseThrow(() -> {
+                    LOGGER.error("Cannot find Coordinate with id: ´{}´.", id);
+                    return new EntityNotFoundException("Coordinate", "id", String.valueOf(id));
+                });
     }
 
     @Override
     public List<Coordinate> findAll() {
-        final List<Coordinate> searchedCoordinates = coordinateRepository.findAll();
         LOGGER.info("Searching all Coordinates.");
-        return searchedCoordinates;
+        return coordinateRepository.findAll();
     }
 }

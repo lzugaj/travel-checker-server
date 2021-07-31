@@ -3,6 +3,7 @@ package com.luv2code.travelchecker.mapper.impl;
 import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.mapper.RoleMapper;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,12 +16,16 @@ public class RoleMapperImpl implements RoleMapper {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(RoleMapperImpl.class);
 
+    private final ModelMapper modelMapper;
+
+    public RoleMapperImpl(final ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+
     @Override
     public RoleGetDto entityToDto(final Role entity) {
         LOGGER.info("Start mapping Role to RoleGetDto.");
-        final RoleGetDto roleGetDto = new RoleGetDto();
-        roleGetDto.setName(entity.getName().name());
-        return roleGetDto;
+        return modelMapper.map(entity, RoleGetDto.class);
     }
 
     @Override

@@ -3,16 +3,21 @@ package com.luv2code.travelchecker.mapper;
 import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
+import com.luv2code.travelchecker.dto.coordinate.CoordinatePostDto;
 import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPostDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPutDto;
 import com.luv2code.travelchecker.mapper.impl.MarkerMapperImpl;
+import com.luv2code.travelchecker.utils.CoordinateUtil;
+import com.luv2code.travelchecker.utils.MarkerUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
@@ -29,152 +34,90 @@ public class MarkerMapperImplTest {
     @Mock
     private CoordinateMapper coordinateMapper;
 
-    private Coordinate firstCoordinate;
-    private Coordinate secondCoordinate;
-
-    private CoordinateGetDto firstCoordinateGetDto;
-    private CoordinateGetDto secondCoordinateGetDto;
+    @Mock
+    private ModelMapper modelMapper;
 
     private Marker firstMarker;
     private Marker secondMarker;
-    private Marker thirdMarker;
 
     private MarkerPostDto firstMarkerPostDto;
 
     private MarkerPutDto firstMarkerPutDto;
 
-    private MarkerGetDto firstMarkerGetDto;
-    private MarkerGetDto secondMarkerGetDto;
-
     private List<Marker> markers;
-    private List<MarkerGetDto> dtoMarkers;
 
     @BeforeEach
     public void setup() {
         // Coordinate
-        firstCoordinate = createCoordinate(1L, -0.127758, 51.507351);
-        secondCoordinate = createCoordinate(2L, -74.005974, 40.712776);
+        Coordinate firstCoordinate = CoordinateUtil.createCoordinate(1L, -0.127758, 51.507351);
+        Coordinate secondCoordinate = CoordinateUtil.createCoordinate(2L, -74.005974, 40.712776);
 
         // CoordinateGetDto
-        firstCoordinateGetDto = createCoordinateGetDto(firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
-        secondCoordinateGetDto = createCoordinateGetDto(secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
+        CoordinateGetDto firstCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(firstCoordinate.getId(), firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
+        CoordinateGetDto secondCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(secondCoordinate.getId(), secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
+
+        CoordinatePostDto firstCoordinatePostDto = CoordinateUtil.createCoordinatePostDto(firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
 
         // Marker
-        firstMarker = createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.now(), 4, Boolean.TRUE, LocalDateTime.now(), null, firstCoordinate);
-        secondMarker = createMarker(2L, "New York", "New York is too big city to explore", LocalDate.now(), 5, Boolean.FALSE, LocalDateTime.now(), null, secondCoordinate);
-        thirdMarker = createMarker(1L, "Zagreb", "Zagreb is my home town", LocalDate.now(), 5, Boolean.TRUE, LocalDateTime.now(), null, firstCoordinate);
+        firstMarker = MarkerUtil.createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.now(), 4, Boolean.TRUE, LocalDateTime.now(), firstCoordinate);
+        secondMarker = MarkerUtil.createMarker(2L, "New York", "New York is too big city to explore", LocalDate.now(), 5, Boolean.FALSE, LocalDateTime.now(), secondCoordinate);
+        Marker thirdMarker = MarkerUtil.createMarker(1L, "Zagreb", "Zagreb is my home town", LocalDate.now(), 5, Boolean.TRUE, LocalDateTime.now(), firstCoordinate);
 
         // MarkerGetDto
-        firstMarkerGetDto = createMarkerGetDto(firstMarker.getId(), firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinateGetDto);
-        secondMarkerGetDto = createMarkerGetDto(secondMarker.getId(), secondMarker.getName(), secondMarker.getDescription(), secondMarker.getEventDate(), secondMarker.getGrade(), secondMarker.getShouldVisitAgain(), secondCoordinateGetDto);
+        MarkerGetDto firstMarkerGetDto = MarkerUtil.createMarkerGetDto(firstMarker.getId(), firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinateGetDto);
+        MarkerGetDto secondMarkerGetDto = MarkerUtil.createMarkerGetDto(secondMarker.getId(), secondMarker.getName(), secondMarker.getDescription(), secondMarker.getEventDate(), secondMarker.getGrade(), secondMarker.getShouldVisitAgain(), secondCoordinateGetDto);
 
         // MarkerPostDto
-        firstMarkerPostDto = createMarkerPostDto(firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstMarker.getCoordinate(), LocalDateTime.now());
+        firstMarkerPostDto = MarkerUtil.createMarkerPostDto(firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinatePostDto, LocalDateTime.now());
 
         // MarkerPutDto
-        firstMarkerPutDto = createMarkerPutDto(firstMarker.getId(), thirdMarker.getName(), thirdMarker.getDescription(), thirdMarker.getEventDate(), thirdMarker.getGrade(), thirdMarker.getShouldVisitAgain(), firstMarker.getCoordinate());
+        firstMarkerPutDto = MarkerUtil.createMarkerPutDto(firstMarker.getId(), thirdMarker.getName(), thirdMarker.getDescription(), thirdMarker.getEventDate(), thirdMarker.getGrade(), thirdMarker.getShouldVisitAgain(), firstMarker.getCoordinate());
 
         markers = Arrays.asList(firstMarker, secondMarker);
-        dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
+        List<MarkerGetDto> dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
 
-        Mockito.when(coordinateMapper.entityToDto(firstCoordinate)).thenReturn(firstCoordinateGetDto);
+        Mockito.when(coordinateMapper.entityToDto(secondCoordinate)).thenReturn(secondMarkerGetDto.getCoordinate());
+
+        Mockito.when(modelMapper.map(firstMarkerPostDto, Marker.class)).thenReturn(firstMarker);
+        Mockito.when(modelMapper.map(firstMarker, MarkerGetDto.class)).thenReturn(firstMarkerGetDto);
+        Mockito.when(modelMapper.map(secondMarker, MarkerGetDto.class)).thenReturn(secondMarkerGetDto);
+
+        Mockito.when(modelMapper.map(firstMarkerPutDto, Marker.class)).thenReturn(firstMarker);
     }
 
     @Test
+    @DisplayName("dtoToEntity(MarkerPostDto) - should return Marker")
     public void should_Return_Marker_When_MarkerPostDto_Correctly_Mapped() {
-        final Marker marker = markerMapper.dtoToEntity(firstMarkerPostDto);
+        final Marker newMarker = markerMapper.dtoToEntity(firstMarkerPostDto);
 
-        Assertions.assertNotNull(marker);
-        Assertions.assertEquals("London", marker.getName());
+        Assertions.assertNotNull(newMarker);
+        Assertions.assertEquals("1", String.valueOf(newMarker.getId()));
     }
 
     @Test
+    @DisplayName("entityToDto(Marker) - should return MarkerGetDto")
     public void should_Return_MarkerGetDto_When_Marker_Correctly_Mapped() {
-        final MarkerGetDto markerGetDto = markerMapper.entityToDto(firstMarker);
+        final MarkerGetDto searchedMarkerDto = markerMapper.entityToDto(secondMarker);
 
-        Assertions.assertNotNull(markerGetDto);
-        Assertions.assertEquals("1", String.valueOf(markerGetDto.getId()));
+        Assertions.assertNotNull(searchedMarkerDto);
+        Assertions.assertEquals("2", String.valueOf(searchedMarkerDto.getId()));
     }
 
     @Test
+    @DisplayName("dtoToEntity(Marker, MarkerPutDto) - should return Marker")
     public void should_Return_Marker_When_MarkerPutDto_Correctly_Mapped() {
-        final Marker marker = markerMapper.dtoToEntity(firstMarker, firstMarkerPutDto);
+        final Marker updatedMarker = markerMapper.dtoToEntity(firstMarker, firstMarkerPutDto);
 
-        Assertions.assertNotNull(marker);
-        Assertions.assertEquals("Zagreb", marker.getName());
+        Assertions.assertNotNull(updatedMarker);
+        Assertions.assertEquals("Zagreb", updatedMarker.getName());
     }
 
     @Test
+    @DisplayName("entitiesToDto(List<Marker>) - should return MarkerGetDto list")
     public void should_Return_MarkerGetDto_List_When_Markers_Correctly_Mapped() {
-        final List<MarkerGetDto> dtoMarkers = markerMapper.entitiesToDto(markers);
+        final List<MarkerGetDto> searchedDtoMarkers = markerMapper.entitiesToDto(markers);
 
-        Assertions.assertNotNull(dtoMarkers);
-        Assertions.assertEquals(2, dtoMarkers.size());
-    }
-
-    private Coordinate createCoordinate(final Long id, final Double longitude, final Double latitude) {
-        final Coordinate coordinate = new Coordinate();
-        coordinate.setId(id);
-        coordinate.setLongitude(longitude);
-        coordinate.setLatitude(latitude);
-        return coordinate;
-    }
-
-    private CoordinateGetDto createCoordinateGetDto(final Double longitude, final Double latitude) {
-        final CoordinateGetDto coordinateGetDto = new CoordinateGetDto();
-        coordinateGetDto.setLongitude(longitude);
-        coordinateGetDto.setLatitude(latitude);
-        return coordinateGetDto;
-    }
-
-    private Marker createMarker(final Long id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final LocalDateTime createdAt, final LocalDateTime modifiedAt, final Coordinate coordinate) {
-        final Marker marker = new Marker();
-        marker.setId(id);
-        marker.setName(name);
-        marker.setDescription(description);
-        marker.setEventDate(eventDate);
-        marker.setGrade(grade);
-        marker.setShouldVisitAgain(shouldVisitAgain);
-        marker.setCreatedAt(createdAt);
-        marker.setModifiedAt(modifiedAt);
-        marker.setCoordinate(coordinate);
-        marker.setUsers(null);
-        return marker;
-    }
-
-    private MarkerGetDto createMarkerGetDto(final Long id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final CoordinateGetDto coordinateGetDto) {
-        final MarkerGetDto markerGetDto = new MarkerGetDto();
-        markerGetDto.setId(id);
-        markerGetDto.setName(name);
-        markerGetDto.setDescription(description);
-        markerGetDto.setEventDate(eventDate);
-        markerGetDto.setGrade(grade);
-        markerGetDto.setShouldVisitAgain(shouldVisitAgain);
-        markerGetDto.setCoordinate(coordinateGetDto);
-        return markerGetDto;
-    }
-
-    private MarkerPostDto createMarkerPostDto(final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final Coordinate coordinate, final LocalDateTime createdAt) {
-        final MarkerPostDto markerPostDto = new MarkerPostDto();
-        markerPostDto.setName(name);
-        markerPostDto.setDescription(description);
-        markerPostDto.setEventDate(eventDate);
-        markerPostDto.setGrade(grade);
-        markerPostDto.setShouldVisitAgain(shouldVisitAgain);
-        markerPostDto.setCoordinate(coordinate);
-        markerPostDto.setCreatedAt(createdAt);
-        return markerPostDto;
-    }
-
-    private MarkerPutDto createMarkerPutDto(final Long id, final String name, final String description, final LocalDate eventDate, final int grade, final Boolean shouldVisitAgain, final Coordinate coordinate) {
-        final MarkerPutDto markerPutDto = new MarkerPutDto();
-        markerPutDto.setId(id);
-        markerPutDto.setName(name);
-        markerPutDto.setDescription(description);
-        markerPutDto.setEventDate(eventDate);
-        markerPutDto.setGrade(grade);
-        markerPutDto.setShouldVisitAgain(shouldVisitAgain);
-        markerPutDto.setCoordinate(coordinate);
-        return markerPutDto;
+        Assertions.assertNotNull(searchedDtoMarkers);
+        Assertions.assertEquals(2, searchedDtoMarkers.size());
     }
 }

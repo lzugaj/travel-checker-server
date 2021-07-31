@@ -18,7 +18,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(
+        name = "user",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = { "username" })
+        }
+)
 public class User extends BaseEntity implements Serializable {
 
     @Column(name = "first_name", nullable = false)

@@ -33,7 +33,7 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable final Long id) {
         final User searchedUser = userService.findById(id);
-        LOGGER.info("Successfully founded User with username: ´{}´.", searchedUser.getUsername());
+        LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
         return new ResponseEntity<>(userMapper.entityToDto(searchedUser), HttpStatus.OK);
     }
 
@@ -56,8 +56,8 @@ public class UserController {
         final User searchedUser = userService.findByUsername(username);
         LOGGER.info("Successfully founded User with username: ´{}´.", username);
 
-        final User updatedUser = userService.update(searchedUser, userPutDto);
-        LOGGER.info("Successfully updated User with username: ´{}´.", updatedUser.getUsername());
+        final User updatedUser = userService.update(username, userMapper.dtoToEntity(searchedUser, userPutDto));
+        LOGGER.info("Successfully finished updating process for User with id: ´{}´.", updatedUser.getId());
         return new ResponseEntity<>(userMapper.entityToDto(updatedUser), HttpStatus.OK);
     }
 }

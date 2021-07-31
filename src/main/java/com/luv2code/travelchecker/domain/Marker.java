@@ -14,11 +14,13 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "marker")
@@ -33,8 +35,8 @@ public class Marker extends BaseEntity implements Serializable {
     private String description;
 
     @Column(name = "event_date")
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate eventDate;
 
     @Column(name = "grade", nullable = false)
@@ -57,5 +59,13 @@ public class Marker extends BaseEntity implements Serializable {
 
     @ManyToMany(mappedBy = "markers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
+
+    public void addUser(final User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+
+        users.add(user);
+    }
 
 }

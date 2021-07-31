@@ -43,7 +43,7 @@ public class DatabaseConfiguration {
     @Bean
     @Profile("prod")
     public void prodDatabaseConnection() {
-        LOGGER.info("DB connection for PROD - MariaDB");
+        LOGGER.info("DB connection for PROD - Postgres");
         LOGGER.info("Driver class name: {}", getDriverClassName());
         LOGGER.info("URL: {}", getUrl());
         LOGGER.info("Username: {}", getUsername());

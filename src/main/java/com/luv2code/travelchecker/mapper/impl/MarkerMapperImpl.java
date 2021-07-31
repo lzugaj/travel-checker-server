@@ -7,6 +7,7 @@ import com.luv2code.travelchecker.dto.marker.MarkerPostDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPutDto;
 import com.luv2code.travelchecker.mapper.CoordinateMapper;
 import com.luv2code.travelchecker.mapper.MarkerMapper;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,39 +24,19 @@ public class MarkerMapperImpl implements MarkerMapper {
 
     private final CoordinateMapper coordinateMapper;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
-    public MarkerMapperImpl(final CoordinateMapper coordinateMapper) {
+    public MarkerMapperImpl(final CoordinateMapper coordinateMapper,
+                            final ModelMapper modelMapper) {
         this.coordinateMapper = coordinateMapper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public Marker dtoToEntity(final MarkerPostDto dto) {
         LOGGER.info("Start mapping MarkerPostDto to Marker.");
-        final Marker marker = new Marker();
-        marker.setName(dto.getName());
-        marker.setDescription(dto.getDescription());
-        marker.setEventDate(dto.getEventDate());
-        marker.setGrade(dto.getGrade());
-        marker.setShouldVisitAgain(dto.getShouldVisitAgain());
-        marker.setCoordinate(dto.getCoordinate());
-        marker.setCreatedAt(dto.getCreatedAt());
-        return marker;
-    }
-
-    @Override
-    public MarkerGetDto entityToDto(final Marker entity) {
-        LOGGER.info("Start mapping Marker to MarkerGetDto.");
-        final MarkerGetDto searchedDtoMarker = new MarkerGetDto();
-        searchedDtoMarker.setId(entity.getId());
-        searchedDtoMarker.setName(entity.getName());
-        searchedDtoMarker.setDescription(entity.getDescription());
-        searchedDtoMarker.setEventDate(entity.getEventDate());
-        searchedDtoMarker.setGrade(entity.getGrade());
-        searchedDtoMarker.setShouldVisitAgain(entity.getShouldVisitAgain());
-
-        final CoordinateGetDto searchedDtoCoordinate = coordinateMapper.entityToDto(entity.getCoordinate());
-        searchedDtoMarker.setCoordinate(searchedDtoCoordinate);
-        return searchedDtoMarker;
+        return modelMapper.map(dto, Marker.class);
     }
 
     @Override
@@ -70,6 +51,20 @@ public class MarkerMapperImpl implements MarkerMapper {
         entity.setCoordinate(dto.getCoordinate());
         entity.setModifiedAt(LocalDateTime.now());
         return entity;
+    }
+
+    @Override
+    public MarkerGetDto entityToDto(final Marker entity) {
+        LOGGER.info("Start mapping Marker to MarkerGetDto.");
+        final MarkerGetDto searchedDtoMarker = modelMapper.map(entity, MarkerGetDto.class);
+        searchedDtoMarker.setCoordinate(getCoordinates(entity));
+        return searchedDtoMarker;
+    }
+
+    private CoordinateGetDto getCoordinates(final Marker entity) {
+        final CoordinateGetDto searchedCoordinate = coordinateMapper.entityToDto(entity.getCoordinate());
+        LOGGER.info("Successfully founded longitude and latitude for Marker with id: ´{}´.", entity.getId());
+        return searchedCoordinate;
     }
 
     @Override

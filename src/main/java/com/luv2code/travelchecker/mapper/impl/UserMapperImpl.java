@@ -12,6 +12,7 @@ import com.luv2code.travelchecker.mapper.MarkerMapper;
 import com.luv2code.travelchecker.mapper.RoleMapper;
 import com.luv2code.travelchecker.mapper.UserMapper;
 import com.luv2code.travelchecker.service.RoleService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,32 +32,32 @@ public class UserMapperImpl implements UserMapper {
 
     private final MarkerMapper markerMapper;
 
+    private final ModelMapper modelMapper;
+
     @Autowired
     public UserMapperImpl(final RoleService roleService,
                           final RoleMapper roleMapper,
-                          final MarkerMapper markerMapper) {
+                          final MarkerMapper markerMapper,
+                          final ModelMapper modelMapper) {
         this.roleService = roleService;
         this.roleMapper = roleMapper;
         this.markerMapper = markerMapper;
+        this.modelMapper = modelMapper;
     }
 
     @Override
     public User dtoToEntity(final UserPostDto dto) {
         LOGGER.info("Start mapping UserPostDto to User.");
-        final User user = new User();
-        user.setFirstName(dto.getFirstName());
-        user.setLastName(dto.getLastName());
-        user.setEmail(dto.getEmail());
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setCreatedAt(dto.getCreatedAt());
-
-        final Role userRole = roleService.findByRoleType(RoleType.USER);
-        LOGGER.info("Successfully founded Role with name: ´{}´.", userRole.getName().name());
-
-        user.addRole(userRole);
+        final User user = modelMapper.map(dto, User.class);
+        user.addRole(findUserRole());
         user.setMarkers(new ArrayList<>());
         return user;
+    }
+
+    private Role findUserRole() {
+        final Role userRole = roleService.findByRoleType(RoleType.USER);
+        LOGGER.info("Successfully founded Role with name: ´{}´.", userRole.getName().name());
+        return userRole;
     }
 
     @Override
@@ -67,25 +68,30 @@ public class UserMapperImpl implements UserMapper {
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
         entity.setUsername(dto.getUsername());
+        entity.setModifiedAt(dto.getModifiedAt());
         return entity;
     }
 
     @Override
     public UserGetDto entityToDto(final User entity) {
         LOGGER.info("Start mapping User to UserGetDto.");
-        final UserGetDto searchedDtoUser = new UserGetDto();
+        final UserGetDto searchedDtoUser = modelMapper.map(entity, UserGetDto.class);
         searchedDtoUser.setId(entity.getId());
-        searchedDtoUser.setFirstName(entity.getFirstName());
-        searchedDtoUser.setLastName(entity.getLastName());
-        searchedDtoUser.setEmail(entity.getEmail());
-        searchedDtoUser.setUsername(entity.getUsername());
-
-        final List<RoleGetDto> searchedDtoRoles = roleMapper.entitiesToDto(entity.getRoles());
-        searchedDtoUser.setRoles(searchedDtoRoles);
-
-        final List<MarkerGetDto> searchedDtoMarkers = markerMapper.entitiesToDto(entity.getMarkers());
-        searchedDtoUser.setMarkers(searchedDtoMarkers);
+        searchedDtoUser.setRoles(getUserRoles(entity));
+        searchedDtoUser.setMarkers(getUserMarkers(entity));
         return searchedDtoUser;
+    }
+
+    private List<RoleGetDto> getUserRoles(final User entity) {
+        final List<RoleGetDto> searchedRoles = roleMapper.entitiesToDto(entity.getRoles());
+        LOGGER.info("Successfully founded ´{}´ roles for User with id: ´{}´.", searchedRoles.size(), entity.getId());
+        return searchedRoles;
+    }
+
+    private List<MarkerGetDto> getUserMarkers(final User entity) {
+        final List<MarkerGetDto> searchedMarkers = markerMapper.entitiesToDto(entity.getMarkers());
+        LOGGER.info("Successfully founded ´{}´ markers for User with id: ´{}´.", searchedMarkers.size(), entity.getId());
+        return searchedMarkers;
     }
 
     @Override

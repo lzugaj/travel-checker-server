@@ -35,8 +35,11 @@ public class AuthorizationController {
 
     @PostMapping
     public ResponseEntity<?> authorize(@Valid @RequestBody final UserPostDto userPostDto) {
-        final User user = userService.save(userPostDto);
-        LOGGER.info("Successfully saved new User with username: ´{}´.", user.getUsername());
+        final User mappedUser = userMapper.dtoToEntity(userPostDto);
+        LOGGER.info("Successfully mapped UserPostDto to User.");
+
+        final User user = userService.save(mappedUser);
+        LOGGER.info("Successfully finished authorization process for User with id: ´{}´.", user.getId());
         return new ResponseEntity<>(userMapper.entityToDto(user), HttpStatus.CREATED);
     }
 }
