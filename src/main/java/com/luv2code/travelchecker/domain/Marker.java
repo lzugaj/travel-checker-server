@@ -14,7 +14,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -59,13 +58,5 @@ public class Marker extends BaseEntity implements Serializable {
 
     @ManyToMany(mappedBy = "markers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<User> users;
-
-    public void addUser(final User user) {
-        if (users == null) {
-            users = new ArrayList<>();
-        }
-
-        users.add(user);
-    }
 
 }

@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -76,5 +77,14 @@ public class User extends BaseEntity implements Serializable {
         }
 
         roles.add(role);
+    }
+
+    public void addMarker(final Marker marker) {
+        if (markers == null) {
+            markers = new ArrayList<>();
+        }
+
+        markers.add(marker);
+        marker.setUsers(Collections.singletonList(this));
     }
 }
