@@ -16,6 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UserPutDto {
 
+    @JsonProperty("id")
+    private Long id;
+
     @JsonProperty("firstName")
     @NotBlank(message = "{user.firstName.blank}")
     @Size(min = 2, message = "{user.firstName.size}")

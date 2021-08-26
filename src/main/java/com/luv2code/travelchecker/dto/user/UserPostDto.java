@@ -2,6 +2,7 @@ package com.luv2code.travelchecker.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.validation.Email;
 import com.luv2code.travelchecker.validation.Password;
 import lombok.*;
@@ -9,6 +10,8 @@ import lombok.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -43,5 +46,8 @@ public class UserPostDto {
 
     @JsonIgnore
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @JsonProperty("markers")
+    private List<Marker> markers = new ArrayList<>();
 
 }

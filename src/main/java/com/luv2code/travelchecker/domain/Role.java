@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "role")
-public class Role extends BaseEntity implements Serializable {
+public class Role extends BaseEntity {
 
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
@@ -26,7 +26,7 @@ public class Role extends BaseEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 
 }

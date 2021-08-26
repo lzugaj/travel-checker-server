@@ -35,7 +35,7 @@ public class DatabaseConfigurationTest {
         databaseConfiguration.setUsername("root");
         databaseConfiguration.setPassword("password");
 
-        databaseConfiguration.prodDatabaseConnection();
+        databaseConfiguration.testDatabaseConnection();
 
         Assertions.assertEquals("org.mariadb.jdbc.Driver", databaseConfiguration.getDriverClassName());
         Assertions.assertEquals("jdbc:mariadb://localhost:3307/travelchecker-test", databaseConfiguration.getUrl());

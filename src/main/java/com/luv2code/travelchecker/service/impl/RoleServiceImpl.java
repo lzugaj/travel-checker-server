@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends AbstractEntityServiceImpl<Role, RoleRepository> implements RoleService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RoleServiceImpl.class);
 
@@ -21,17 +21,13 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     public RoleServiceImpl(final RoleRepository roleRepository) {
+        super(roleRepository, Role.class);
         this.roleRepository = roleRepository;
     }
 
     @Override
     public Role findById(final Long id) {
-        LOGGER.info("Searching Role with id: ´{}´.", id);
-        return roleRepository.findById(id)
-                .orElseThrow(() -> {
-                    LOGGER.error("Cannot find Role with id: ´{}´.", id);
-                    return new EntityNotFoundException("Role", "id", String.valueOf(id));
-                });
+        return super.findById(id);
     }
 
     @Override
@@ -46,7 +42,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public List<Role> findAll() {
-        LOGGER.info("Searching all Roles.");
-        return roleRepository.findAll();
+        return super.findAll();
     }
 }

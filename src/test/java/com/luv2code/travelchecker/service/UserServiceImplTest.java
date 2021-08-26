@@ -1,10 +1,13 @@
 package com.luv2code.travelchecker.service;
 
+import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.User;
+import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.UserRepository;
 import com.luv2code.travelchecker.service.impl.UserServiceImpl;
+import com.luv2code.travelchecker.utils.RoleUtil;
 import com.luv2code.travelchecker.utils.UserUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +30,9 @@ public class UserServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private RoleService roleService;
+
     private User firstUser;
     private User secondUser;
     private User thirdUser;
@@ -37,6 +43,9 @@ public class UserServiceImplTest {
 
     @BeforeEach
     public void setup() {
+        // Role
+        final Role userRole = RoleUtil.createRole(1L, RoleType.USER, "User role");
+
         // User
         firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "tu3ze9ooQu");
         secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien", "goh7DuoF5");
@@ -47,6 +56,8 @@ public class UserServiceImplTest {
         eightUser = UserUtil.createUser(1L, "Danny", "Bloom", "dbloom@gmail.com", "dbloom", firstUser.getPassword());
 
         List<User> users = Arrays.asList(secondUser, thirdUser);
+
+        Mockito.when(roleService.findByRoleType(RoleType.USER)).thenReturn(userRole);
 
         Mockito.when(userRepository.save(firstUser)).thenReturn(firstUser);
         Mockito.when(userRepository.save(eightUser)).thenReturn(eightUser);

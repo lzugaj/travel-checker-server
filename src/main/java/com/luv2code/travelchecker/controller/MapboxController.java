@@ -1,7 +1,6 @@
 package com.luv2code.travelchecker.controller;
 
 import com.luv2code.travelchecker.dto.mapbox.MapboxGetDto;
-import com.luv2code.travelchecker.mapper.MapboxMapper;
 import com.luv2code.travelchecker.service.MapboxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,19 +19,15 @@ public class MapboxController {
 
     private final MapboxService mapboxService;
 
-    private final MapboxMapper<MapboxGetDto> mapboxMapper;
-
     @Autowired
-    public MapboxController(final MapboxService mapboxService,
-                            final MapboxMapper<MapboxGetDto> mapboxMapper) {
+    public MapboxController(final MapboxService mapboxService) {
         this.mapboxService = mapboxService;
-        this.mapboxMapper = mapboxMapper;
     }
 
     @GetMapping("/token")
     public ResponseEntity<?> fetchToken() {
         final String mapboxToken = mapboxService.getToken();
         LOGGER.info("Successfully founded Mapbox token.");
-        return new ResponseEntity<>(mapboxMapper.entityToDto(mapboxToken), HttpStatus.OK);
+        return new ResponseEntity<>(new MapboxGetDto(mapboxToken), HttpStatus.OK);
     }
 }

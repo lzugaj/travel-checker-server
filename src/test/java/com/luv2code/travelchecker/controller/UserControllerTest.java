@@ -11,7 +11,6 @@ import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.dto.user.UserGetDto;
 import com.luv2code.travelchecker.dto.user.UserPutDto;
-import com.luv2code.travelchecker.mapper.UserMapper;
 import com.luv2code.travelchecker.service.UserService;
 import com.luv2code.travelchecker.utils.CoordinateUtil;
 import com.luv2code.travelchecker.utils.MarkerUtil;
@@ -22,6 +21,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -53,7 +53,7 @@ public class UserControllerTest {
     private UserService userService;
 
     @MockBean
-    private UserMapper userMapper;
+    private ModelMapper modelMapper;
 
     // User
     private User firstUser;
@@ -212,8 +212,6 @@ public class UserControllerTest {
         Marker firstMarker = MarkerUtil.createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.of(2021, 7, 20), 4, Boolean.TRUE, LocalDateTime.now(), firstCoordinate);
         Marker secondMarker = MarkerUtil.createMarker(2L, "New York", "New York is too big city to explore", LocalDate.of(2021, 7, 20), 5, Boolean.FALSE, LocalDateTime.now(), secondCoordinate);
 
-        List<Marker> markers = Arrays.asList(firstMarker, secondMarker);
-
         // CoordinateGetDto
         CoordinateGetDto firstCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(firstCoordinate.getId(), firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
         CoordinateGetDto secondCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(secondCoordinate.getId(), secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
@@ -236,20 +234,13 @@ public class UserControllerTest {
         UserGetDto secondUserGetDto = UserUtil.createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), secondUser.getUsername(), dtoRoles, new ArrayList<>());
         UserGetDto thirdUserGetDto = UserUtil.createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), dtoRoles, dtoMarkers);
 
-        List<UserGetDto> dtoUsers = Arrays.asList(firstUserGetDto, secondUserGetDto);
-
         // UserPutDto
         firstUserPutDto = UserUtil.createUserPutDto(thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), LocalDateTime.now());
-
-        Mockito.when(userMapper.entityToDto(Mockito.any(User.class))).thenReturn(firstUserGetDto);
-        Mockito.when(userMapper.entitiesToDto(users)).thenReturn(dtoUsers);
-        Mockito.when(userMapper.dtoToEntity(firstUser, firstUserPutDto)).thenReturn(thirdUser);
-        Mockito.when(userMapper.entityToDto(thirdUser)).thenReturn(thirdUserGetDto);
 
         Mockito.when(userService.findById(firstUser.getId())).thenReturn(firstUser);
         Mockito.when(userService.findByUsername(firstUser.getUsername())).thenReturn(firstUser);
         Mockito.when(userService.findAll()).thenReturn(users);
-        Mockito.when(userService.update(firstUser.getUsername(), Mockito.any(User.class))).thenReturn(thirdUser);
+        Mockito.when(userService.update(firstUser.getUsername(), firstUser)).thenReturn(thirdUser);
     }
 
     @Test

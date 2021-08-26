@@ -6,8 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "coordinate")
-public class Coordinate extends BaseEntity implements Serializable {
+public class Coordinate extends BaseEntity {
 
     @Column(name = "longitude")
     private Double longitude;
@@ -24,7 +28,14 @@ public class Coordinate extends BaseEntity implements Serializable {
     @Column(name = "latitude")
     private Double latitude;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "coordinate", orphanRemoval = true)
+    @OneToMany(mappedBy = "coordinate")
     private List<Marker> markers;
 
+    public void addMarker(final Marker marker) {
+        if (markers == null) {
+            markers = new ArrayList<>();
+        }
+
+        markers.add(marker);
+    }
 }

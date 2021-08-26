@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,9 +24,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "marker")
-public class Marker extends BaseEntity implements Serializable {
+public class Marker extends BaseEntity {
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     @NotBlank(message = "{marker.name.blank}")
     @Size(min = 2, message = "{marker.name.size}")
     private String name;
@@ -38,11 +39,11 @@ public class Marker extends BaseEntity implements Serializable {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate eventDate;
 
-    @Column(name = "grade", nullable = false)
+    @Column(name = "grade")
     @NotNull(message = "{marker.grade.null}")
     private Integer grade;
 
-    @Column(name = "should_visit_again", nullable = false)
+    @Column(name = "should_visit_again")
     @NotNull(message = "{marker.shouldVisitAgain.null}")
     private Boolean shouldVisitAgain;
 
@@ -52,11 +53,27 @@ public class Marker extends BaseEntity implements Serializable {
     @Column(name = "modified_at")
     private LocalDateTime modifiedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "coordinate_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "coordinate_id")
     private Coordinate coordinate;
 
-    @ManyToMany(mappedBy = "markers", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
+    @JoinTable(
+            name = "user_marker",
+            joinColumns = @JoinColumn(name = "marker_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
+    public void addUser(final User user) {
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+
+        users.add(user);
+    }
 }

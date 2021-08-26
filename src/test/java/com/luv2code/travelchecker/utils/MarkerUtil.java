@@ -59,7 +59,7 @@ public class MarkerUtil {
         markerPutDto.setEventDate(eventDate);
         markerPutDto.setGrade(grade);
         markerPutDto.setShouldVisitAgain(shouldVisitAgain);
-        markerPutDto.setCoordinate(coordinate);
+        /*markerPutDto.setCoordinate(coordinate);*/
         return markerPutDto;
     }
 }

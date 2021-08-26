@@ -2,11 +2,12 @@ package com.luv2code.travelchecker.controller;
 
 import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.domain.User;
+import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPostDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPutDto;
-import com.luv2code.travelchecker.mapper.MarkerMapper;
 import com.luv2code.travelchecker.service.MarkerService;
 import com.luv2code.travelchecker.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/markers")
@@ -27,15 +29,15 @@ public class MarkerController {
 
     private final UserService userService;
 
-    private final MarkerMapper markerMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public MarkerController(final MarkerService markerService,
                             final UserService userService,
-                            final MarkerMapper markerMapper) {
+                            final ModelMapper modelMapper) {
         this.markerService = markerService;
         this.userService = userService;
-        this.markerMapper = markerMapper;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping("/user/{username}")
@@ -43,33 +45,30 @@ public class MarkerController {
         final User searchedUser = userService.findByUsername(username);
         LOGGER.info("Successfully founded User with username: ´{}´.", searchedUser.getUsername());
 
-        final Marker marker = markerService.save(searchedUser, markerMapper.dtoToEntity(markerPostDto));
+        final Marker marker = markerService.save(searchedUser, modelMapper.map(markerPostDto, Marker.class));
         LOGGER.info("Successfully created new Marker with id: ´{}´.", marker.getId());
-        return new ResponseEntity<>(markerMapper.entityToDto(marker), HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(marker, MarkerGetDto.class), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable final Long id) {
         final Marker searchedMarker = markerService.findById(id);
         LOGGER.info("Successfully founded Marker with id: ´{}´.", id);
-        return new ResponseEntity<>(markerMapper.entityToDto(searchedMarker), HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(searchedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<?> findAll() {
         final List<Marker> searchedMarkers = markerService.findAll();
         LOGGER.info("Successfully founded ´{}´ Markers.", searchedMarkers.size());
-        return new ResponseEntity<>(markerMapper.entitiesToDto(searchedMarkers), HttpStatus.OK);
+        return new ResponseEntity<>(mapList(searchedMarkers, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable final Long id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
-        final Marker searchedMarker = markerService.findById(id);
-        LOGGER.info("Successfully founded Marker with id: ´{}´.", id);
-
-        final Marker updatedMarker = markerService.update(markerMapper.dtoToEntity(searchedMarker, markerPutDto));
+        final Marker updatedMarker = markerService.update(modelMapper.map(markerPutDto, Marker.class));
         LOGGER.info("Successfully updated Marker with id: ´{}´.", id);
-        return new ResponseEntity<>(markerMapper.entityToDto(updatedMarker), HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(updatedMarker, MarkerGetDto.class), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
@@ -80,5 +79,12 @@ public class MarkerController {
         markerService.delete(searchedMarker);
         LOGGER.info("Successfully deleted Marker with id: ´{}´.", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    public List<MarkerGetDto> mapList(final List<Marker> source, final Class<MarkerGetDto> targetClass) {
+        return source
+                .stream()
+                .map(element -> modelMapper.map(element, targetClass))
+                .collect(Collectors.toList());
     }
 }

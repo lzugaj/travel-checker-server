@@ -1,9 +1,12 @@
 package com.luv2code.travelchecker.service.impl;
 
+import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.User;
+import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.UserRepository;
+import com.luv2code.travelchecker.service.RoleService;
 import com.luv2code.travelchecker.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,15 +16,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserRepository> implements UserService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
 
+    private final RoleService roleService;
+
     @Autowired
-    public UserServiceImpl(final UserRepository userRepository) {
+    public UserServiceImpl(final UserRepository userRepository,
+                           final RoleService roleService) {
+        super(userRepository, User.class);
         this.userRepository = userRepository;
+        this.roleService = roleService;
     }
 
     @Override
@@ -38,9 +46,14 @@ public class UserServiceImpl implements UserService {
                     "User", "email", user.getEmail());
         }
 
-        final User newUser = userRepository.save(user);
-        LOGGER.info("Successfully created User with id: ´{}´.", user.getId());
-        return newUser;
+        user.addRole(findUserRole());
+        return super.save(user);
+    }
+
+    private Role findUserRole() {
+        final Role userRole = roleService.findByRoleType(RoleType.USER);
+        LOGGER.info("Successfully founded Role with name: ´{}´.", userRole.getName().name());
+        return userRole;
     }
 
     private boolean isUsernameAlreadyTaken(final String username) {
@@ -55,12 +68,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(final Long id) {
-        LOGGER.info("Searching User with id: ´{}´.", id);
-        return userRepository.findById(id)
-                .orElseThrow(() -> {
-                        LOGGER.error("Cannot find User with id: ´{}´.", id);
-                        return new EntityNotFoundException("User", "id", String.valueOf(id));
-                });
+        return super.findById(id);
     }
 
     @Override
@@ -75,16 +83,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        LOGGER.info("Searching all Users.");
-        return userRepository.findAll();
+        return super.findAll();
     }
 
     @Override
     public User update(final String username, final User user) {
         if (checkIfUsernameIsNotAlreadyTaken(username, user)) {
-            final User updatedUser = userRepository.save(user);
-            LOGGER.info("Successfully updated User with id: ´{}´.", user.getId());
-            return updatedUser;
+            return super.save(user);
         } else {
             LOGGER.error("User already exists with username: ´{}´.", user.getUsername());
             throw new EntityAlreadyExistsException(

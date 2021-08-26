@@ -42,7 +42,7 @@ public class MarkerPutDto {
     @NotNull(message = "{marker.grade.null}")
     private Integer grade;
 
-    @JsonProperty("should_visit_again")
+    @JsonProperty("shouldVisitAgain")
     @NotNull(message = "{marker.shouldVisitAgain.null}")
     private Boolean shouldVisitAgain;
 
