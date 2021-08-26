@@ -5,6 +5,7 @@ import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.RoleRepository;
 import com.luv2code.travelchecker.service.impl.RoleServiceImpl;
+import com.luv2code.travelchecker.utils.RoleUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,8 +32,8 @@ public class RoleServiceImplTest {
 
     @BeforeEach
     public void setup() {
-        adminRole = create(1L, RoleType.ADMIN, "ADMIN role have the highest permission in application hierarchy");
-        userRole = create(2L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
+        adminRole = RoleUtil.createRole(1L, RoleType.ADMIN, "ADMIN role have the highest permission in application hierarchy");
+        userRole = RoleUtil.createRole(2L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
 
         final List<Role> roles = Collections.singletonList(userRole);
 
@@ -95,13 +96,5 @@ public class RoleServiceImplTest {
 
         Assertions.assertEquals(1, searchedRoles.size());
         Assertions.assertNotNull(searchedRoles);
-    }
-
-    private Role create(final Long id, final RoleType roleType, final String description) {
-        final Role role = new Role();
-        role.setId(id);
-        role.setName(roleType);
-        role.setDescription(description);
-        return role;
     }
 }

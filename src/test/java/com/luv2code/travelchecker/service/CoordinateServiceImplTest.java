@@ -4,6 +4,7 @@ import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.CoordinateRepository;
 import com.luv2code.travelchecker.service.impl.CoordinateServiceImpl;
+import com.luv2code.travelchecker.utils.CoordinateUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,14 +27,13 @@ public class CoordinateServiceImplTest {
     private CoordinateRepository coordinateRepository;
 
     private Coordinate firstCoordinate;
-    private Coordinate secondCoordinate;
     private Coordinate thirdCoordinate;
 
     @BeforeEach
     public void setup() {
-        firstCoordinate = create(1L, 45.232132232, 15.123123123);
-        secondCoordinate = create(2L, 32.876543211, 18.123456789);
-        thirdCoordinate = create(3L, 49.888777333, 21.762123456);
+        firstCoordinate = CoordinateUtil.createCoordinate(1L, 45.232132232, 15.123123123);
+        Coordinate secondCoordinate = CoordinateUtil.createCoordinate(2L, 32.876543211, 18.123456789);
+        thirdCoordinate = CoordinateUtil.createCoordinate(3L, 49.888777333, 21.762123456);
 
         final List<Coordinate> coordinates = Arrays.asList(firstCoordinate, secondCoordinate, thirdCoordinate);
 
@@ -72,13 +72,5 @@ public class CoordinateServiceImplTest {
 
         Assertions.assertNotNull(coordinates);
         Assertions.assertEquals(3, coordinates.size());
-    }
-
-    private Coordinate create(final Long id, final Double longitude, final Double latitude) {
-        final Coordinate coordinate = new Coordinate();
-        coordinate.setId(id);
-        coordinate.setLongitude(longitude);
-        coordinate.setLatitude(latitude);
-        return coordinate;
     }
 }

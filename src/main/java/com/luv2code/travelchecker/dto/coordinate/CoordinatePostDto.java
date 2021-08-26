@@ -8,10 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CoordinateGetDto {
-
-    @JsonProperty("id")
-    private Long id;
+public class CoordinatePostDto {
 
     @JsonProperty("longitude")
     private Double longitude;

@@ -6,8 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.luv2code.travelchecker.domain.Coordinate;
-import lombok.AllArgsConstructor;
+import com.luv2code.travelchecker.dto.coordinate.CoordinatePostDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +20,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class MarkerPostDto {
 
     @JsonProperty("name")
@@ -41,12 +39,12 @@ public class MarkerPostDto {
     @NotNull(message = "{marker.grade.null}")
     private Integer grade;
 
-    @JsonProperty("should_visit_again")
+    @JsonProperty("shouldVisitAgain")
     @NotNull(message = "{marker.shouldVisitAgain.null}")
     private Boolean shouldVisitAgain;
 
     @JsonProperty("coordinate")
-    private Coordinate coordinate;
+    private CoordinatePostDto coordinatePostDto;
 
     @JsonIgnore
     private LocalDateTime createdAt = LocalDateTime.now();

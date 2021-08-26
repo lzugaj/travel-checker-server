@@ -11,13 +11,17 @@ import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.dto.user.UserGetDto;
 import com.luv2code.travelchecker.dto.user.UserPutDto;
-import com.luv2code.travelchecker.mapper.UserMapper;
 import com.luv2code.travelchecker.service.UserService;
+import com.luv2code.travelchecker.utils.CoordinateUtil;
+import com.luv2code.travelchecker.utils.MarkerUtil;
+import com.luv2code.travelchecker.utils.RoleUtil;
+import com.luv2code.travelchecker.utils.UserUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -49,47 +53,14 @@ public class UserControllerTest {
     private UserService userService;
 
     @MockBean
-    private UserMapper userMapper;
-
-    // Role
-    private Role userRole;
-
-    // RoleGetDto
-    private RoleGetDto userRoleDto;
-    private List<RoleGetDto> dtoRoles;
+    private ModelMapper modelMapper;
 
     // User
     private User firstUser;
-    private User secondUser;
     private User thirdUser;
-    private List<User> users;
-
-    // UserGetDto
-    private UserGetDto firstUserGetDto;
-    private UserGetDto secondUserGetDto;
-    private UserGetDto thirdUserGetDto;
-    private List<UserGetDto> dtoUsers;
 
     // UserPutDto
     private UserPutDto firstUserPutDto;
-
-    // Coordinate
-    private Coordinate firstCoordinate;
-    private Coordinate secondCoordinate;
-
-    // CoordinateGetDto
-    private CoordinateGetDto firstCoordinateGetDto;
-    private CoordinateGetDto secondCoordinateGetDto;
-
-    // Marker
-    private Marker firstMarker;
-    private Marker secondMarker;
-    private List<Marker> markers;
-
-    // MarkerGetDto
-    private MarkerGetDto firstMarkerGetDto;
-    private MarkerGetDto secondMarkerGetDto;
-    private List<MarkerGetDto> dtoMarkers;
 
     public static final String FIND_USER_JSON = "{\n" +
             "   \"id\":1,\n" +
@@ -107,7 +78,7 @@ public class UserControllerTest {
             "           \"id\":1,\n" +
             "           \"name\":\"London\",\n" +
             "           \"description\":\"London is a busy and beautiful city\",\n" +
-            "           \"eventDate\":[2021,7,20],\n" +
+            "           \"eventDate\":\"2021-07-20\",\n" +
             "           \"grade\":4,\n" +
             "           \"shouldVisitAgain\":true,\n" +
             "           \"coordinate\":{\n" +
@@ -119,7 +90,7 @@ public class UserControllerTest {
             "           \"id\":2,\n" +
             "           \"name\":\"New York\",\n" +
             "           \"description\":\"New York is too big city to explore\",\n" +
-            "           \"eventDate\":[2021,7,20],\n" +
+            "           \"eventDate\":\"2021-07-20\",\n" +
             "           \"grade\":5,\n" +
             "           \"shouldVisitAgain\":false,\n" +
             "           \"coordinate\":{\n" +
@@ -147,7 +118,7 @@ public class UserControllerTest {
             "               \"id\":1,\n" +
             "               \"name\":\"London\",\n" +
             "               \"description\":\"London is a busy and beautiful city\",\n" +
-            "               \"eventDate\":[2021,7,20],\n" +
+            "               \"eventDate\":\"2021-07-20\",\n" +
             "               \"grade\":4,\n" +
             "               \"shouldVisitAgain\":true,\n" +
             "               \"coordinate\":{\n" +
@@ -159,7 +130,7 @@ public class UserControllerTest {
             "               \"id\":2,\n" +
             "               \"name\":\"New York\",\n" +
             "               \"description\":\"New York is too big city to explore\",\n" +
-            "               \"eventDate\":[2021,7,20],\n" +
+            "               \"eventDate\":\"2021-07-20\",\n" +
             "               \"grade\":5,\n" +
             "               \"shouldVisitAgain\":false,\n" +
             "               \"coordinate\":{\n" +
@@ -180,7 +151,7 @@ public class UserControllerTest {
             "               \"name\":\"USER\"\n" +
             "           }\n" +
             "       ],\n" +
-            "       \"markers\":null\n" +
+            "       \"markers\":[]\n" +
             "   }\n" +
             "]";
 
@@ -200,7 +171,7 @@ public class UserControllerTest {
             "           \"id\":1,\n" +
             "           \"name\":\"London\",\n" +
             "           \"description\":\"London is a busy and beautiful city\",\n" +
-            "           \"eventDate\":[2021,7,20],\n" +
+            "           \"eventDate\":\"2021-07-20\",\n" +
             "           \"grade\":4,\n" +
             "           \"shouldVisitAgain\":true,\n" +
             "           \"coordinate\":{\n" +
@@ -212,7 +183,7 @@ public class UserControllerTest {
             "           \"id\":2,\n" +
             "           \"name\":\"New York\",\n" +
             "           \"description\":\"New York is too big city to explore\",\n" +
-            "           \"eventDate\":[2021,7,20],\n" +
+            "           \"eventDate\":\"2021-07-20\",\n" +
             "           \"grade\":5,\n" +
             "           \"shouldVisitAgain\":false,\n" +
             "           \"coordinate\":{\n" +
@@ -226,64 +197,61 @@ public class UserControllerTest {
     @BeforeEach
     public void setup() {
         // Role
-        userRole = createRole(1L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
+        Role userRole = RoleUtil.createRole(1L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
 
         // RoleGetDto
-        userRoleDto = createRoleGetDto(userRole.getName());
+        RoleGetDto userRoleDto = RoleUtil.createRoleGetDto(userRole);
 
-        dtoRoles = Collections.singletonList(userRoleDto);
+        List<RoleGetDto> dtoRoles = Collections.singletonList(userRoleDto);
 
         // Coordinate
-        firstCoordinate = createCoordinate(1L, -0.127758, 51.507351);
-        secondCoordinate = createCoordinate(2L, -74.005974, 40.712776);
+        Coordinate firstCoordinate = CoordinateUtil.createCoordinate(1L, -0.127758, 51.507351);
+        Coordinate secondCoordinate = CoordinateUtil.createCoordinate(2L, -74.005974, 40.712776);
 
         // Marker
-        firstMarker = createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.of(2021, 7, 20), 4, Boolean.TRUE, LocalDateTime.now(), null, firstCoordinate);
-        secondMarker = createMarker(2L, "New York", "New York is too big city to explore", LocalDate.of(2021, 7, 20), 5, Boolean.FALSE, LocalDateTime.now(), null, secondCoordinate);
-
-        markers = Arrays.asList(firstMarker, secondMarker);
+        Marker firstMarker = MarkerUtil.createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.of(2021, 7, 20), 4, Boolean.TRUE, LocalDateTime.now(), firstCoordinate);
+        Marker secondMarker = MarkerUtil.createMarker(2L, "New York", "New York is too big city to explore", LocalDate.of(2021, 7, 20), 5, Boolean.FALSE, LocalDateTime.now(), secondCoordinate);
 
         // CoordinateGetDto
-        firstCoordinateGetDto = createCoordinateGetDto(firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
-        secondCoordinateGetDto = createCoordinateGetDto(secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
+        CoordinateGetDto firstCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(firstCoordinate.getId(), firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
+        CoordinateGetDto secondCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(secondCoordinate.getId(), secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
 
         // MarkerGetDto
-        firstMarkerGetDto = createMarkerGetDto(firstMarker.getId(), firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinateGetDto);
-        secondMarkerGetDto = createMarkerGetDto(secondMarker.getId(), secondMarker.getName(), secondMarker.getDescription(), secondMarker.getEventDate(), secondMarker.getGrade(), secondMarker.getShouldVisitAgain(), secondCoordinateGetDto);
+        MarkerGetDto firstMarkerGetDto = MarkerUtil.createMarkerGetDto(firstMarker.getId(), firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinateGetDto);
+        MarkerGetDto secondMarkerGetDto = MarkerUtil.createMarkerGetDto(secondMarker.getId(), secondMarker.getName(), secondMarker.getDescription(), secondMarker.getEventDate(), secondMarker.getGrade(), secondMarker.getShouldVisitAgain(), secondCoordinateGetDto);
 
-        dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
+        List<MarkerGetDto> dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
 
         // User
-        firstUser = createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "tu3ze9ooQu", LocalDateTime.now(), markers, userRole);
-        secondUser = createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien", "goh7DuoF5", LocalDateTime.now(), new ArrayList<>(), userRole);
-        thirdUser = createUser(1L, "Sarah", "Isaac", "SarahLIsaac@gmail.com", "Mostion",  firstUser.getPassword(), firstUser.getCreatedAt(), firstUser.getMarkers(), userRole);
+        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "tu3ze9ooQu");
+        User secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien", "goh7DuoF5");
+        thirdUser = UserUtil.createUser(1L, "Sarah", "Isaac", "SarahLIsaac@gmail.com", "Mostion123", "goh7DuoF5");
 
-        users = Arrays.asList(firstUser, secondUser);
+        List<User> users = Arrays.asList(firstUser, secondUser);
 
         // UserGetDto
-        firstUserGetDto = createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), firstUser.getUsername(), dtoRoles, dtoMarkers);
-        secondUserGetDto = createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), secondUser.getUsername(), dtoRoles, new ArrayList<>());
-        thirdUserGetDto = createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), dtoRoles, dtoMarkers);
-
-        dtoUsers = Arrays.asList(firstUserGetDto, secondUserGetDto);
+        UserGetDto firstUserGetDto = UserUtil.createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), firstUser.getUsername(), dtoRoles, dtoMarkers);
+        UserGetDto secondUserGetDto = UserUtil.createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), secondUser.getUsername(), dtoRoles, new ArrayList<>());
+        UserGetDto thirdUserGetDto = UserUtil.createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), dtoRoles, dtoMarkers);
 
         // UserPutDto
-        firstUserPutDto = createUserPutDto("Sarah", "Isaac", "SarahLIsaac@gmail.com", "Mostion123");
-
-        Mockito.when(userMapper.entityToDto(Mockito.any(User.class))).thenReturn(firstUserGetDto);
-        Mockito.when(userMapper.entitiesToDto(users)).thenReturn(dtoUsers);
+        firstUserPutDto = UserUtil.createUserPutDto(thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), LocalDateTime.now());
 
         Mockito.when(userService.findById(firstUser.getId())).thenReturn(firstUser);
         Mockito.when(userService.findByUsername(firstUser.getUsername())).thenReturn(firstUser);
         Mockito.when(userService.findAll()).thenReturn(users);
-        Mockito.when(userService.update(Mockito.any(User.class), Mockito.any(UserPutDto.class))).thenReturn(thirdUser);
+        Mockito.when(userService.update(firstUser.getUsername(), firstUser)).thenReturn(thirdUser);
     }
 
     @Test
     @DisplayName("GET /users/1")
     public void should_Find_User_By_Id() throws Exception {
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/" + firstUser.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/users/" + firstUser.getId()))
+                .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(FIND_USER_JSON));
     }
@@ -291,8 +259,12 @@ public class UserControllerTest {
     @Test
     @DisplayName("GET /users/username/Mone1968")
     public void should_Find_User_By_Username() throws Exception {
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/username/" + firstUser.getUsername())
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/users/username/" + firstUser.getUsername()))
+                .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(FIND_USER_JSON));
     }
@@ -300,8 +272,12 @@ public class UserControllerTest {
     @Test
     @DisplayName("GET /users")
     public void should_Find_All_Users() throws Exception {
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
         this.mockMvc
-                .perform(MockMvcRequestBuilders.get("/users"))
+                .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(FIND_ALL_USERS_JSON));
     }
@@ -318,98 +294,5 @@ public class UserControllerTest {
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().json(UPDATE_USER_JSON));
-    }
-
-    private Role createRole(final Long id, final RoleType roleType, final String description) {
-        final Role role = new Role();
-        role.setId(id);
-        role.setName(roleType);
-        role.setDescription(description);
-        return role;
-    }
-
-    private Coordinate createCoordinate(final Long id, final Double longitude, final Double latitude) {
-        final Coordinate coordinate = new Coordinate();
-        coordinate.setId(id);
-        coordinate.setLongitude(longitude);
-        coordinate.setLatitude(latitude);
-        return coordinate;
-    }
-
-    private Marker createMarker(final Long id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final LocalDateTime createdAt, final LocalDateTime modifiedAt, final Coordinate coordinate) {
-        final Marker marker = new Marker();
-        marker.setId(id);
-        marker.setName(name);
-        marker.setDescription(description);
-        marker.setEventDate(eventDate);
-        marker.setGrade(grade);
-        marker.setShouldVisitAgain(shouldVisitAgain);
-        marker.setCreatedAt(createdAt);
-        marker.setModifiedAt(modifiedAt);
-        marker.setCoordinate(coordinate);
-        return marker;
-    }
-
-    private UserGetDto createUserGetDto(final Long id, final String firstName, final String lastName, final String email, final String username, final List<RoleGetDto> dtoRoles, final List<MarkerGetDto> dtoMarkers) {
-        return UserGetDto.builder()
-                .id(id)
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .username(username)
-                .roles(dtoRoles)
-                .markers(dtoMarkers)
-                .build();
-    }
-
-    private MarkerGetDto createMarkerGetDto(final Long id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final CoordinateGetDto coordinateGetDto) {
-        return MarkerGetDto.builder()
-                .id(id)
-                .name(name)
-                .description(description)
-                .eventDate(eventDate)
-                .grade(grade)
-                .shouldVisitAgain(shouldVisitAgain)
-                .coordinate(coordinateGetDto)
-                .build();
-    }
-
-    private CoordinateGetDto createCoordinateGetDto(final Double longitude, final Double latitude) {
-        return CoordinateGetDto.builder()
-                .longitude(longitude)
-                .latitude(latitude)
-                .build();
-    }
-
-    private RoleGetDto createRoleGetDto(final RoleType roleType) {
-        return RoleGetDto.builder()
-                .name(roleType.name())
-                .build();
-    }
-
-    private User createUser(final Long id, final String firstName, final String lastName, final String email, final String username, final String password, final LocalDateTime createdAt, final List<Marker> markers, final Role userRole) {
-        final User user = new User();
-        user.setId(id);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setModifiedAt(null);
-//        user.setProfileImage(null);
-        user.setMarkers(markers);
-        user.addRole(userRole);
-        return user;
-    }
-
-    private UserPutDto createUserPutDto(final String firstName, final String lastName, final String email, final String username) {
-        return UserPutDto.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .username(username)
-                .modifiedAt(LocalDateTime.now())
-                .build();
     }
 }

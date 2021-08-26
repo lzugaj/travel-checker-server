@@ -1,23 +1,22 @@
 package com.luv2code.travelchecker.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.domain.enums.RoleType;
-import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.dto.user.UserGetDto;
 import com.luv2code.travelchecker.dto.user.UserPostDto;
-import com.luv2code.travelchecker.mapper.UserMapper;
 import com.luv2code.travelchecker.service.UserService;
+import com.luv2code.travelchecker.utils.RoleUtil;
+import com.luv2code.travelchecker.utils.UserUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -46,25 +45,12 @@ public class AuthorizationControllerTest {
     private UserService userService;
 
     @MockBean
-    private UserMapper userMapper;
-
-    // Role
-    private Role userRole;
-
-    // RoleGetDto
-    private RoleGetDto userRoleDto;
-    private List<RoleGetDto> dtoRoles;
-
-    // User
-    private User firstUser;
-
-    // UserGetDto
-    private UserGetDto firstUserGetDto;
+    private ModelMapper modelMapper;
 
     // UserPostDto
-    private UserPostDto firstUserPostDto;
+    private UserPostDto userPostDto;
 
-    public static final String AUTHORIZE_USER_JSON = "{\n" +
+    public static final String AUTHORIZE_USER_JSON_CONTENT = "{\n" +
             "   \"id\":1,\n" +
             "   \"firstName\":\"Eunice\",\n" +
             "   \"lastName\":\"Holt\",\n" +
@@ -81,24 +67,25 @@ public class AuthorizationControllerTest {
     @BeforeEach
     public void setup() {
         // Role
-        userRole = createRole(1L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
+        final Role userRole = RoleUtil.createRole(1L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
 
         // RoleGetDto
-        userRoleDto = createRoleGetDto(userRole.getName());
-
-        dtoRoles = Collections.singletonList(userRoleDto);
+        final RoleGetDto userRoleDto = RoleUtil.createRoleGetDto(userRole);
+        final List<RoleGetDto> dtoRoles = Collections.singletonList(userRoleDto);
 
         // User
-        firstUser = createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "#tu3ze9ooQu", LocalDateTime.now(), new ArrayList<>(), userRole);
+        final User user = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "#tu3ze9ooQu");
 
         // UserGetDto
-        firstUserGetDto = createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), firstUser.getUsername(), dtoRoles, new ArrayList<>());
+        final UserGetDto userGetDto = UserUtil.createUserGetDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), dtoRoles, new ArrayList<>());
 
         // UserPostDto
-        firstUserPostDto = createUserPostDto(firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), firstUser.getUsername(), firstUser.getPassword());
+        userPostDto = UserUtil.createUserPostDto(user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), user.getPassword(), LocalDateTime.now());
 
-        BDDMockito.given(userMapper.entityToDto(firstUser)).willReturn(firstUserGetDto);
-        BDDMockito.given(userService.save(Mockito.any(UserPostDto.class))).willReturn(firstUser);
+        BDDMockito.given(modelMapper.map(userPostDto, User.class)).willReturn(user);
+        /*BDDMockito.when(modelMapper.map(user, UserGetDto.class)).thenReturn(userGetDto);*/
+
+        BDDMockito.given(userService.save(user)).willReturn(user);
     }
 
     @Test
@@ -107,62 +94,11 @@ public class AuthorizationControllerTest {
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/authorization")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(firstUserPostDto));
+                .content(objectMapper.writeValueAsString(userPostDto));
 
         this.mockMvc
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.content().json(AUTHORIZE_USER_JSON));
-    }
-
-    private UserPostDto createUserPostDto(final String firstName, final String lastName, final String email, final String username, final String password) {
-        return UserPostDto.builder()
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .username(username)
-                .password(password)
-                .build();
-    }
-
-    private Role createRole(final Long id, final RoleType roleType, final String description) {
-        final Role role = new Role();
-        role.setId(id);
-        role.setName(roleType);
-        role.setDescription(description);
-        return role;
-    }
-
-    private RoleGetDto createRoleGetDto(final RoleType roleType) {
-        return RoleGetDto.builder()
-                .name(roleType.name())
-                .build();
-    }
-
-    private User createUser(final Long id, final String firstName, final String lastName, final String email, final String username, final String password, final LocalDateTime createdAt, final List<Marker> markers, final Role userRole) {
-        final User user = new User();
-        user.setId(id);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setCreatedAt(LocalDateTime.now());
-        user.setModifiedAt(null);
-        user.setMarkers(markers);
-        user.addRole(userRole);
-        return user;
-    }
-
-    private UserGetDto createUserGetDto(final Long id, final String firstName, final String lastName, final String email, final String username, final List<RoleGetDto> dtoRoles, final List<MarkerGetDto> dtoMarkers) {
-        return UserGetDto.builder()
-                .id(id)
-                .firstName(firstName)
-                .lastName(lastName)
-                .email(email)
-                .username(username)
-                .roles(dtoRoles)
-                .markers(dtoMarkers)
-                .build();
+                .andExpect(MockMvcResultMatchers.content().json(AUTHORIZE_USER_JSON_CONTENT));
     }
 }

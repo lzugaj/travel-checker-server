@@ -1,9 +1,10 @@
 package com.luv2code.travelchecker.controller;
 
 import com.luv2code.travelchecker.domain.User;
+import com.luv2code.travelchecker.dto.user.UserGetDto;
 import com.luv2code.travelchecker.dto.user.UserPostDto;
-import com.luv2code.travelchecker.mapper.UserMapper;
 import com.luv2code.travelchecker.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,22 @@ public class AuthorizationController {
 
     private final UserService userService;
 
-    private final UserMapper userMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
     public AuthorizationController(final UserService userService,
-                                   final UserMapper userMapper) {
+                                   final ModelMapper modelMapper) {
         this.userService = userService;
-        this.userMapper = userMapper;
+        this.modelMapper = modelMapper;
     }
 
     @PostMapping
     public ResponseEntity<?> authorize(@Valid @RequestBody final UserPostDto userPostDto) {
-        final User user = userService.save(userPostDto);
-        LOGGER.info("Successfully saved new User with username: ´{}´.", user.getUsername());
-        return new ResponseEntity<>(userMapper.entityToDto(user), HttpStatus.CREATED);
+        final User mappedUser = modelMapper.map(userPostDto, User.class);
+        LOGGER.info("Successfully mapped UserPostDto to User.");
+
+        final User user = userService.save(mappedUser);
+        LOGGER.info("Successfully finished authorization process for User with id: ´{}´.", user.getId());
+        return new ResponseEntity<>(modelMapper.map(user, UserGetDto.class), HttpStatus.CREATED);
     }
 }
