@@ -44,6 +44,11 @@ public class UserPostDto {
     @Password(message = "{user.password.invalid}")
     private String password;
 
+    @JsonProperty("repeatedPassword")
+    @NotBlank(message = "{user.password.blank}")
+    @Password(message = "{user.password.invalid}")
+    private String confirmationPassword;
+
     @JsonIgnore
     private LocalDateTime createdAt = LocalDateTime.now();
 

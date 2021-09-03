@@ -5,12 +5,15 @@ import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
+import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
 import com.luv2code.travelchecker.repository.UserRepository;
 import com.luv2code.travelchecker.service.RoleService;
 import com.luv2code.travelchecker.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,16 +27,25 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     private final RoleService roleService;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
-                           final RoleService roleService) {
+                           final RoleService roleService,
+                           @Lazy final PasswordEncoder passwordEncoder) {
         super(userRepository, User.class);
         this.userRepository = userRepository;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User save(final User user) {
+        if (!user.getPassword().equals(user.getConfirmationPassword())) {
+            LOGGER.error("Password is not repeated correctly for User with email: ´{}´.", user.getEmail());
+            throw new PasswordNotConfirmedRightException("User", "password", user.getPassword());
+        }
+
         if (isUsernameAlreadyTaken(user.getUsername())) {
             LOGGER.error("User already exists with username: ´{}´.", user.getUsername());
             throw new EntityAlreadyExistsException(
@@ -47,6 +59,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         }
 
         user.addRole(findUserRole());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return super.save(user);
     }
 
@@ -56,9 +69,9 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         return userRole;
     }
 
-    private boolean isUsernameAlreadyTaken(final String username) {
+    private boolean isUsernameAlreadyTaken(final String email) {
         return findAll().stream()
-                .anyMatch(user -> user.getUsername().equals(username));
+                .anyMatch(user -> user.getEmail().equals(email));
     }
 
     private boolean isEmailAlreadyTaken(final String email) {

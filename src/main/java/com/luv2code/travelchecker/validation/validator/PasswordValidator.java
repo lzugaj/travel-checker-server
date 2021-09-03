@@ -12,7 +12,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
 
     // Minimum eight characters, at least one letter, one number and one special character
     public static final Pattern VALID_PASSWORD_REGEX = Pattern.compile(
-            "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
             Pattern.CASE_INSENSITIVE);
 
     @Override

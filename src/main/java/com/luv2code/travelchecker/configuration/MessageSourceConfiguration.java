@@ -16,7 +16,9 @@ import java.util.Locale;
 public class MessageSourceConfiguration {
 
     private String baseName;
+
     private String defaultLocale;
+
     private String defaultEncoding;
 
     @Bean
