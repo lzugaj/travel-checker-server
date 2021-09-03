@@ -56,7 +56,6 @@ public class MapperConfiguration {
                 .addMapping(User::getFirstName, UserGetDto::setFirstName)
                 .addMapping(User::getLastName, UserGetDto::setLastName)
                 .addMapping(User::getEmail, UserGetDto::setEmail)
-                .addMapping(User::getUsername, UserGetDto::setUsername)
                 .addMapping(User::getRoles, UserGetDto::setRoles)
                 .addMapping(User::getMarkers, UserGetDto::setMarkers);
     }
@@ -66,7 +65,6 @@ public class MapperConfiguration {
                 .addMapping(UserPostDto::getFirstName, User::setFirstName)
                 .addMapping(UserPostDto::getLastName, User::setLastName)
                 .addMapping(UserPostDto::getEmail, User::setEmail)
-                .addMapping(UserPostDto::getUsername, User::setUsername)
                 .addMapping(UserPostDto::getPassword, User::setPassword)
                 .addMapping(UserPostDto::getConfirmationPassword, User::setConfirmationPassword)
                 .addMapping(UserPostDto::getCreatedAt, User::setCreatedAt)
@@ -79,7 +77,6 @@ public class MapperConfiguration {
                 .addMapping(UserPutDto::getFirstName, User::setFirstName)
                 .addMapping(UserPutDto::getLastName, User::setLastName)
                 .addMapping(UserPutDto::getEmail, User::setEmail)
-                .addMapping(UserPutDto::getUsername, User::setUsername)
                 .addMapping(UserPutDto::getModifiedAt, User::setModifiedAt);
     }
 

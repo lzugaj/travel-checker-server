@@ -52,15 +52,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             throw new BadCredentialsException("Data sent for authentication in could not be parsed.");
         }
 
-        final String username = authenticationDto.getUsername();
+        final String email = authenticationDto.getEmail();
         final String password = authenticationDto.getPassword();
-        if (username == null || password == null) {
+        if (email == null || password == null) {
             LOGGER.error("Authentication attempt with incomplete data.");
-            throw new BadCredentialsException("Username and password must not be null.");
+            throw new BadCredentialsException("Email and password must not be null.");
         }
 
         try {
-            return super.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            return super.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(email, password));
         } catch (final Exception exception) {
             if (!(exception instanceof EntityNotFoundException) &&
                     !(exception instanceof AuthenticationException)) {
@@ -68,13 +68,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             }
 
             if (exception instanceof InternalAuthenticationServiceException) {
-                LOGGER.info("Authentication attempt with unregistered username: ´{}´.", authenticationDto.getUsername());
+                LOGGER.info("Authentication attempt with unregistered email: ´{}´.", authenticationDto.getEmail());
             } else {
-                User user = userService.findByUsername(username);
-                LOGGER.error("Failed authentication attempt for user with id: ´{}´ using username: ´{}´.", user.getId(), authenticationDto.getUsername());
+                User user = userService.findByEmail(email);
+                LOGGER.error("Failed authentication attempt for user with id: ´{}´ using email: ´{}´.", user.getId(), authenticationDto.getEmail());
             }
 
-            throw new BadCredentialsException("Invalid username or password.");
+            throw new BadCredentialsException("Invalid email or password.");
         }
     }
 
@@ -86,7 +86,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         final String jwtToken = JwtUtil.generateToken(userDetails, jwtConfiguration.getSecret());
 
-        final User user = userService.findByUsername(userDetails.getUsername());
+        final User user = userService.findByEmail(userDetails.getUsername());
         LOGGER.info("Authentication success for user with id: ´{}´.", user.getId());
         response.addHeader(jwtConfiguration.getHeaderName(), jwtConfiguration.getTokenPrefix() + jwtToken);
     }

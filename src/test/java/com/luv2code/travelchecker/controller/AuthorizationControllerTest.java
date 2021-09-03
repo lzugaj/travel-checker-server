@@ -74,13 +74,13 @@ public class AuthorizationControllerTest {
         final List<RoleGetDto> dtoRoles = Collections.singletonList(userRoleDto);
 
         // User
-        final User user = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "#tu3ze9ooQu");
+        final User user = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968");
 
         // UserGetDto
-        final UserGetDto userGetDto = UserUtil.createUserGetDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), dtoRoles, new ArrayList<>());
+        final UserGetDto userGetDto = UserUtil.createUserGetDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), dtoRoles, new ArrayList<>());
 
         // UserPostDto
-        userPostDto = UserUtil.createUserPostDto(user.getFirstName(), user.getLastName(), user.getEmail(), user.getUsername(), user.getPassword(), LocalDateTime.now());
+        userPostDto = UserUtil.createUserPostDto(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword(), LocalDateTime.now());
 
         BDDMockito.given(modelMapper.map(userPostDto, User.class)).willReturn(user);
         /*BDDMockito.when(modelMapper.map(user, UserGetDto.class)).thenReturn(userGetDto);*/

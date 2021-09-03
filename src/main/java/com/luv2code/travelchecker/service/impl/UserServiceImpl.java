@@ -43,17 +43,12 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     public User save(final User user) {
         if (!user.getPassword().equals(user.getConfirmationPassword())) {
             LOGGER.error("Password is not repeated correctly for User with email: ´{}´.", user.getEmail());
-            throw new PasswordNotConfirmedRightException("User", "password", user.getPassword());
-        }
-
-        if (isUsernameAlreadyTaken(user.getUsername())) {
-            LOGGER.error("User already exists with username: ´{}´.", user.getUsername());
-            throw new EntityAlreadyExistsException(
-                    "User", "username", user.getUsername());
+            throw new PasswordNotConfirmedRightException(
+                    "User", "email", user.getEmail());
         }
 
         if (user.getEmail() != null && isEmailAlreadyTaken(user.getEmail())) {
-            LOGGER.error("User already exists with email: ´{}´.", user.getUsername());
+            LOGGER.error("User already exists with email: ´{}´.", user.getEmail());
             throw new EntityAlreadyExistsException(
                     "User", "email", user.getEmail());
         }
@@ -69,11 +64,6 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         return userRole;
     }
 
-    private boolean isUsernameAlreadyTaken(final String email) {
-        return findAll().stream()
-                .anyMatch(user -> user.getEmail().equals(email));
-    }
-
     private boolean isEmailAlreadyTaken(final String email) {
         return findAll().stream()
                 .anyMatch(user -> user.getEmail().equals(email));
@@ -85,12 +75,12 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     }
 
     @Override
-    public User findByUsername(final String username) {
-        LOGGER.info("Searching User with username: ´{}´.", username);
-        return userRepository.findByUsername(username)
+    public User findByEmail(final String email) {
+        LOGGER.info("Searching User with email: ´{}´.", email);
+        return userRepository.findByEmail(email)
                 .orElseThrow(() -> {
-                    LOGGER.error("Cannot find User with username: ´{}´.", username);
-                    return new EntityNotFoundException("User", "username", username);
+                    LOGGER.error("Cannot find User with email: ´{}´.", email);
+                    return new EntityNotFoundException("User", "email", email);
                 });
     }
 
@@ -100,33 +90,33 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     }
 
     @Override
-    public User update(final String username, final User user) {
-        if (checkIfUsernameIsNotAlreadyTaken(username, user)) {
+    public User update(final String email, final User user) {
+        if (checkIfEmailIsNotAlreadyTaken(email, user)) {
             return super.save(user);
         } else {
-            LOGGER.error("User already exists with username: ´{}´.", user.getUsername());
+            LOGGER.error("User already exists with email: ´{}´.", user.getEmail());
             throw new EntityAlreadyExistsException(
-                    "User", "username", user.getUsername());
+                    "User", "email", user.getEmail());
         }
     }
 
-    private boolean checkIfUsernameIsNotAlreadyTaken(final String username, final User currentUser) {
-        if (!currentUser.getUsername().equals(username)) {
+    private boolean checkIfEmailIsNotAlreadyTaken(final String email, final User currentUser) {
+        if (!currentUser.getEmail().equals(email)) {
             final List<User> users = findAll();
             for (User user : users) {
-                if (usernameIsNotAlreadyTaken(currentUser, user)) return false;
+                if (emailIsNotAlreadyTaken(currentUser, user)) return false;
             }
         }
 
         return true;
     }
 
-    private boolean usernameIsNotAlreadyTaken(final User currentUser, final User user) {
-        boolean areUsernamesEquals = true;
+    private boolean emailIsNotAlreadyTaken(final User currentUser, final User user) {
+        boolean areEmailsEquals = true;
         if (!user.equals(currentUser)) {
-            areUsernamesEquals = user.getUsername().equals(currentUser.getUsername());
+            areEmailsEquals = user.getEmail().equals(currentUser.getEmail());
         }
 
-        return areUsernamesEquals;
+        return areEmailsEquals;
     }
 }

@@ -33,11 +33,6 @@ public class UserPutDto {
     @Email(message = "{user.email.invalid}")
     private String email;
 
-    @JsonProperty("username")
-    @NotBlank(message = "{user.username.blank}")
-    @Size(min = 5, message = "{user.username.size}")
-    private String username;
-
     @JsonIgnore
     private LocalDateTime modifiedAt = LocalDateTime.now();
 

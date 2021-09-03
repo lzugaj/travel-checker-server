@@ -44,10 +44,10 @@ public class UserController {
         return new ResponseEntity<>(modelMapper.map(searchedUser, UserGetDto.class), HttpStatus.OK);
     }
 
-    @GetMapping("/username/{username}")
-    public ResponseEntity<?> findByUsername(@PathVariable final String username) {
-        final User searchedUser = userService.findByUsername(username);
-        LOGGER.info("Successfully founded User with username: ´{}´.", searchedUser.getUsername());
+    @GetMapping("/email/{email}")
+    public ResponseEntity<?> findByEmail(@PathVariable final String email) {
+        final User searchedUser = userService.findByEmail(email);
+        LOGGER.info("Successfully founded User with email: ´{}´.", searchedUser.getEmail());
         return new ResponseEntity<>(modelMapper.map(searchedUser, UserGetDto.class), HttpStatus.OK);
     }
 
@@ -60,13 +60,13 @@ public class UserController {
 
     @PutMapping
     public ResponseEntity<?> update(@RequestBody final UserPutDto userPutDto) {
-        final String currentlyAuthenticatedUsername = authenticationService.getAuthenticatedUsername();
-        LOGGER.info("Currently authenticated User with username: ´{}´.", currentlyAuthenticatedUsername);
+        final String currentlyAuthenticatedUser = authenticationService.getAuthenticatedUser();
+        LOGGER.info("Currently authenticated User with email: ´{}´.", currentlyAuthenticatedUser);
 
         final User mappedUser = modelMapper.map(userPutDto, User.class);
         LOGGER.info("Successfully mapped UserPutDto to User.");
 
-        final User updatedUser = userService.update(currentlyAuthenticatedUsername, mappedUser);
+        final User updatedUser = userService.update(currentlyAuthenticatedUser, mappedUser);
         LOGGER.info("Successfully finished updating process for User with id: ´{}´.", updatedUser.getId());
         return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.OK);
     }

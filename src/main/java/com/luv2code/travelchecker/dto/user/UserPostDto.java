@@ -34,17 +34,12 @@ public class UserPostDto {
     @Email(message = "{user.email.invalid}")
     private String email;
 
-    @JsonProperty("username")
-    @NotBlank(message = "{user.username.blank}")
-    @Size(min = 5, message = "{user.username.size}")
-    private String username;
-
     @JsonProperty("password")
     @NotBlank(message = "{user.password.blank}")
     @Password(message = "{user.password.invalid}")
     private String password;
 
-    @JsonProperty("repeatedPassword")
+    @JsonProperty("confirmationPassword")
     @NotBlank(message = "{user.password.blank}")
     @Password(message = "{user.password.invalid}")
     private String confirmationPassword;

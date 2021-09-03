@@ -19,7 +19,7 @@ import java.util.Set;
 @Table(
         name = "user",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = { "username" })
+                @UniqueConstraint(columnNames = { "email" })
         }
 )
 public class User extends BaseEntity {
@@ -32,9 +32,6 @@ public class User extends BaseEntity {
 
     @Column(name = "email")
     private String email;
-
-    @Column(name = "username")
-    private String username;
 
     @Column(name = "password")
     private String password;

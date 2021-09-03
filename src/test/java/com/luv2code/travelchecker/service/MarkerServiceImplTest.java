@@ -54,7 +54,7 @@ public class MarkerServiceImplTest {
         List<Marker> markers = Arrays.asList(secondMarker, thirdMarker);
 
         // UserGetDto
-        user = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "#password");
+        user = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968");
 
         Mockito.when(markerRepository.save(firstMarker)).thenReturn(firstMarker);
         Mockito.when(markerRepository.save(fourthMarker)).thenReturn(fourthMarker);

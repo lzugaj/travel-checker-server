@@ -26,9 +26,6 @@ public class UserGetDto {
     @JsonProperty("email")
     private String email;
 
-    @JsonProperty("username")
-    private String username;
-
     @JsonProperty("roles")
     private List<RoleGetDto> roles;
 

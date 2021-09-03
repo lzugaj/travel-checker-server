@@ -47,11 +47,11 @@ public class MarkerController {
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody final MarkerPostDto markerPostDto) {
-        final String currentlyAuthenticatedUsername = authenticationService.getAuthenticatedUsername();
-        LOGGER.info("Currently authenticated User with username: ´{}´.", currentlyAuthenticatedUsername);
+        final String currentlyAuthenticatedUser = authenticationService.getAuthenticatedUser();
+        LOGGER.info("Currently authenticated User with email: ´{}´.", currentlyAuthenticatedUser);
 
-        final User searchedUser = userService.findByUsername(currentlyAuthenticatedUsername);
-        LOGGER.info("Successfully founded User with username: ´{}´.", searchedUser.getUsername());
+        final User searchedUser = userService.findByEmail(currentlyAuthenticatedUser);
+        LOGGER.info("Successfully founded User with email: ´{}´.", searchedUser.getEmail());
 
         final Marker marker = markerService.save(searchedUser, modelMapper.map(markerPostDto, Marker.class));
         LOGGER.info("Successfully created new Marker with id: ´{}´.", marker.getId());

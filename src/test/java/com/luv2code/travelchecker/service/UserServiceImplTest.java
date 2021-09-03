@@ -47,13 +47,13 @@ public class UserServiceImplTest {
         final Role userRole = RoleUtil.createRole(1L, RoleType.USER, "User role");
 
         // User
-        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "tu3ze9ooQu");
-        secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien", "goh7DuoF5");
-        thirdUser = UserUtil.createUser(3L, "Sarah", "Isaac", "samblanco@gmail.com", "Mostion", "urai9Shahnu");
-        fourthUser = UserUtil.createUser(1L, "Ashley", "Ross", "AshleyMRoss@gmail.com", "Mustrien", firstUser.getPassword());
-        sixthUser = UserUtil.createUser(4L, "Kevin", "Blake", "samblanco@gmail.com", "Kevin", "nsaoindas123");
-        seventhUser = UserUtil.createUser(1L, "John", "Doe", "jdoe@gmail.com", "Mone1968", firstUser.getPassword());
-        eightUser = UserUtil.createUser(1L, "Danny", "Bloom", "dbloom@gmail.com", "dbloom", firstUser.getPassword());
+        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968");
+        secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien");
+        thirdUser = UserUtil.createUser(3L, "Sarah", "Isaac", "samblanco@gmail.com", "Mostion");
+        fourthUser = UserUtil.createUser(1L, "Ashley", "Ross", "AshleyMRoss@gmail.com", "Mustrien");
+        sixthUser = UserUtil.createUser(4L, "Kevin", "Blake", "samblanco@gmail.com", "Kevin");
+        seventhUser = UserUtil.createUser(1L, "John", "Doe", "jdoe@gmail.com", "Mone1968");
+        eightUser = UserUtil.createUser(1L, "Danny", "Bloom", "dbloom@gmail.com", "dbloom");
 
         List<User> users = Arrays.asList(secondUser, thirdUser);
 
@@ -62,7 +62,7 @@ public class UserServiceImplTest {
         Mockito.when(userRepository.save(firstUser)).thenReturn(firstUser);
         Mockito.when(userRepository.save(eightUser)).thenReturn(eightUser);
         Mockito.when(userRepository.findById(secondUser.getId())).thenReturn(Optional.ofNullable(secondUser));
-        Mockito.when(userRepository.findByUsername(thirdUser.getUsername())).thenReturn(Optional.ofNullable(thirdUser));
+        // Mockito.when(userRepository.findByEmail(thirdUser.getUsername())).thenReturn(Optional.ofNullable(thirdUser));
         Mockito.when(userRepository.findAll()).thenReturn(users);
     }
 
@@ -126,7 +126,7 @@ public class UserServiceImplTest {
 
     @Test
     public void should_Return_User_When_Username_Is_Present() {
-        final User searchedUser = userService.findByUsername(thirdUser.getUsername());
+        final User searchedUser = userService.findByEmail(thirdUser.getEmail());
 
         Assertions.assertNotNull(searchedUser);
         Assertions.assertEquals("3", String.valueOf(thirdUser.getId()));
@@ -134,12 +134,12 @@ public class UserServiceImplTest {
 
     @Test
     public void should_Throw_Exception_When_Username_Is_Not_Present() {
-        Mockito.when(userRepository.findByUsername(firstUser.getUsername()))
+        Mockito.when(userRepository.findByEmail(firstUser.getEmail()))
                 .thenReturn(Optional.empty());
 
         final Exception exception = Assertions.assertThrows(
                 EntityNotFoundException.class,
-                () -> userService.findByUsername(firstUser.getUsername())
+                () -> userService.findByEmail(firstUser.getEmail())
         );
 
         final String expectedMessage = "Entity 'User' with 'username' value 'Mone1968' not founded.";
@@ -158,27 +158,27 @@ public class UserServiceImplTest {
 
     @Test
     public void should_Update_User_When_Username_Is_Valid_And_Not_Exists() {
-        final User updatedUser = userService.update(firstUser.getUsername(), eightUser);
+        final User updatedUser = userService.update(firstUser.getEmail(), eightUser);
 
         Assertions.assertNotNull(updatedUser);
-        Assertions.assertEquals("dbloom", updatedUser.getUsername());
+        Assertions.assertEquals("dbloom", updatedUser.getEmail());
     }
 
     @Test
     public void should_Update_User_When_Username_Is_Valid_And_Is_Equals() {
         Mockito.when(userRepository.save(seventhUser)).thenReturn(seventhUser);
 
-        final User updatedUser = userService.update(firstUser.getUsername(), seventhUser);
+        final User updatedUser = userService.update(firstUser.getEmail(), seventhUser);
 
         Assertions.assertNotNull(updatedUser);
-        Assertions.assertEquals("Mone1968", updatedUser.getUsername());
+        Assertions.assertEquals("Mone1968", updatedUser.getEmail());
     }
 
     @Test
     public void should_Throw_Exception_When_Username_Already_Exists() {
         final Exception exception = Assertions.assertThrows(
                 EntityAlreadyExistsException.class,
-                () -> userService.update(firstUser.getUsername(), fourthUser)
+                () -> userService.update(firstUser.getEmail(), fourthUser)
         );
 
         final String expectedMessage = "Entity 'User' with 'username' value 'Mustrien' already exists.";

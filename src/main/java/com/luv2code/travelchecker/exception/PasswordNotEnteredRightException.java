@@ -18,7 +18,7 @@ public class PasswordNotEnteredRightException extends AbstractEntityException {
     }
 
     private static String createMessage(final String entityName, final String fieldName, final String fieldValue) {
-        return String.format("Entity '%s' with '%s' value '%s' is not entered right.",
+        return String.format("Password for entity '%s' with '%s' value '%s' is not entered right.",
                 entityName, fieldName, fieldValue);
     }
 }
