@@ -1,6 +1,5 @@
 package com.luv2code.travelchecker.domain.base;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;

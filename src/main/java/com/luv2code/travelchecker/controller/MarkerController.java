@@ -5,6 +5,7 @@ import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPostDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPutDto;
+import com.luv2code.travelchecker.service.AuthenticationService;
 import com.luv2code.travelchecker.service.MarkerService;
 import com.luv2code.travelchecker.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -29,20 +30,27 @@ public class MarkerController {
 
     private final UserService userService;
 
+    private final AuthenticationService authenticationService;
+
     private final ModelMapper modelMapper;
 
     @Autowired
     public MarkerController(final MarkerService markerService,
                             final UserService userService,
+                            final AuthenticationService authenticationService,
                             final ModelMapper modelMapper) {
         this.markerService = markerService;
         this.userService = userService;
+        this.authenticationService = authenticationService;
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping("/user/{username}")
-    public ResponseEntity<?> save(@PathVariable final String username, @Valid @RequestBody final MarkerPostDto markerPostDto) {
-        final User searchedUser = userService.findByUsername(username);
+    @PostMapping
+    public ResponseEntity<?> save(@Valid @RequestBody final MarkerPostDto markerPostDto) {
+        final String currentlyAuthenticatedUsername = authenticationService.getAuthenticatedUsername();
+        LOGGER.info("Currently authenticated User with username: ´{}´.", currentlyAuthenticatedUsername);
+
+        final User searchedUser = userService.findByUsername(currentlyAuthenticatedUsername);
         LOGGER.info("Successfully founded User with username: ´{}´.", searchedUser.getUsername());
 
         final Marker marker = markerService.save(searchedUser, modelMapper.map(markerPostDto, Marker.class));
@@ -61,7 +69,7 @@ public class MarkerController {
     public ResponseEntity<?> findAll() {
         final List<Marker> searchedMarkers = markerService.findAll();
         LOGGER.info("Successfully founded ´{}´ Markers.", searchedMarkers.size());
-        return new ResponseEntity<>(mapList(searchedMarkers, MarkerGetDto.class), HttpStatus.OK);
+        return new ResponseEntity<>(mapList(searchedMarkers), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -81,10 +89,10 @@ public class MarkerController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    public List<MarkerGetDto> mapList(final List<Marker> source, final Class<MarkerGetDto> targetClass) {
-        return source
+    private List<MarkerGetDto> mapList(final List<Marker> markers) {
+        return markers
                 .stream()
-                .map(element -> modelMapper.map(element, targetClass))
+                .map(element -> modelMapper.map(element, MarkerGetDto.class))
                 .collect(Collectors.toList());
     }
 }

@@ -10,6 +10,12 @@ spring:
     allow-bean-definition-overriding: true
 luv2code:
   travel-checker:
+    security:
+      secret: 'm5jKHPO7Z2aqWYPdujYeoCnPNiUmgTRlfIBqCwU8HpRQ3fZQ55uk6jRPeA6pWkkVhSWXycBhD1zAI18VeebwKVzfYPoy70UCaMA9k2OhJ2x7Ldo1b5kxVpxV8BvcbrzWTWXdbS7FpKKep7TAI7KEvOLs4lMPJ7HWbcCWzwHoWP9dPe2hvUHE9C2ZEQHnG5MKMInfqptK3OS7xKDAgsoQrFmqpqXYUrfbThOqDTGr8kfWsOn2TyaENGkZsHI6CZOi'
+      expirationTime: 864000000
+      tokenPrefix: 'Bearer '
+      headerName: 'Authorization'
+      bcryptRounds: 12
     mapbox:
       token: 'pk.eyJ1IjoibHp1Z2FqIiwiYSI6ImNrbHpnbGhvMjFraW0ybnBsdzR3OXN6bDAifQ.dBuHMH1r6dH22MsrXrCRUQ'
     locale:

@@ -3,6 +3,7 @@ package com.luv2code.travelchecker.controller;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.user.UserGetDto;
 import com.luv2code.travelchecker.dto.user.UserPutDto;
+import com.luv2code.travelchecker.service.AuthenticationService;
 import com.luv2code.travelchecker.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -23,12 +24,16 @@ public class UserController {
 
     private final UserService userService;
 
+    private final AuthenticationService authenticationService;
+
     private final ModelMapper modelMapper;
 
     @Autowired
     public UserController(final UserService userService,
+                          final AuthenticationService authenticationService,
                           final ModelMapper modelMapper) {
         this.userService = userService;
+        this.authenticationService = authenticationService;
         this.modelMapper = modelMapper;
     }
 
@@ -50,23 +55,26 @@ public class UserController {
     public ResponseEntity<?> findAll() {
         final List<User> users = userService.findAll();
         LOGGER.info("Successfully founded ´{}´ Users.", users.size());
-        return new ResponseEntity<>(mapList(users, UserGetDto.class), HttpStatus.OK);
+        return new ResponseEntity<>(mapList(users), HttpStatus.OK);
     }
 
-    @PutMapping("/username/{username}")
-    public ResponseEntity<?> update(@PathVariable final String username, @RequestBody final UserPutDto userPutDto) {
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody final UserPutDto userPutDto) {
+        final String currentlyAuthenticatedUsername = authenticationService.getAuthenticatedUsername();
+        LOGGER.info("Currently authenticated User with username: ´{}´.", currentlyAuthenticatedUsername);
+
         final User mappedUser = modelMapper.map(userPutDto, User.class);
         LOGGER.info("Successfully mapped UserPutDto to User.");
 
-        final User updatedUser = userService.update(username, mappedUser);
+        final User updatedUser = userService.update(currentlyAuthenticatedUsername, mappedUser);
         LOGGER.info("Successfully finished updating process for User with id: ´{}´.", updatedUser.getId());
         return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.OK);
     }
 
-    public List<UserGetDto> mapList(final List<User> source, final Class<UserGetDto> targetClass) {
-        return source
+    private List<UserGetDto> mapList(final List<User> users) {
+        return users
                 .stream()
-                .map(element -> modelMapper.map(element, targetClass))
+                .map(element -> modelMapper.map(element, UserGetDto.class))
                 .collect(Collectors.toList());
     }
 }

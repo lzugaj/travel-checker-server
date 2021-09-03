@@ -1,10 +1,7 @@
 package com.luv2code.travelchecker.controller.handler;
 
 import com.luv2code.travelchecker.controller.handler.response.ApiResponse;
-import com.luv2code.travelchecker.exception.EntityAlreadyExistsException;
-import com.luv2code.travelchecker.exception.EntityNotFoundException;
-import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
-import com.luv2code.travelchecker.exception.PasswordNotEnteredRightException;
+import com.luv2code.travelchecker.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -27,6 +24,12 @@ public class ResponseEntityExceptionHandler {
             NullPointerException.class
     })
     public ResponseEntity<ApiResponse> handleRuntimeException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        return createResponseMessage(badRequest, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = UserNotAuthenticatedException.class)
+    public ResponseEntity<ApiResponse> handleUserNotAuthenticatedException(final UserNotAuthenticatedException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         return createResponseMessage(badRequest, exception, httpServletRequest);
     }

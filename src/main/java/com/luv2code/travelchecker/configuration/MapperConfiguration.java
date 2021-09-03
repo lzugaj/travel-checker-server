@@ -68,6 +68,7 @@ public class MapperConfiguration {
                 .addMapping(UserPostDto::getEmail, User::setEmail)
                 .addMapping(UserPostDto::getUsername, User::setUsername)
                 .addMapping(UserPostDto::getPassword, User::setPassword)
+                .addMapping(UserPostDto::getConfirmationPassword, User::setConfirmationPassword)
                 .addMapping(UserPostDto::getCreatedAt, User::setCreatedAt)
                 .addMapping(UserPostDto::getMarkers, User::setMarkers);
     }
