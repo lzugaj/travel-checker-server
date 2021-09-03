@@ -51,13 +51,13 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                                     final FilterChain filterChain) throws ServletException, IOException {
         final String authorizationHeader = request.getHeader(jwtConfiguration.getHeaderName());
 
-        String username = null;
+        String email = null;
         String jtwToken = null;
 
         if (authorizationHeader != null && authorizationHeader.startsWith(jwtConfiguration.getTokenPrefix()) && authorizationHeader.length() > 7) {
             jtwToken = authorizationHeader.substring(7);
             try {
-                username = JwtUtil.extractUsername(jtwToken, jwtConfiguration.getSecret());
+                email = JwtUtil.extractUsername(jtwToken, jwtConfiguration.getSecret());
             } catch (final Exception exception){
                 final String url = request.getRequestURL().toString();
                 if (exception instanceof MalformedJwtException){
@@ -68,15 +68,15 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
             }
         }
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            final UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
             final Boolean isTokenValid = JwtUtil.validateToken(jtwToken, userDetails, jwtConfiguration.getSecret());
 
             User user;
             try {
-                user = userService.findByUsername(username);
+                user = userService.findByEmail(email);
             } catch (final EntityNotFoundException exception) {
-                LOGGER.info("Authorization attempt with valid JWT but non existing username ´{}´.", username);
+                LOGGER.info("Authorization attempt with valid JWT but non existing email: ´{}´.", email);
                 throw exception;
             }
 

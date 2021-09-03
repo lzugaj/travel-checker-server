@@ -223,24 +223,24 @@ public class UserControllerTest {
         List<MarkerGetDto> dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
 
         // User
-        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968", "tu3ze9ooQu");
-        User secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien", "goh7DuoF5");
-        thirdUser = UserUtil.createUser(1L, "Sarah", "Isaac", "SarahLIsaac@gmail.com", "Mostion123", "goh7DuoF5");
+        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968");
+        User secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien");
+        thirdUser = UserUtil.createUser(1L, "Sarah", "Isaac", "SarahLIsaac@gmail.com", "Mostion123");
 
         List<User> users = Arrays.asList(firstUser, secondUser);
 
         // UserGetDto
-        UserGetDto firstUserGetDto = UserUtil.createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), firstUser.getUsername(), dtoRoles, dtoMarkers);
-        UserGetDto secondUserGetDto = UserUtil.createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), secondUser.getUsername(), dtoRoles, new ArrayList<>());
-        UserGetDto thirdUserGetDto = UserUtil.createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), dtoRoles, dtoMarkers);
+        UserGetDto firstUserGetDto = UserUtil.createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), dtoRoles, dtoMarkers);
+        UserGetDto secondUserGetDto = UserUtil.createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), dtoRoles, new ArrayList<>());
+        UserGetDto thirdUserGetDto = UserUtil.createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), dtoRoles, dtoMarkers);
 
         // UserPutDto
-        firstUserPutDto = UserUtil.createUserPutDto(thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), thirdUser.getUsername(), LocalDateTime.now());
+        firstUserPutDto = UserUtil.createUserPutDto(thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), LocalDateTime.now());
 
         Mockito.when(userService.findById(firstUser.getId())).thenReturn(firstUser);
-        Mockito.when(userService.findByUsername(firstUser.getUsername())).thenReturn(firstUser);
+        // Mockito.when(userService.findByEmail(firstUser.getUsername())).thenReturn(firstUser);
         Mockito.when(userService.findAll()).thenReturn(users);
-        Mockito.when(userService.update(firstUser.getUsername(), firstUser)).thenReturn(thirdUser);
+        // Mockito.when(userService.update(firstUser.getUsername(), firstUser)).thenReturn(thirdUser);
     }
 
     @Test
@@ -259,7 +259,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("GET /users/username/Mone1968")
     public void should_Find_User_By_Username() throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/username/" + firstUser.getUsername())
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/username/" + firstUser.getEmail())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -285,7 +285,7 @@ public class UserControllerTest {
     @Test
     @DisplayName("PUT /users/username/Mone1968")
     public void should_Update_User() throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/username/" + firstUser.getUsername())
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/username/" + firstUser.getEmail())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(firstUserPutDto));

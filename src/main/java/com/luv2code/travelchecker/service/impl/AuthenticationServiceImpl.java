@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
-    public String getAuthenticatedUsername() {
+    public String getAuthenticatedUser() {
         final Authentication currentAuthenticatedUser = SecurityContextHolder.getContext().getAuthentication();
         if (currentAuthenticatedUser instanceof AnonymousAuthenticationToken) {
             throw new UserNotAuthenticatedException(
-                    "User", "username", currentAuthenticatedUser.getName());
+                    "User", "email", currentAuthenticatedUser.getName());
         } else {
             return currentAuthenticatedUser.getName();
         }
