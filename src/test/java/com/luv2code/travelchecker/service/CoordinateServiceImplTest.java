@@ -4,7 +4,7 @@ import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.CoordinateRepository;
 import com.luv2code.travelchecker.service.impl.CoordinateServiceImpl;
-import com.luv2code.travelchecker.utils.CoordinateUtil;
+import com.luv2code.travelchecker.util.CoordinateUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

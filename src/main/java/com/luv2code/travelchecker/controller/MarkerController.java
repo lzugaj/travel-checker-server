@@ -47,7 +47,7 @@ public class MarkerController {
 
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody final MarkerPostDto markerPostDto) {
-        final String currentlyAuthenticatedUser = authenticationService.getAuthenticatedUser();
+        final String currentlyAuthenticatedUser = authenticationService.getAuthenticatedEmail();
         LOGGER.info("Currently authenticated User with email: ´{}´.", currentlyAuthenticatedUser);
 
         final User searchedUser = userService.findByEmail(currentlyAuthenticatedUser);

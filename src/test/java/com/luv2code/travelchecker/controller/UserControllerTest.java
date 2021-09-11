@@ -10,20 +10,20 @@ import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
 import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.dto.user.UserGetDto;
-import com.luv2code.travelchecker.dto.user.UserPutDto;
+import com.luv2code.travelchecker.repository.UserRepository;
 import com.luv2code.travelchecker.service.UserService;
-import com.luv2code.travelchecker.utils.CoordinateUtil;
-import com.luv2code.travelchecker.utils.MarkerUtil;
-import com.luv2code.travelchecker.utils.RoleUtil;
-import com.luv2code.travelchecker.utils.UserUtil;
+import com.luv2code.travelchecker.util.*;
+import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -34,13 +34,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
+import static com.luv2code.travelchecker.util.SecurityConstants.HEADER_NAME;
+import static com.luv2code.travelchecker.util.SecurityConstants.TOKEN_PREFIX;
+
+@SpringBootTest
+@AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = UserController.class)
 public class UserControllerTest {
 
     @Autowired
@@ -55,244 +56,96 @@ public class UserControllerTest {
     @MockBean
     private ModelMapper modelMapper;
 
+    @MockBean
+    private UserRepository userRepository;
+
     // User
     private User firstUser;
-    private User thirdUser;
 
-    // UserPutDto
-    private UserPutDto firstUserPutDto;
-
-    public static final String FIND_USER_JSON = "{\n" +
-            "   \"id\":1,\n" +
-            "   \"firstName\":\"Eunice\",\n" +
-            "   \"lastName\":\"Holt\",\n" +
-            "   \"email\":\"eholt@gmail.com\",\n" +
-            "   \"username\":\"Mone1968\",\n" +
-            "   \"roles\":[\n" +
-            "       {\n" +
-            "           \"name\":\"USER\"\n" +
-            "       }\n" +
-            "   ],\n" +
-            "   \"markers\":[\n" +
-            "       {\n" +
-            "           \"id\":1,\n" +
-            "           \"name\":\"London\",\n" +
-            "           \"description\":\"London is a busy and beautiful city\",\n" +
-            "           \"eventDate\":\"2021-07-20\",\n" +
-            "           \"grade\":4,\n" +
-            "           \"shouldVisitAgain\":true,\n" +
-            "           \"coordinate\":{\n" +
-            "               \"longitude\":-0.127758,\n" +
-            "               \"latitude\":51.507351\n" +
-            "           }\n" +
-            "       },\n" +
-            "       {\n" +
-            "           \"id\":2,\n" +
-            "           \"name\":\"New York\",\n" +
-            "           \"description\":\"New York is too big city to explore\",\n" +
-            "           \"eventDate\":\"2021-07-20\",\n" +
-            "           \"grade\":5,\n" +
-            "           \"shouldVisitAgain\":false,\n" +
-            "           \"coordinate\":{\n" +
-            "               \"longitude\":-74.005974,\n" +
-            "               \"latitude\":40.712776\n" +
-            "           }\n" +
-            "       }\n" +
-            "   ]\n" +
-            "}";
-
-    public static final String FIND_ALL_USERS_JSON = "[\n" +
-            "   {\n" +
-            "       \"id\":1,\n" +
-            "       \"firstName\":\"Eunice\",\n" +
-            "       \"lastName\":\"Holt\",\n" +
-            "       \"email\":\"eholt@gmail.com\",\n" +
-            "       \"username\":\"Mone1968\",\n" +
-            "       \"roles\":[\n" +
-            "           {\n" +
-            "               \"name\":\"USER\"\n" +
-            "           }\n" +
-            "       ],\n" +
-            "       \"markers\":[\n" +
-            "           {\n" +
-            "               \"id\":1,\n" +
-            "               \"name\":\"London\",\n" +
-            "               \"description\":\"London is a busy and beautiful city\",\n" +
-            "               \"eventDate\":\"2021-07-20\",\n" +
-            "               \"grade\":4,\n" +
-            "               \"shouldVisitAgain\":true,\n" +
-            "               \"coordinate\":{\n" +
-            "                   \"longitude\":-0.127758,\n" +
-            "                   \"latitude\":51.507351\n" +
-            "               }\n" +
-            "           },\n" +
-            "           {\n" +
-            "               \"id\":2,\n" +
-            "               \"name\":\"New York\",\n" +
-            "               \"description\":\"New York is too big city to explore\",\n" +
-            "               \"eventDate\":\"2021-07-20\",\n" +
-            "               \"grade\":5,\n" +
-            "               \"shouldVisitAgain\":false,\n" +
-            "               \"coordinate\":{\n" +
-            "                   \"longitude\":-74.005974,\n" +
-            "                   \"latitude\":40.712776\n" +
-            "               }\n" +
-            "           }\n" +
-            "       ]\n" +
-            "   },\n" +
-            "   {\n" +
-            "       \"id\":2,\n" +
-            "       \"firstName\":\"Sam\",\n" +
-            "       \"lastName\":\"Blanco\",\n" +
-            "       \"email\":\"samblanco@gmail.com\",\n" +
-            "       \"username\":\"Mustrien\",\n" +
-            "       \"roles\":[\n" +
-            "           {\n" +
-            "               \"name\":\"USER\"\n" +
-            "           }\n" +
-            "       ],\n" +
-            "       \"markers\":[]\n" +
-            "   }\n" +
-            "]";
-
-    public final String UPDATE_USER_JSON = "{\n" +
-            "   \"id\":1,\n" +
-            "   \"firstName\":\"Sarah\",\n" +
-            "   \"lastName\":\"Isaac\",\n" +
-            "   \"email\":\"SarahLIsaac@gmail.com\",\n" +
-            "   \"username\":\"Mostion123\",\n" +
-            "   \"roles\":[\n" +
-            "       {\n" +
-            "           \"name\":\"USER\"\n" +
-            "       }\n" +
-            "   ],\n" +
-            "   \"markers\":[\n" +
-            "       {\n" +
-            "           \"id\":1,\n" +
-            "           \"name\":\"London\",\n" +
-            "           \"description\":\"London is a busy and beautiful city\",\n" +
-            "           \"eventDate\":\"2021-07-20\",\n" +
-            "           \"grade\":4,\n" +
-            "           \"shouldVisitAgain\":true,\n" +
-            "           \"coordinate\":{\n" +
-            "               \"longitude\":-0.127758,\n" +
-            "               \"latitude\":51.507351\n" +
-            "           }\n" +
-            "       },\n" +
-            "       {\n" +
-            "           \"id\":2,\n" +
-            "           \"name\":\"New York\",\n" +
-            "           \"description\":\"New York is too big city to explore\",\n" +
-            "           \"eventDate\":\"2021-07-20\",\n" +
-            "           \"grade\":5,\n" +
-            "           \"shouldVisitAgain\":false,\n" +
-            "           \"coordinate\":{\n" +
-            "               \"longitude\":-74.005974,\n" +
-            "               \"latitude\":40.712776\n" +
-            "           }\n" +
-            "       }\n" +
-            "   ]\n" +
-            "}";
+    private static final String ADMIN_JWT_TOKEN = JwtTokenUtil.createAdminToken("admin@gmail.com");
 
     @BeforeEach
     public void setup() {
         // Role
-        Role userRole = RoleUtil.createRole(1L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
+        final Role adminRole = RoleUtil.createRole(1L, RoleType.ADMIN, "Admin role");
+        final Role userRole = RoleUtil.createRole(2L, RoleType.USER, "User role");
 
         // RoleGetDto
-        RoleGetDto userRoleDto = RoleUtil.createRoleGetDto(userRole);
-
-        List<RoleGetDto> dtoRoles = Collections.singletonList(userRoleDto);
+        final RoleGetDto userRoleDto = RoleUtil.createRoleGetDto(userRole);
+        final List<RoleGetDto> dtoRoles = List.of(userRoleDto);
 
         // Coordinate
-        Coordinate firstCoordinate = CoordinateUtil.createCoordinate(1L, -0.127758, 51.507351);
-        Coordinate secondCoordinate = CoordinateUtil.createCoordinate(2L, -74.005974, 40.712776);
+        final Coordinate firstCoordinate = CoordinateUtil.createCoordinate(1L, -0.127758, 51.507351);
+        final Coordinate secondCoordinate = CoordinateUtil.createCoordinate(2L, -74.005974, 40.712776);
 
         // Marker
-        Marker firstMarker = MarkerUtil.createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.of(2021, 7, 20), 4, Boolean.TRUE, LocalDateTime.now(), firstCoordinate);
-        Marker secondMarker = MarkerUtil.createMarker(2L, "New York", "New York is too big city to explore", LocalDate.of(2021, 7, 20), 5, Boolean.FALSE, LocalDateTime.now(), secondCoordinate);
+        final Marker firstMarker = MarkerUtil.createMarker(1L, "London", "London is a busy and beautiful city", LocalDate.of(2021, 7, 20), 4, Boolean.TRUE, LocalDateTime.now(), firstCoordinate);
+        final Marker secondMarker = MarkerUtil.createMarker(2L, "New York", "New York is too big city to explore", LocalDate.of(2021, 7, 20), 5, Boolean.FALSE, LocalDateTime.now(), secondCoordinate);
 
         // CoordinateGetDto
-        CoordinateGetDto firstCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(firstCoordinate.getId(), firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
-        CoordinateGetDto secondCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(secondCoordinate.getId(), secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
+        final CoordinateGetDto firstCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(firstCoordinate.getId(), firstCoordinate.getLongitude(), firstCoordinate.getLatitude());
+        final CoordinateGetDto secondCoordinateGetDto = CoordinateUtil.createCoordinateGetDto(secondCoordinate.getId(), secondCoordinate.getLongitude(), secondCoordinate.getLatitude());
 
         // MarkerGetDto
-        MarkerGetDto firstMarkerGetDto = MarkerUtil.createMarkerGetDto(firstMarker.getId(), firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinateGetDto);
-        MarkerGetDto secondMarkerGetDto = MarkerUtil.createMarkerGetDto(secondMarker.getId(), secondMarker.getName(), secondMarker.getDescription(), secondMarker.getEventDate(), secondMarker.getGrade(), secondMarker.getShouldVisitAgain(), secondCoordinateGetDto);
-
-        List<MarkerGetDto> dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
+        final MarkerGetDto firstMarkerGetDto = MarkerUtil.createMarkerGetDto(firstMarker.getId(), firstMarker.getName(), firstMarker.getDescription(), firstMarker.getEventDate(), firstMarker.getGrade(), firstMarker.getShouldVisitAgain(), firstCoordinateGetDto);
+        final MarkerGetDto secondMarkerGetDto = MarkerUtil.createMarkerGetDto(secondMarker.getId(), secondMarker.getName(), secondMarker.getDescription(), secondMarker.getEventDate(), secondMarker.getGrade(), secondMarker.getShouldVisitAgain(), secondCoordinateGetDto);
+        final List<MarkerGetDto> dtoMarkers = Arrays.asList(firstMarkerGetDto, secondMarkerGetDto);
 
         // User
-        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "Mone1968");
-        User secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "Mustrien");
-        thirdUser = UserUtil.createUser(1L, "Sarah", "Isaac", "SarahLIsaac@gmail.com", "Mostion123");
+        final User admin = UserUtil.createUser(3L, "Admin", "Administrator", "admin@gmail.com", "$2a$12$WBG7PQLSfumuAHH0vUlkbuuHKLRrhYeLJ1d3FIvitkFKvuLuGX47u");
+        admin.setRoles(Collections.singleton(adminRole));
 
-        List<User> users = Arrays.asList(firstUser, secondUser);
+        firstUser = UserUtil.createUser(1L, "Eunice", "Holt", "eholt@gmail.com", "$2a$12$fxoy9xif4UoE1650oX3oAu1piTM6JkJ38DD5ZjtyA1Zw7hjLw0j8y");
+        final User secondUser = UserUtil.createUser(2L, "Sam", "Blanco", "samblanco@gmail.com", "$2a$12$/8ROxRmTtxHUa/fSLNaIR.qO6cE0BYtInuLkYGm37wi5fOJgV9xl.");
+        final User thirdUser = UserUtil.createUser(1L, "Sarah", "Isaac", "SarahLIsaac@gmail.com", "$2a$12$fxoy9xif4UoE1650oX3oAu1piTM6JkJ38DD5ZjtyA1Zw7hjLw0j8y");
+
+        firstUser.setRoles(Collections.singleton(userRole));
+        secondUser.setRoles(Collections.singleton(userRole));
+        thirdUser.setRoles(Collections.singleton(userRole));
+
+        final List<User> users = Arrays.asList(firstUser, secondUser);
 
         // UserGetDto
-        UserGetDto firstUserGetDto = UserUtil.createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), dtoRoles, dtoMarkers);
-        UserGetDto secondUserGetDto = UserUtil.createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), dtoRoles, new ArrayList<>());
-        UserGetDto thirdUserGetDto = UserUtil.createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), dtoRoles, dtoMarkers);
+        final UserGetDto firstUserGetDto = UserUtil.createUserGetDto(firstUser.getId(), firstUser.getFirstName(), firstUser.getLastName(), firstUser.getEmail(), dtoRoles, dtoMarkers);
+        final UserGetDto secondUserGetDto = UserUtil.createUserGetDto(secondUser.getId(), secondUser.getFirstName(), secondUser.getLastName(), secondUser.getEmail(), dtoRoles, new ArrayList<>());
+        // final UserGetDto thirdUserGetDto = UserUtil.createUserGetDto(thirdUser.getId(), thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), dtoRoles, new ArrayList<>());
 
-        // UserPutDto
-        firstUserPutDto = UserUtil.createUserPutDto(thirdUser.getFirstName(), thirdUser.getLastName(), thirdUser.getEmail(), LocalDateTime.now());
+        BDDMockito.given(userService.findByEmail(admin.getEmail())).willReturn(admin);
+        BDDMockito.given(userRepository.findByEmail(admin.getEmail())).willReturn(Optional.of(admin));
 
-        Mockito.when(userService.findById(firstUser.getId())).thenReturn(firstUser);
-        // Mockito.when(userService.findByEmail(firstUser.getUsername())).thenReturn(firstUser);
-        Mockito.when(userService.findAll()).thenReturn(users);
-        // Mockito.when(userService.update(firstUser.getUsername(), firstUser)).thenReturn(thirdUser);
+        BDDMockito.given(userService.findById(firstUser.getId())).willReturn(firstUser);
+        BDDMockito.given(modelMapper.map(Mockito.any(), Mockito.any())).willReturn(firstUserGetDto, secondUserGetDto);
+
+        BDDMockito.given(userService.findAll()).willReturn(users);
     }
 
     @Test
     @DisplayName("GET /users/1")
     public void should_Find_User_By_Id() throws Exception {
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/" + firstUser.getId())
+                .header(HEADER_NAME, TOKEN_PREFIX + ADMIN_JWT_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         this.mockMvc
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(FIND_USER_JSON));
-    }
-
-    @Test
-    @DisplayName("GET /users/username/Mone1968")
-    public void should_Find_User_By_Username() throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/username/" + firstUser.getEmail())
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON);
-
-        this.mockMvc
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(FIND_USER_JSON));
+                .andExpect(MockMvcResultMatchers.jsonPath("id", CoreMatchers.is(1)))
+                .andExpect(MockMvcResultMatchers.jsonPath("firstName", CoreMatchers.is(firstUser.getFirstName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(firstUser.getLastName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(firstUser.getEmail())));
     }
 
     @Test
     @DisplayName("GET /users")
     public void should_Find_All_Users() throws Exception {
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users")
+                .header(HEADER_NAME, TOKEN_PREFIX + ADMIN_JWT_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         this.mockMvc
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(FIND_ALL_USERS_JSON));
-    }
-
-    @Test
-    @DisplayName("PUT /users/username/Mone1968")
-    public void should_Update_User() throws Exception {
-        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/username/" + firstUser.getEmail())
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(firstUserPutDto));
-
-        this.mockMvc
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().json(UPDATE_USER_JSON));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

@@ -26,14 +26,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    private final JwtConfiguration jwtConfiguration;
-
     public SecurityConfiguration(final UserService userService,
-                                 final UserDetailsService userDetailsService,
-                                 final JwtConfiguration jwtConfiguration) {
+                                 final UserDetailsService userDetailsService) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
-        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
@@ -62,16 +58,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**")
                     .permitAll()
-                .antMatchers(
-                        USER_FIND_BY_ID_URL,
-                        USER_UPDATE_URL,
-                        MARKER_URL,
-                        MAPBOX_URL)
-                    .hasAnyRole(USER_ROLE)
-                .antMatchers(
-                        USER_FIND_BY_ID_URL,
-                        USER_FIND_ALL_URL)
-                    .hasAnyRole(ADMIN_ROLE)
+                .antMatchers(USERS_URL).hasAnyRole(ADMIN_ROLE)
+                .antMatchers(AUTH_ME_URL).hasAnyRole(USER_ROLE)
+                .antMatchers(PROFILES_UPDATE_ME_URL).hasAnyRole(USER_ROLE)
+                .antMatchers(MARKERS_URL).hasAnyRole(USER_ROLE)
+                .antMatchers(MAPBOX_URL).hasAnyRole(USER_ROLE)
                 .anyRequest()
                     .authenticated()
                 .and()
@@ -83,7 +74,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(jwtConfiguration.getBcryptRounds());
+        return new BCryptPasswordEncoder(BCRYPT_ROUNDS);
     }
 
     @Bean
@@ -95,13 +86,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         final JwtAuthenticationFilter jwtAuthenticationFilter =
-                new JwtAuthenticationFilter(authenticationManager(), userService, jwtConfiguration);
+                new JwtAuthenticationFilter(authenticationManager(), userService);
         jwtAuthenticationFilter.setFilterProcessesUrl(AUTHENTICATION_URL);
         return jwtAuthenticationFilter;
     }
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
-        return new JwtAuthorizationFilter(authenticationManager(), userService, userDetailsService, jwtConfiguration);
+        return new JwtAuthorizationFilter(authenticationManager(), userService, userDetailsService);
     }
 }

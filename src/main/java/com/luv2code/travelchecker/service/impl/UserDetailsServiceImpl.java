@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(searchedUser.get().getEmail(), searchedUser.get().getPassword(), authorities);
         } else {
             LOGGER.error("Cannot find User with username: ´{}´.", username);
-            throw  new EntityNotFoundException("User", "username", username);
+            throw  new EntityNotFoundException("User", "email", username);
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.luv2code.travelchecker.utils;
+package com.luv2code.travelchecker.util;
 
 import com.luv2code.travelchecker.dto.password.PasswordUpdateDto;
 
