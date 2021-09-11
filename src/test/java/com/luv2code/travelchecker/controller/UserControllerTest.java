@@ -98,7 +98,7 @@ public class UserControllerTest {
         firstUser.setRoles(Collections.singleton(userRole));
         secondUser.setRoles(Collections.singleton(userRole));
         thirdUser.setRoles(Collections.singleton(userRole));
-
+      
         final List<User> users = Arrays.asList(firstUser, secondUser);
 
         // UserGetDto
