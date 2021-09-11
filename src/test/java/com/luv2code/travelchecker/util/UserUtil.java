@@ -1,4 +1,4 @@
-package com.luv2code.travelchecker.utils;
+package com.luv2code.travelchecker.util;
 
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
@@ -19,6 +19,19 @@ public class UserUtil {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
+        user.setConfirmationPassword(password);
+        user.setCreatedAt(LocalDateTime.now());
+        return user;
+    }
+
+    public static User createUserWithWrongConfirmedPassword(final Long id, final String firstName, final String lastName, final String email, final String password, final String confirmedPassword) {
+        final User user = new User();
+        user.setId(id);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setConfirmationPassword(confirmedPassword);
         user.setCreatedAt(LocalDateTime.now());
         return user;
     }
@@ -29,6 +42,7 @@ public class UserUtil {
         userPostDto.setLastName(lastName);
         userPostDto.setEmail(email);
         userPostDto.setPassword(password);
+        userPostDto.setConfirmationPassword(password);
         userPostDto.setCreatedAt(createdAt);
         return userPostDto;
     }

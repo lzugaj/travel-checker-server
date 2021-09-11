@@ -1,6 +1,5 @@
 package com.luv2code.travelchecker.filter;
 
-import com.luv2code.travelchecker.configuration.JwtConfiguration;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.service.UserService;
@@ -24,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.luv2code.travelchecker.util.SecurityConstants.*;
+
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
@@ -32,32 +33,28 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     private final UserDetailsService userDetailsService;
 
-    private final JwtConfiguration jwtConfiguration;
-
     @Autowired
     public JwtAuthorizationFilter(final AuthenticationManager authenticationManager,
                                   final UserService userService,
-                                  final UserDetailsService userDetailsService,
-                                  final JwtConfiguration jwtConfiguration) {
+                                  final UserDetailsService userDetailsService) {
         super(authenticationManager);
         this.userService = userService;
         this.userDetailsService = userDetailsService;
-        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
                                     final HttpServletResponse response,
                                     final FilterChain filterChain) throws ServletException, IOException {
-        final String authorizationHeader = request.getHeader(jwtConfiguration.getHeaderName());
+        final String authorizationHeader = request.getHeader(HEADER_NAME);
 
         String email = null;
         String jtwToken = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith(jwtConfiguration.getTokenPrefix()) && authorizationHeader.length() > 7) {
+        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX) && authorizationHeader.length() > 7) {
             jtwToken = authorizationHeader.substring(7);
             try {
-                email = JwtUtil.extractUsername(jtwToken, jwtConfiguration.getSecret());
+                email = JwtUtil.extractUsername(jtwToken, SECRET);
             } catch (final Exception exception){
                 final String url = request.getRequestURL().toString();
                 if (exception instanceof MalformedJwtException){
@@ -70,7 +67,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             final UserDetails userDetails = this.userDetailsService.loadUserByUsername(email);
-            final Boolean isTokenValid = JwtUtil.validateToken(jtwToken, userDetails, jwtConfiguration.getSecret());
+            final Boolean isTokenValid = JwtUtil.validateToken(jtwToken, userDetails, SECRET);
 
             User user;
             try {

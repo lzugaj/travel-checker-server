@@ -8,9 +8,9 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password:
+    url: ${TRAVEL_CHECKER_DEV_DB_URL}
+    username: ${TRAVEL_CHECKER_DEV_DB_USERNAME}
+    password: ${TRAVEL_CHECKER_DEV_DB_PASSWORD}
   jpa:
     show-sql: false
     database-platform: org.hibernate.dialect.H2Dialect

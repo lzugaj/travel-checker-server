@@ -6,9 +6,11 @@ import com.luv2code.travelchecker.repository.AbstractEntityRepository;
 import com.luv2code.travelchecker.service.AbstractEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends AbstractEntityRepository<E>> implements AbstractEntityService<E> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractEntityServiceImpl.class);

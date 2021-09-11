@@ -5,7 +5,7 @@ import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.RoleRepository;
 import com.luv2code.travelchecker.service.impl.RoleServiceImpl;
-import com.luv2code.travelchecker.utils.RoleUtil;
+import com.luv2code.travelchecker.util.RoleUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

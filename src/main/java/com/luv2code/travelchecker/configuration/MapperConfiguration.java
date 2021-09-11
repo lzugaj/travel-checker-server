@@ -23,8 +23,8 @@ public class MapperConfiguration {
     @Bean
     public ModelMapper modelMapper() {
         final ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration()
-                .setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.getConfiguration().setAmbiguityIgnored(true);
 
         // Role Mapper
         roleToRoleGetDto(modelMapper);

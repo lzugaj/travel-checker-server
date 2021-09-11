@@ -1,7 +1,6 @@
 package com.luv2code.travelchecker.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.luv2code.travelchecker.configuration.JwtConfiguration;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.authentication.AuthenticationDto;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
@@ -24,21 +23,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.luv2code.travelchecker.util.SecurityConstants.*;
+
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private final UserService userService;
 
-    private final JwtConfiguration jwtConfiguration;
-
     @Autowired
     public JwtAuthenticationFilter(final AuthenticationManager authenticationManager,
-                                   final UserService userService,
-                                   final JwtConfiguration jwtConfiguration) {
+                                   final UserService userService) {
         setAuthenticationManager(authenticationManager);
         this.userService = userService;
-        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
@@ -84,10 +81,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             final FilterChain chain,
                                             final Authentication authentication) {
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        final String jwtToken = JwtUtil.generateToken(userDetails, jwtConfiguration.getSecret());
+        final String jwtToken = JwtUtil.generateToken(userDetails, SECRET);
 
         final User user = userService.findByEmail(userDetails.getUsername());
         LOGGER.info("Authentication success for user with id: ´{}´.", user.getId());
-        response.addHeader(jwtConfiguration.getHeaderName(), jwtConfiguration.getTokenPrefix() + jwtToken);
+        response.addHeader(HEADER_NAME, TOKEN_PREFIX + jwtToken);
     }
 }
