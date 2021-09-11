@@ -79,7 +79,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
             final String url = request.getRequestURL().toString();
             if(!isTokenValid){
-                LOGGER.error("User with id ´{}´ attempted access to URL ´{}´, with expired JWT token.", user.getId(), url);
+                LOGGER.error("User with id: ´{}´ attempted access to URL: ´{}´, with expired JWT token.", user.getId(), url);
                 throw new ExpiredJwtException(null, null, "Expired JWT");
             }
 
