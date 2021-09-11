@@ -13,7 +13,7 @@ luv2code:
     mapbox:
       token: ${TRAVEL_CHECKER_MAPBOX_TOKEN}
     locale:
-      baseName: messages/messages
+      baseName: classpath:messages
       defaultLocale: en
       defaultEncoding: UTF-8
     api-info:
