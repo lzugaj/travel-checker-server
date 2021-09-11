@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/profiles")
 public class ProfileController {
@@ -38,7 +40,7 @@ public class ProfileController {
     }
 
     @PutMapping("/me")
-    public ResponseEntity<?> update(@RequestBody final UserPutDto userPutDto) {
+    public ResponseEntity<?> updateMyProfile(@Valid @RequestBody final UserPutDto userPutDto) {
         final String email = authenticationService.getAuthenticatedEmail();
         LOGGER.info("Successfully founded currently logged in User with email: ´{}´.", email);
 

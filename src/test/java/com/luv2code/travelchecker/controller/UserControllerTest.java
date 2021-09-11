@@ -1,6 +1,5 @@
 package com.luv2code.travelchecker.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.domain.Role;
@@ -46,9 +45,6 @@ public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @MockBean
     private UserService userService;

@@ -76,16 +76,18 @@ public class ProfileControllerTest {
         final User user = UserUtil.createUser(1L, "John", "Doe", "john.doe@gmail.com", "$2a$12$Gw9o/me9.BOeI5a40v7Reuxc5GyOdAMXUDWDnIWZFa6LM9HLeiyc6");
         user.setRoles(Collections.singleton(userRole));
 
-        userPutDto = UserUtil.createUserPutDto(user.getFirstName(), user.getLastName(), userPutDto.getEmail(), LocalDateTime.now());
+        userPutDto = UserUtil.createUserPutDto(user.getFirstName(), user.getLastName(), user.getEmail(), LocalDateTime.now());
+        userPutDto.setId(user.getId());
 
         final UserGetDto userGetDto = UserUtil.createUserGetDto(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), rolesGetDto, null);
 
+        BDDMockito.given(modelMapper.map(userPutDto, User.class)).willReturn(user);
+        BDDMockito.given(modelMapper.map(user, UserGetDto.class)).willReturn(userGetDto);
+
         BDDMockito.given(userService.findByEmail(user.getEmail())).willReturn(user);
+        BDDMockito.given(userService.update(user.getEmail(), user)).willReturn(user);
         BDDMockito.given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
         BDDMockito.given(authenticationService.getAuthenticatedEmail()).willReturn(user.getEmail());
-        BDDMockito.given(modelMapper.map(userPutDto, User.class)).willReturn(user);
-        BDDMockito.given(userService.update(user.getEmail(), user)).willReturn(user);
-        BDDMockito.given(modelMapper.map(user, UserGetDto.class)).willReturn(userGetDto);
     }
 
     @Test
@@ -101,7 +103,7 @@ public class ProfileControllerTest {
 
         this.mockMvc
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("id", CoreMatchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("firstName", CoreMatchers.is(userPutDto.getFirstName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(userPutDto.getLastName())))
