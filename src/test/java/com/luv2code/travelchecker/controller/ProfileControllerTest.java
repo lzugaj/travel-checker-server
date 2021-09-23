@@ -84,10 +84,10 @@ public class ProfileControllerTest {
         BDDMockito.given(modelMapper.map(userPutDto, User.class)).willReturn(user);
         BDDMockito.given(modelMapper.map(user, UserGetDto.class)).willReturn(userGetDto);
 
-        BDDMockito.given(userService.findByEmail(user.getEmail())).willReturn(user);
-        BDDMockito.given(userService.update(user.getEmail(), user)).willReturn(user);
         BDDMockito.given(userRepository.findByEmail(user.getEmail())).willReturn(Optional.of(user));
         BDDMockito.given(authenticationService.getAuthenticatedEmail()).willReturn(user.getEmail());
+        BDDMockito.given(userService.findByEmail(user.getEmail())).willReturn(user);
+        BDDMockito.given(userService.update(user.getEmail(), user)).willReturn(user);
     }
 
     @Test
@@ -103,10 +103,9 @@ public class ProfileControllerTest {
 
         this.mockMvc
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("id", CoreMatchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("firstName", CoreMatchers.is(userPutDto.getFirstName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(userPutDto.getLastName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(userPutDto.getEmail())));
+                .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(userPutDto.getLastName())));
     }
 }

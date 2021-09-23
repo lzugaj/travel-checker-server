@@ -98,7 +98,7 @@ public class ResponseEntityExceptionHandler {
 
             message = String.join(",", messages);
         } else if (exception instanceof NullPointerException) {
-            message = "Something went wrong. Please investigate the cause of the problem in more depth.";
+            message = "Something went wrong (NullPointerException). Please investigate the cause of the problem in more depth.";
         } else {
             message = exception.getMessage();
         }

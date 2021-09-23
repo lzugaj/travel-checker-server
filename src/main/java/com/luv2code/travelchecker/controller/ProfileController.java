@@ -11,10 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -39,7 +36,7 @@ public class ProfileController {
         this.modelMapper = modelMapper;
     }
 
-    @PutMapping("/me")
+    @PatchMapping("/me")
     public ResponseEntity<?> updateMyProfile(@Valid @RequestBody final UserPutDto userPutDto) {
         final String email = authenticationService.getAuthenticatedEmail();
         LOGGER.info("Successfully founded currently logged in User with email: ´{}´.", email);
@@ -49,6 +46,6 @@ public class ProfileController {
 
         final User updatedUser = userService.update(email, mappedUser);
         LOGGER.info("Successfully finished updating process for User with id: ´{}´.", updatedUser.getId());
-        return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.OK);
+        return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.CREATED);
     }
 }

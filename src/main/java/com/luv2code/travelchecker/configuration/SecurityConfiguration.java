@@ -56,10 +56,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/swagger-resources/**",
                         "/configuration/security",
                         "/swagger-ui.html",
-                        "/webjars/**")
+                        "/webjars/**",
+                        "/h2-console/**")
                     .permitAll()
                 .antMatchers(USERS_URL).hasAnyRole(ADMIN_ROLE)
-                .antMatchers(AUTH_ME_URL).hasAnyRole(USER_ROLE)
+                .antMatchers(AUTH_ME_URL).hasAnyRole(ADMIN_ROLE, USER_ROLE)
                 .antMatchers(PROFILES_UPDATE_ME_URL).hasAnyRole(USER_ROLE)
                 .antMatchers(MARKERS_URL).hasAnyRole(USER_ROLE)
                 .antMatchers(MAPBOX_URL).hasAnyRole(USER_ROLE)

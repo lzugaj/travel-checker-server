@@ -12,9 +12,11 @@ spring:
     username: ${TRAVEL_CHECKER_DEV_DB_USERNAME}
     password: ${TRAVEL_CHECKER_DEV_DB_PASSWORD}
   jpa:
-    show-sql: false
+    show-sql: true
+    generate-ddl: true
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   liquibase:
+    enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml

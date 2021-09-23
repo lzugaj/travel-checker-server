@@ -2,7 +2,6 @@ package com.luv2code.travelchecker.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.luv2code.travelchecker.validation.Email;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
@@ -28,10 +27,6 @@ public class UserPutDto {
     @NotBlank(message = "{user.lastName.blank}")
     @Size(min = 2, message = "{user.lastName.size}")
     private String lastName;
-
-    @JsonProperty("email")
-    @Email(message = "{user.email.invalid}")
-    private String email;
 
     @JsonIgnore
     private LocalDateTime modifiedAt = LocalDateTime.now();

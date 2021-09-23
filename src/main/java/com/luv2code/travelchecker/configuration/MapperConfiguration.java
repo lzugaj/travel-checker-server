@@ -4,6 +4,7 @@ import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.domain.Marker;
 import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.User;
+import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
 import com.luv2code.travelchecker.dto.marker.MarkerGetDto;
 import com.luv2code.travelchecker.dto.marker.MarkerPostDto;
@@ -12,10 +13,16 @@ import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import com.luv2code.travelchecker.dto.user.UserGetDto;
 import com.luv2code.travelchecker.dto.user.UserPostDto;
 import com.luv2code.travelchecker.dto.user.UserPutDto;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Configuration
 public class MapperConfiguration {
@@ -45,9 +52,54 @@ public class MapperConfiguration {
         return new ModelMapper();
     }
 
+    private Converter<?, ?> convertRoles() {
+        return new AbstractConverter<List<RoleType>, List<String>>() {
+            protected List<String> convert(final List<RoleType> roles) {
+                if (roles == null) {
+                    return new ArrayList<>();
+                }
+
+                return roles.stream()
+                        .map(RoleType::name)
+                        .collect(Collectors.toList());
+            }
+        };
+    }
+
     private void roleToRoleGetDto(final ModelMapper modelMapper) {
         modelMapper.createTypeMap(Role.class, RoleGetDto.class)
                 .addMapping(Role::getName, RoleGetDto::setName);
+    }
+
+    private Converter<?, ?> convertMarkers() {
+        return new AbstractConverter<List<Marker>, List<MarkerGetDto>>() {
+            protected List<MarkerGetDto> convert(final List<Marker> markers) {
+                if (markers == null) {
+                    return new ArrayList<>();
+                }
+
+                return markers.stream()
+                        .map(marker -> {
+                            final Coordinate coordinate = marker.getCoordinate();
+                            final CoordinateGetDto coordinateGetDto = CoordinateGetDto.builder()
+                                    .id(coordinate.getId())
+                                    .longitude(coordinate.getLongitude())
+                                    .latitude(coordinate.getLatitude())
+                                    .build();
+
+                            return MarkerGetDto.builder()
+                                    .id(marker.getId())
+                                    .name(marker.getName())
+                                    .description(marker.getDescription())
+                                    .eventDate(marker.getEventDate())
+                                    .grade(marker.getGrade())
+                                    .shouldVisitAgain(marker.getShouldVisitAgain())
+                                    .coordinate(coordinateGetDto)
+                                    .build();
+                        })
+                        .collect(Collectors.toList());
+            }
+        };
     }
 
     private void userToUserGetDto(final ModelMapper modelMapper) {
@@ -56,8 +108,8 @@ public class MapperConfiguration {
                 .addMapping(User::getFirstName, UserGetDto::setFirstName)
                 .addMapping(User::getLastName, UserGetDto::setLastName)
                 .addMapping(User::getEmail, UserGetDto::setEmail)
-                .addMapping(User::getRoles, UserGetDto::setRoles)
-                .addMapping(User::getMarkers, UserGetDto::setMarkers);
+                .addMappings(mapper -> mapper.using(convertRoles()).map(User::getRoles, UserGetDto::setRoles))
+                .addMappings(mapper -> mapper.using(convertMarkers()).map(User::getMarkers, UserGetDto::setMarkers));
     }
 
     private void userPostDtoToUser(final ModelMapper modelMapper) {
@@ -76,7 +128,6 @@ public class MapperConfiguration {
                 .addMapping(UserPutDto::getId, User::setId)
                 .addMapping(UserPutDto::getFirstName, User::setFirstName)
                 .addMapping(UserPutDto::getLastName, User::setLastName)
-                .addMapping(UserPutDto::getEmail, User::setEmail)
                 .addMapping(UserPutDto::getModifiedAt, User::setModifiedAt);
     }
 

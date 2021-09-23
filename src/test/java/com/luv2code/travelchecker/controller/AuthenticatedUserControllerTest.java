@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.luv2code.travelchecker.util.SecurityConstants.HEADER_NAME;
 import static com.luv2code.travelchecker.util.SecurityConstants.TOKEN_PREFIX;
@@ -76,7 +77,7 @@ public class AuthenticatedUserControllerTest {
         // UserGetDto
         final UserGetDto meDto = UserUtil.createUserGetDto(me.getId(), me.getFirstName(), me.getLastName(), me.getEmail(), rolesDto, null);
 
-        BDDMockito.given(userRepository.findByEmail(me.getEmail())).willReturn(java.util.Optional.of(me));
+        BDDMockito.given(userRepository.findByEmail(me.getEmail())).willReturn(Optional.of(me));
         BDDMockito.given(authenticationService.getAuthenticatedEmail()).willReturn(me.getEmail());
         BDDMockito.given(userService.findByEmail(me.getEmail())).willReturn(me);
         BDDMockito.given(modelMapper.map(me, UserGetDto.class)).willReturn(meDto);

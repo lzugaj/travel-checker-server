@@ -51,7 +51,6 @@ public class UserUtil {
         final UserPutDto userPutDto = new UserPutDto();
         userPutDto.setFirstName(firstName);
         userPutDto.setLastName(lastName);
-        userPutDto.setEmail(email);
         userPutDto.setModifiedAt(modifiedAt);
         return userPutDto;
     }
