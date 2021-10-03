@@ -1,4 +1,4 @@
-pipeline {
+node {
     agent any
     tools {
         maven 'Maven',
@@ -13,12 +13,12 @@ pipeline {
     def branch = env.BRANCH_NAME
 
     if (branch.matches('feature/.+|bugfix/.+|hotfix/.+')) {
-          stages {
-              stage('Build') {
-                  steps {
-                      bat 'mvn clean install -DskipTests'
-                  }
-              }
+        stages {
+            stage('Build') {
+                steps {
+                    bat 'mvn clean install -DskipTests'
+                }
+            }
         }
     } else if (branch == 'develop') {
         stages {
