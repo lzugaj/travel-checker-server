@@ -6,16 +6,10 @@ pipeline {
     }
 
     stages {
-        stage('Compile') {
-            sh 'mvn clean compile'
-        }
-
         stage('Build') {
-            sh 'mvn clean install -DskipTests'
-        }
-
-        stage('Test') {
-            sh 'mvn test'
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
         }
     }
 }
