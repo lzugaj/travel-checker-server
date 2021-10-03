@@ -1,4 +1,4 @@
-node {
+pipeline {
     agent any
     tools {
         maven 'Maven',
@@ -16,7 +16,9 @@ node {
                 }
             }
         }
-    } else if (branch == 'develop') {
+    }
+
+    if (branch == 'develop') {
         stages {
             stage('Compile') {
                 steps {
