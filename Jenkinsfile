@@ -8,23 +8,19 @@ pipeline {
     env.SKIP_TLS = true
     def branch = env.BRANCH_NAME
 
-    if (branch.matches('feature/.+|bugfix/.+|hotfix/.+') {
-        stages {
+    stages {
+        if (branch.matches('feature/.+|bugfix/.+|hotfix/.+') {
             stage('Build') {
                 steps {
                     bat 'mvn clean install -DskipTests'
                 }
             }
-        }
-    }
-
-    if (branch == 'develop') {
-        stages {
-            stage('Compile') {
-                steps {
-                    bat 'mvn clean compile'
-                }
-            }
+        } else if (branch == 'develop') {
+              stage('Compile') {
+                  steps {
+                      bat 'mvn clean compile'
+                  }
+              }
         }
     }
 }
