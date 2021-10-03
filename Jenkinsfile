@@ -13,7 +13,7 @@ pipeline {
     def branch = env.BRANCH_NAME
 
     stages {
-        if (branch.matches('feature/.+|bugfix/.+|hotfix/.+') {
+        if (branch.matches('feature/.+|bugfix/.+|hotfix/.+')) {
             stage('Build') {
                 steps {
                     bat 'mvn clean install -DskipTests'
