@@ -7,15 +7,15 @@ pipeline {
 
     stages {
         stage('Compile') {
-            bat 'mvn clean compile'
+            sh 'mvn clean compile'
         }
 
         stage('Build') {
-            bat 'mvn clean install -DskipTests'
+            sh 'mvn clean install -DskipTests'
         }
 
         stage('Test') {
-            bat 'mvn test'
+            sh 'mvn test'
         }
     }
 }
