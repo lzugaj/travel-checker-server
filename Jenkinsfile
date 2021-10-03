@@ -16,7 +16,7 @@ node {
         stages {
             stage('Build') {
                 steps {
-                    bat 'mvn clean install -DskipTests'
+                    sh 'mvn clean install -DskipTests'
                 }
             }
         }
@@ -24,7 +24,7 @@ node {
         stages {
             stage('Compile') {
                 steps {
-                    bat 'mvn clean compile'
+                    sh 'mvn clean compile'
                 }
             }
         }
