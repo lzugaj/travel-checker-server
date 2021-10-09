@@ -1,5 +1,4 @@
 TOOLS = [
-    jdk: 'JDK 11',
     maven: 'Maven 3.8.2'
 ]
 
@@ -27,10 +26,7 @@ if (branch == 'develop') {
 }
 
 def mvn(cmd) {
-    withMaven(
-        maven: TOOLS.maven,
-        jdk: TOOLS.jdk
-    ) {
+    withMaven(maven: TOOLS.maven) {
         sh 'mvn ${cmd}'
     }
 }
