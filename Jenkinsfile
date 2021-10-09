@@ -6,6 +6,8 @@ TOOLS = [
 env.SKIP_TLS = true
 def branch = env.BRANCH_NAME
 
+@Library('croz-jenkins-libs') _
+
 if (branch.matches('feature/.+|bugfix/.+|hotfix/.+')) {
     node('git&&linux&&!master&&maven') {
         stage('Build') {
