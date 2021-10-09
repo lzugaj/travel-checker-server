@@ -8,7 +8,7 @@ spring:
       path: /h2-console
   datasource:
     driver-class-name: org.h2.Driver
-    url: ${TRAVEL_CHECKER_DEV_DB_URL}
+    url: jdbc:h2:mem:testdb # ${TRAVEL_CHECKER_DEV_DB_URL}
     username: ${TRAVEL_CHECKER_DEV_DB_USERNAME}
     password: ${TRAVEL_CHECKER_DEV_DB_PASSWORD}
   jpa:

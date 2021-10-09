@@ -176,6 +176,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>travel-checker-server</finalName>
     </build>
 
 </project>

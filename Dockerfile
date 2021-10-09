@@ -1,4 +1,4 @@
-FROM alpine:latest
-VOLUME /tmp
-COPY ./build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+FROM openjdk:11
+EXPOSE 9010
+ADD target/travel-checker-server.jar travel-checker-server.jar
+ENTRYPOINT ["java", "-jar", "/travel-checker-server.jar"]
