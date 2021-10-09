@@ -1,13 +1,15 @@
 pipeline {
     agent any
-    stages {
-        if (env.BRANCH_NAME == 'develop') {
+    if (env.BRANCH_NAME == 'develop') {
+        stages {
             stage('Compile') {
                 steps {
                     echo 'Compile'
                 }
             }
-        } else {
+        }
+    } else {
+        stages {
             stage('Build') {
                 steps {
                     echo 'Build'
