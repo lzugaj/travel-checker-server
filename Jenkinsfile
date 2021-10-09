@@ -1,18 +1,18 @@
 pipeline {
     agent any
-
     stages {
         stage('Compile') {
-            when { branch 'develop' }
+            when {
+                branch 'develop'
+            }
             steps {
-                sh 'mvn clean compile'
+                echo 'Compile'
             }
         }
 
-        stage('Compile') {
-            when { not { branch 'develop' } }
+        stage('Build') {
             steps {
-                sh 'mvn clean install -DskipTests'
+                echo 'Build'
             }
         }
     }
