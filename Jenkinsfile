@@ -6,7 +6,7 @@ TOOLS = [
 env.SKIP_TLS = true
 def branch = env.BRANCH_NAME
 
-@Library('jenkins-shared-library') _
+@Library('jenkins-shared-library')_
 
 if (branch.matches('feature/.+|bugfix/.+|hotfix/.+')) {
     node('git&&linux&&!master&&maven') {
