@@ -1,21 +1,19 @@
-TOOLS = [
-    jdk: 'JDK 11',
-    maven: 'Maven 3.6.3'
-]
+pipeline {
+    agent any
 
-env.SKIP_TLS = true
-def branch = env.BRANCH_NAME
-
-if (branch =~ 'feature/' || branch =~ 'bugfix/' ) {
-    node('git&&linux&&!master&&maven') {
-        stage('Build') {
-            sh 'mvn clean install -DskipTests'
-        }
-    }
-} else if (branch == 'develop') {
-    node('git&&linux&&!master&&maven') {
-        stage('Compile') {
-            sh 'mvn clean compile'
+    stages {
+        if (env.BRANCH_NAME == 'develop') {
+            stage('Compile') {
+                steps {
+                    sh 'mvn clean compile'
+                }
+            }
+        } else {
+            stage('Build') {
+                steps {
+                    sh 'mvn clean install -DskipTests'
+                }
+            }
         }
     }
 }
