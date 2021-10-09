@@ -1,5 +1,5 @@
 TOOLS = [
-    jdk: 'JDK 11',
+    jdk: 'JDK 8',
     maven: [
         id: 'Maven 3.8.2',
         globalSettings: '1a20d0f5-59a6-4b51-96a0-13bd5c065779',
