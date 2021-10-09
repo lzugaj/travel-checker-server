@@ -1,18 +1,17 @@
 pipeline {
     agent any
     stages {
-        stage('Compile') {
-            when {
-                branch 'develop'
+        if (env.BRANCH_NAME == 'develop') {
+            stage('Compile') {
+                steps {
+                    echo 'Compile'
+                }
             }
-            steps {
-                echo 'Compile'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Build'
+        } else {
+            stage('Build') {
+                steps {
+                    echo 'Build'
+                }
             }
         }
     }
