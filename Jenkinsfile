@@ -1,4 +1,12 @@
-if (env.BRANCH_NAME == 'develop') {
+def branch = env.BRANCH_NAME
+
+if (branch == 'develop') {
+    node {
+        stage('Compile') {
+            echo 'Compile'
+        }
+    }
+} else if (branch == 'master') {
     node {
         stage('Compile') {
             echo 'Compile'
