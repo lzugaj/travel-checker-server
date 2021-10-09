@@ -14,19 +14,13 @@ if (branch == 'develop') {
 } else if (branch == 'master') {
     node {
         stage('Compile') {
-            mvn 'compile'
+            sh 'mvn compile'
         }
     }
 } else {
     node {
         stage('Build') {
-            mvn 'clean install -DskipTests'
+            sh 'mvn clean install -DskipTests'
         }
-    }
-}
-
-def mvn(cmd) {
-    withMaven(maven: TOOLS.maven) {
-        sh 'mvn ${cmd}'
     }
 }
