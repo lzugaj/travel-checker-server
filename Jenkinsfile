@@ -1,5 +1,5 @@
 if (env.BRANCH_NAME == 'develop') {
-    stages {
+    node {
         stage('Compile') {
             steps {
                 echo 'Compile'
@@ -7,7 +7,7 @@ if (env.BRANCH_NAME == 'develop') {
         }
     }
 } else {
-    stages {
+    node {
         stage('Build') {
             steps {
                 echo 'Build'
