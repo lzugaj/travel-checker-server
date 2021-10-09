@@ -1,11 +1,6 @@
 TOOLS = [
     jdk: 'JDK 11',
-    maven: [
-        id: 'Maven 3.8.2',
-        globalSettings: '1a20d0f5-59a6-4b51-96a0-13bd5c065779',
-        settings: '5d77dfcc-5b32-4d9f-841a-90f768d94a58',
-        mavenOpts: '-Xmx768m -XX:MaxPermSize=256m'
-    ]
+    maven: 'Maven 3.8.2'
 ]
 
 env.SKIP_TLS = true
@@ -33,11 +28,8 @@ if (branch == 'develop') {
 
 def mvn(cmd) {
     withMaven(
-        maven: TOOLS.maven.id,
-        jdk: TOOLS.jdk,
-        globalMavenSettingsConfig: TOOLS.maven.globalSettings,
-        mavenSettingsConfig: TOOLS.maven.settings,
-        mavenOpts: TOOLS.maven.mavenOpts
+        maven: TOOLS.maven,
+        jdk: TOOLS.jdk
     ) {
         sh 'mvn ${cmd}'
     }
