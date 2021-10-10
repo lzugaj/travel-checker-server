@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/base.xml" />
+    <springProperty scope="context" name="logs" source="logging.file.path" />
+    <springProperty scope="context" name="fileName" source="logging.file.name" />
+    <springProperty scope="context" name="springAppName" source="spring.application.name" />
 
-    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>travelchecker.log</file>
-        <append>true</append>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{dd-MM-yyyy HH:mm} [%5level] - %logger.%M - %msg%n</pattern>
+            <pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) [${springAppName}] %highlight(%-5level) %logger{36}.%M - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <logger name="org.springframework.web" level="DEBUG" />
-    <logger name="your.custom.package" level="TRACE" />
+    <appender name="LOGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logs}/${fileName}.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] [${springAppName}] %-5level %logger{36}.%M - %msg%n</Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logs}/archived/${fileName}_%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>100MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
 
-    <root level="INFO">
-        <appender-ref ref="FILE" />
+    <logger name="com.yahoo.elide.graphql.subscriptions" level="DEBUG" />
+
+    <!-- Log Hibernate SQL Statements -->
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
+
+    <!-- Log JPA Datastore HQL Statements -->
+    <logger name="com.yahoo.elide.core.hibernate.hql.DefaultQueryLogger" level="DEBUG" />
+
+    <!-- Log SQL/JPQL Timings -->
+    <logger name="com.yahoo.elide.core.utils.TimedFunction" level="DEBUG" />
+
+    <!-- Log HTTP Error Explanations -->
+    <logger name="com.yahoo.elide.graphql.QueryRunner" level="DEBUG" />
+    <logger name="com.yahoo.elide.Elide" level="DEBUG" />
+
+    <!-- Log Analytic SQL Queries -->
+    <logger name="com.yahoo.elide.datastores.aggregation.core.Slf4jQueryLogger" level="DEBUG" />
+
+    <root level="info">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="LOGFILE" />
     </root>
 </configuration>

@@ -1,0 +1,409 @@
+10-10-2021 22:13:20.710 [background-preinit] [travel-checker-server, ] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+10-10-2021 22:13:20.735 [main] [travel-checker-server, ] INFO  c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 25696 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+10-10-2021 22:13:20.737 [main] [travel-checker-server, ] INFO  c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+10-10-2021 22:13:22.249 [main] [travel-checker-server, ] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10-10-2021 22:13:22.464 [main] [travel-checker-server, ] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 193 ms. Found 4 JPA repository interfaces.
+10-10-2021 22:13:23.240 [main] [travel-checker-server, ] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+10-10-2021 22:13:23.248 [main] [travel-checker-server, ] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:13:23.249 [main] [travel-checker-server, ] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-10-2021 22:13:23.249 [main] [travel-checker-server, ] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.43]
+10-10-2021 22:13:23.394 [main] [travel-checker-server, ] INFO  o.a.c.c.C.[.[.[/api/v1/travel-checker].log - Initializing Spring embedded WebApplicationContext
+10-10-2021 22:13:23.394 [main] [travel-checker-server, ] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 2603 ms
+10-10-2021 22:13:23.479 [main] [travel-checker-server, ] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-10-2021 22:13:23.618 [main] [travel-checker-server, ] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-10-2021 22:13:23.625 [main] [travel-checker-server, ] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration.lambda$h2Console$0 - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+10-10-2021 22:13:27.162 [main] [travel-checker-server, ] INFO  l.lockservice.StandardLockService.info - Successfully acquired change log lock
+10-10-2021 22:13:27.543 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-000-role-create.xml
+10-10-2021 22:13:27.566 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-001-user-create.xml
+10-10-2021 22:13:27.568 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-002-user-role-create.xml
+10-10-2021 22:13:27.584 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-003-coordinate-create.xml
+10-10-2021 22:13:27.592 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-004-marker-create.xml
+10-10-2021 22:13:27.603 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-005-user-marker-create.xml
+10-10-2021 22:13:27.627 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-006-role-insert.xml
+10-10-2021 22:13:27.636 [main] [travel-checker-server, ] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210723-000-user-alter.xml
+10-10-2021 22:13:27.661 [main] [travel-checker-server, ] INFO  l.c.StandardChangeLogHistoryService.info - Creating database history table with name: PUBLIC.DATABASECHANGELOG
+10-10-2021 22:13:27.662 [main] [travel-checker-server, ] INFO  l.c.StandardChangeLogHistoryService.info - Reading from PUBLIC.DATABASECHANGELOG
+10-10-2021 22:13:27.764 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Table role created
+10-10-2021 22:13:27.764 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-000-role-create.xml::20210624-000-1::lzugaj ran successfully in 8ms
+10-10-2021 22:13:27.784 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Table user created
+10-10-2021 22:13:27.784 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-001-user-create.xml::20210624-001-1::lzugaj ran successfully in 2ms
+10-10-2021 22:13:27.787 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Table user_role created
+10-10-2021 22:13:27.788 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-1::lzugaj ran successfully in 2ms
+10-10-2021 22:13:27.800 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (user_id)
+10-10-2021 22:13:27.800 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-2::lzugaj ran successfully in 11ms
+10-10-2021 22:13:27.804 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (role_id)
+10-10-2021 22:13:27.805 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-3::lzugaj ran successfully in 3ms
+10-10-2021 22:13:27.808 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Table coordinate created
+10-10-2021 22:13:27.808 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-003-coordinate-create.xml::20210624-003-1::lzugaj ran successfully in 2ms
+10-10-2021 22:13:27.812 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Table marker created
+10-10-2021 22:13:27.812 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-1::lzugaj ran successfully in 2ms
+10-10-2021 22:13:27.813 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to marker (coordinate_id)
+10-10-2021 22:13:27.813 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-2::lzugaj ran successfully in 0ms
+10-10-2021 22:13:27.818 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Table user_marker created
+10-10-2021 22:13:27.819 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-1::lzugaj ran successfully in 2ms
+10-10-2021 22:13:27.822 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (user_id)
+10-10-2021 22:13:27.823 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-2::lzugaj ran successfully in 3ms
+10-10-2021 22:13:27.825 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (marker_id)
+10-10-2021 22:13:27.825 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-3::lzugaj ran successfully in 0ms
+10-10-2021 22:13:27.829 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+10-10-2021 22:13:27.830 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+10-10-2021 22:13:27.830 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-006-role-insert.xml::20210624-006-1::lzugaj ran successfully in 2ms
+10-10-2021 22:13:27.832 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - Unique constraint added to user(email)
+10-10-2021 22:13:27.832 [main] [travel-checker-server, ] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210723-000-user-alter.xml::20210723-000-1::lzugaj ran successfully in 1ms
+10-10-2021 22:13:27.835 [main] [travel-checker-server, ] INFO  l.lockservice.StandardLockService.info - Successfully released change log lock
+10-10-2021 22:13:27.997 [main] [travel-checker-server, ] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+10-10-2021 22:13:28.054 [main] [travel-checker-server, ] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.28.Final
+10-10-2021 22:13:28.249 [main] [travel-checker-server, ] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10-10-2021 22:13:28.381 [main] [travel-checker-server, ] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+10-10-2021 22:13:29.139 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table user drop constraint if exists UKob8kqyqqgmefl0aco34akdtpe
+10-10-2021 22:13:29.140 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table user add constraint UKob8kqyqqgmefl0aco34akdtpe unique (email)
+10-10-2021 22:13:29.151 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table marker add constraint FKbnmlind6bxnrv9knl07q7q0mu foreign key (coordinate_id) references coordinate
+10-10-2021 22:13:29.157 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK7x0524j5apsrww33y6xddtmto foreign key (user_id) references user
+10-10-2021 22:13:29.157 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK5m5q5jdta8sowibeyqh3mafw0 foreign key (marker_id) references marker
+10-10-2021 22:13:29.178 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FKa68196081fvovjhkek5m97n3y foreign key (role_id) references role
+10-10-2021 22:13:29.180 [main] [travel-checker-server, ] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FK859n2jvi8ivhui0rl0esws6o foreign key (user_id) references user
+10-10-2021 22:13:29.181 [main] [travel-checker-server, ] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+10-10-2021 22:13:29.194 [main] [travel-checker-server, ] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+10-10-2021 22:13:29.701 [main] [travel-checker-server, ] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-10-2021 22:13:31.987 [main] [travel-checker-server, ] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - DB connection for DEV - H2
+10-10-2021 22:13:31.988 [main] [travel-checker-server, ] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Driver class name: org.h2.Driver
+10-10-2021 22:13:31.988 [main] [travel-checker-server, ] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - URL: jdbc:h2:mem:testdb
+10-10-2021 22:13:31.988 [main] [travel-checker-server, ] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Username: sa
+10-10-2021 22:13:31.988 [main] [travel-checker-server, ] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Password: password
+10-10-2021 22:13:32.464 [main] [travel-checker-server, ] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6c78ad08, org.springframework.security.web.context.SecurityContextPersistenceFilter@21084cbe, org.springframework.security.web.header.HeaderWriterFilter@3767973, org.springframework.web.filter.CorsFilter@3328d00b, org.springframework.security.web.authentication.logout.LogoutFilter@1ca73158, com.luv2code.travelchecker.filter.ExceptionHandlerFilter@2e740f3c, com.luv2code.travelchecker.filter.JwtAuthenticationFilter@7e1383f7, com.luv2code.travelchecker.filter.JwtAuthorizationFilter@cce5ae3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1772cc68, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6e5b7446, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@30427a3f, org.springframework.security.web.session.SessionManagementFilter@59e285e, org.springframework.security.web.access.ExceptionTranslationFilter@6948460f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@25832704]
+10-10-2021 22:13:32.592 [main] [travel-checker-server, ] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+10-10-2021 22:13:33.115 [main] [travel-checker-server, ] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:13:33.138 [main] [travel-checker-server, ] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path '/api/v1/travel-checker'
+10-10-2021 22:13:33.492 [main] [travel-checker-server, ] INFO  c.l.t.TravelCheckerApplication.logStarted - Started TravelCheckerApplication in 13.7 seconds (JVM running for 16.538)
+10-10-2021 22:14:53.253 [background-preinit] [travel-checker-server] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+10-10-2021 22:14:53.277 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 32300 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+10-10-2021 22:14:53.279 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+10-10-2021 22:14:54.540 [main] [travel-checker-server] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10-10-2021 22:14:54.718 [main] [travel-checker-server] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 168 ms. Found 4 JPA repository interfaces.
+10-10-2021 22:14:55.446 [main] [travel-checker-server] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+10-10-2021 22:14:55.455 [main] [travel-checker-server] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:14:55.456 [main] [travel-checker-server] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-10-2021 22:14:55.456 [main] [travel-checker-server] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.43]
+10-10-2021 22:14:55.618 [main] [travel-checker-server] INFO  o.a.c.c.C.[.[.[/api/v1/travel-checker].log - Initializing Spring embedded WebApplicationContext
+10-10-2021 22:14:55.618 [main] [travel-checker-server] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 2295 ms
+10-10-2021 22:14:55.699 [main] [travel-checker-server] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-10-2021 22:14:55.836 [main] [travel-checker-server] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-10-2021 22:14:55.843 [main] [travel-checker-server] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration.lambda$h2Console$0 - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+10-10-2021 22:14:59.090 [main] [travel-checker-server] INFO  l.lockservice.StandardLockService.info - Successfully acquired change log lock
+10-10-2021 22:14:59.444 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-000-role-create.xml
+10-10-2021 22:14:59.467 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-001-user-create.xml
+10-10-2021 22:14:59.486 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-002-user-role-create.xml
+10-10-2021 22:14:59.505 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-003-coordinate-create.xml
+10-10-2021 22:14:59.507 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-004-marker-create.xml
+10-10-2021 22:14:59.516 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-005-user-marker-create.xml
+10-10-2021 22:14:59.531 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-006-role-insert.xml
+10-10-2021 22:14:59.533 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210723-000-user-alter.xml
+10-10-2021 22:14:59.559 [main] [travel-checker-server] INFO  l.c.StandardChangeLogHistoryService.info - Creating database history table with name: PUBLIC.DATABASECHANGELOG
+10-10-2021 22:14:59.561 [main] [travel-checker-server] INFO  l.c.StandardChangeLogHistoryService.info - Reading from PUBLIC.DATABASECHANGELOG
+10-10-2021 22:14:59.638 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table role created
+10-10-2021 22:14:59.638 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-000-role-create.xml::20210624-000-1::lzugaj ran successfully in 7ms
+10-10-2021 22:14:59.657 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user created
+10-10-2021 22:14:59.658 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-001-user-create.xml::20210624-001-1::lzugaj ran successfully in 3ms
+10-10-2021 22:14:59.662 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user_role created
+10-10-2021 22:14:59.662 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-1::lzugaj ran successfully in 2ms
+10-10-2021 22:14:59.675 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (user_id)
+10-10-2021 22:14:59.676 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-2::lzugaj ran successfully in 12ms
+10-10-2021 22:14:59.678 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (role_id)
+10-10-2021 22:14:59.679 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-3::lzugaj ran successfully in 2ms
+10-10-2021 22:14:59.682 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table coordinate created
+10-10-2021 22:14:59.682 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-003-coordinate-create.xml::20210624-003-1::lzugaj ran successfully in 2ms
+10-10-2021 22:14:59.683 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table marker created
+10-10-2021 22:14:59.683 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-1::lzugaj ran successfully in 1ms
+10-10-2021 22:14:59.686 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to marker (coordinate_id)
+10-10-2021 22:14:59.688 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-2::lzugaj ran successfully in 3ms
+10-10-2021 22:14:59.691 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user_marker created
+10-10-2021 22:14:59.691 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-1::lzugaj ran successfully in 1ms
+10-10-2021 22:14:59.695 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (user_id)
+10-10-2021 22:14:59.695 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-2::lzugaj ran successfully in 1ms
+10-10-2021 22:14:59.697 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (marker_id)
+10-10-2021 22:14:59.697 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-3::lzugaj ran successfully in 1ms
+10-10-2021 22:14:59.699 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+10-10-2021 22:14:59.700 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+10-10-2021 22:14:59.700 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-006-role-insert.xml::20210624-006-1::lzugaj ran successfully in 2ms
+10-10-2021 22:14:59.702 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Unique constraint added to user(email)
+10-10-2021 22:14:59.702 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210723-000-user-alter.xml::20210723-000-1::lzugaj ran successfully in 1ms
+10-10-2021 22:14:59.705 [main] [travel-checker-server] INFO  l.lockservice.StandardLockService.info - Successfully released change log lock
+10-10-2021 22:14:59.849 [main] [travel-checker-server] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+10-10-2021 22:14:59.905 [main] [travel-checker-server] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.28.Final
+10-10-2021 22:15:00.106 [main] [travel-checker-server] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10-10-2021 22:15:00.229 [main] [travel-checker-server] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+10-10-2021 22:15:01.002 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user drop constraint if exists UKob8kqyqqgmefl0aco34akdtpe
+10-10-2021 22:15:01.003 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user add constraint UKob8kqyqqgmefl0aco34akdtpe unique (email)
+10-10-2021 22:15:01.013 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table marker add constraint FKbnmlind6bxnrv9knl07q7q0mu foreign key (coordinate_id) references coordinate
+10-10-2021 22:15:01.015 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK7x0524j5apsrww33y6xddtmto foreign key (user_id) references user
+10-10-2021 22:15:01.015 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK5m5q5jdta8sowibeyqh3mafw0 foreign key (marker_id) references marker
+10-10-2021 22:15:01.028 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FKa68196081fvovjhkek5m97n3y foreign key (role_id) references role
+10-10-2021 22:15:01.028 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FK859n2jvi8ivhui0rl0esws6o foreign key (user_id) references user
+10-10-2021 22:15:01.043 [main] [travel-checker-server] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+10-10-2021 22:15:01.055 [main] [travel-checker-server] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+10-10-2021 22:15:01.532 [main] [travel-checker-server] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-10-2021 22:15:03.593 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - DB connection for DEV - H2
+10-10-2021 22:15:03.594 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Driver class name: org.h2.Driver
+10-10-2021 22:15:03.594 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - URL: jdbc:h2:mem:testdb
+10-10-2021 22:15:03.594 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Username: sa
+10-10-2021 22:15:03.594 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Password: password
+10-10-2021 22:15:04.006 [main] [travel-checker-server] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1a183473, org.springframework.security.web.context.SecurityContextPersistenceFilter@5cf24f99, org.springframework.security.web.header.HeaderWriterFilter@5b4f77e1, org.springframework.web.filter.CorsFilter@2d7956fb, org.springframework.security.web.authentication.logout.LogoutFilter@26c79134, com.luv2code.travelchecker.filter.ExceptionHandlerFilter@5d869991, com.luv2code.travelchecker.filter.JwtAuthenticationFilter@3f706310, com.luv2code.travelchecker.filter.JwtAuthorizationFilter@3b6a4b91, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@e4bb03, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@61902ae5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@597880b1, org.springframework.security.web.session.SessionManagementFilter@18681121, org.springframework.security.web.access.ExceptionTranslationFilter@1b3b95e8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@334f130d]
+10-10-2021 22:15:04.129 [main] [travel-checker-server] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+10-10-2021 22:15:04.620 [main] [travel-checker-server] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:15:04.647 [main] [travel-checker-server] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path '/api/v1/travel-checker'
+10-10-2021 22:15:05.036 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStarted - Started TravelCheckerApplication in 12.524 seconds (JVM running for 14.78)
+10-10-2021 22:17:34.934 [background-preinit] [travel-checker-server] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:34.965 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 19328 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:34.967 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:36.481 [main] [travel-checker-server] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:36.673 [main] [travel-checker-server] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 181 ms. Found 4 JPA repository interfaces.
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.509 [main] [travel-checker-server] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.519 [main] [travel-checker-server] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.519 [main] [travel-checker-server] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.520 [main] [travel-checker-server] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.43]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.694 [main] [travel-checker-server] INFO  o.a.c.c.C.[.[.[/api/v1/travel-checker].log - Initializing Spring embedded WebApplicationContext
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.695 [main] [travel-checker-server] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 2659 ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.788 [main] [travel-checker-server] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.922 [main] [travel-checker-server] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:37.929 [main] [travel-checker-server] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration.lambda$h2Console$0 - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:41.841 [main] [travel-checker-server] INFO  l.lockservice.StandardLockService.info - Successfully acquired change log lock
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.261 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-000-role-create.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.287 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-001-user-create.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.303 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-002-user-role-create.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.317 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-003-coordinate-create.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.329 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-004-marker-create.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.341 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-005-user-marker-create.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.352 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-006-role-insert.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.362 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210723-000-user-alter.xml
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.388 [main] [travel-checker-server] INFO  l.c.StandardChangeLogHistoryService.info - Creating database history table with name: PUBLIC.DATABASECHANGELOG
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.392 [main] [travel-checker-server] INFO  l.c.StandardChangeLogHistoryService.info - Reading from PUBLIC.DATABASECHANGELOG
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.483 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table role created
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.484 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-000-role-create.xml::20210624-000-1::lzugaj ran successfully in 9ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.507 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user created
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.507 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-001-user-create.xml::20210624-001-1::lzugaj ran successfully in 3ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.511 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user_role created
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.511 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-1::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.526 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (user_id)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.526 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-2::lzugaj ran successfully in 14ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.530 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (role_id)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.530 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-3::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.533 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table coordinate created
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.534 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-003-coordinate-create.xml::20210624-003-1::lzugaj ran successfully in 3ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.537 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table marker created
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.538 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-1::lzugaj ran successfully in 3ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.541 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to marker (coordinate_id)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.542 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-2::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.546 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user_marker created
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.546 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-1::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.550 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (user_id)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.550 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-2::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.554 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (marker_id)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.554 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-3::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.557 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.557 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.558 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-006-role-insert.xml::20210624-006-1::lzugaj ran successfully in 2ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.560 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Unique constraint added to user(email)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.560 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210723-000-user-alter.xml::20210723-000-1::lzugaj ran successfully in 1ms
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.563 [main] [travel-checker-server] INFO  l.lockservice.StandardLockService.info - Successfully released change log lock
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.732 [main] [travel-checker-server] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:42.800 [main] [travel-checker-server] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.28.Final
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:43.014 [main] [travel-checker-server] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:43.159 [main] [travel-checker-server] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.036 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user drop constraint if exists UKob8kqyqqgmefl0aco34akdtpe
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.038 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user add constraint UKob8kqyqqgmefl0aco34akdtpe unique (email)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.050 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table marker add constraint FKbnmlind6bxnrv9knl07q7q0mu foreign key (coordinate_id) references coordinate
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.065 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK7x0524j5apsrww33y6xddtmto foreign key (user_id) references user
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.067 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK5m5q5jdta8sowibeyqh3mafw0 foreign key (marker_id) references marker
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.084 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FKa68196081fvovjhkek5m97n3y foreign key (role_id) references role
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.086 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FK859n2jvi8ivhui0rl0esws6o foreign key (user_id) references user
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.088 [main] [travel-checker-server] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.101 [main] [travel-checker-server] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:44.760 [main] [travel-checker-server] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:46.962 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - DB connection for DEV - H2
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:46.970 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Driver class name: org.h2.Driver
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:46.970 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - URL: jdbc:h2:mem:testdb
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:46.970 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Username: sa
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:46.970 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Password: password
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:47.421 [main] [travel-checker-server] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@c1add62, org.springframework.security.web.context.SecurityContextPersistenceFilter@62b92df8, org.springframework.security.web.header.HeaderWriterFilter@2a6ca8d0, org.springframework.web.filter.CorsFilter@723c7f2f, org.springframework.security.web.authentication.logout.LogoutFilter@3035b9e6, com.luv2code.travelchecker.filter.ExceptionHandlerFilter@5cb077e3, com.luv2code.travelchecker.filter.JwtAuthenticationFilter@4faf32a7, com.luv2code.travelchecker.filter.JwtAuthorizationFilter@559048b3, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3593747f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3a0f0552, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@278758da, org.springframework.security.web.session.SessionManagementFilter@320f9b40, org.springframework.security.web.access.ExceptionTranslationFilter@23673954, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@2c29342a]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:47.536 [main] [travel-checker-server] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:48.045 [main] [travel-checker-server] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:48.068 [main] [travel-checker-server] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path '/api/v1/travel-checker'
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:17:48.420 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStarted - Started TravelCheckerApplication in 14.381 seconds (JVM running for 17.399)
+ {FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue}10-10-2021 22:20:02.833 [background-preinit] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+10-10-2021 22:20:02.854 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 24704 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+10-10-2021 22:20:02.855 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+10-10-2021 22:20:04.092 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10-10-2021 22:20:04.230 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 129 ms. Found 4 JPA repository interfaces.
+10-10-2021 22:20:05.036 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+10-10-2021 22:20:05.046 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:20:05.046 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-10-2021 22:20:05.047 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.43]
+10-10-2021 22:20:05.204 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.c.c.C.[.[.[/api/v1/travel-checker].log - Initializing Spring embedded WebApplicationContext
+10-10-2021 22:20:05.204 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 2289 ms
+10-10-2021 22:20:05.302 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-10-2021 22:20:05.422 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-10-2021 22:20:05.429 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.b.a.h.H2ConsoleAutoConfiguration.lambda$h2Console$0 - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+10-10-2021 22:20:41.280 [background-preinit] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+10-10-2021 22:20:41.294 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 16288 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+10-10-2021 22:20:41.296 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+10-10-2021 22:20:42.818 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10-10-2021 22:20:43.010 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 181 ms. Found 4 JPA repository interfaces.
+10-10-2021 22:20:44.006 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+10-10-2021 22:20:44.020 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:20:44.022 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-10-2021 22:20:44.022 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.43]
+10-10-2021 22:20:44.207 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.a.c.c.C.[.[.[/api/v1/travel-checker].log - Initializing Spring embedded WebApplicationContext
+10-10-2021 22:20:44.208 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 2858 ms
+10-10-2021 22:20:44.309 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-10-2021 22:20:44.452 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-10-2021 22:20:44.459 [main] [travel-checker-server] [34m[0;39m{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=green, DEBUG=green bold, TRACE=blue} o.s.b.a.h.H2ConsoleAutoConfiguration.lambda$h2Console$0 - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+10-10-2021 22:21:26.614 [main] [travel-checker-server] ERROR o.s.boot.SpringApplication.reportFailure - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@7:71 - no applicable action for [Console], current ElementPath  is [[configuration][Console]]
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:326 - no applicable action for [PatternLayout], current ElementPath  is [[configuration][Console][PatternLayout]]
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:327)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:281)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:239)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:216)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:82)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:63)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:117)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:111)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:62)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:362)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+	at com.luv2code.travelchecker.TravelCheckerApplication.main(TravelCheckerApplication.java:10)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@7:71 - no applicable action for [Console], current ElementPath  is [[configuration][Console]]
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:326 - no applicable action for [PatternLayout], current ElementPath  is [[configuration][Console][PatternLayout]]
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:312)
+	... 18 common frames omitted
+10-10-2021 22:21:46.720 [main] [travel-checker-server] ERROR o.s.boot.SpringApplication.reportFailure - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@7:71 - no applicable action for [Console], current ElementPath  is [[configuration][Console]]
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:326 - no applicable action for [PatternLayout], current ElementPath  is [[configuration][Console][PatternLayout]]
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [ConsoleAppender]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:327)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:281)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:239)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:216)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:82)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:63)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:117)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:111)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:62)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:362)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:320)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300)
+	at com.luv2code.travelchecker.TravelCheckerApplication.main(TravelCheckerApplication.java:10)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@7:71 - no applicable action for [Console], current ElementPath  is [[configuration][Console]]
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@8:326 - no applicable action for [PatternLayout], current ElementPath  is [[configuration][Console][PatternLayout]]
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - Could not find an appender named [ConsoleAppender]. Did you define it below instead of above in the configuration file?
+ERROR in ch.qos.logback.core.joran.action.AppenderRefAction - See http://logback.qos.ch/codes.html#appender_order for more details.
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:312)
+	... 18 common frames omitted
+10-10-2021 22:22:52.902 [background-preinit] [travel-checker-server] [34m[0;39m{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green} o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+10-10-2021 22:22:52.931 [main] [travel-checker-server] [34m[0;39m{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green} c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 20548 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+10-10-2021 22:22:52.932 [main] [travel-checker-server] [34m[0;39m{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green} c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+10-10-2021 22:22:54.488 [main] [travel-checker-server] [34m[0;39m{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green} o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10-10-2021 22:22:54.659 [main] [travel-checker-server] [34m[0;39m{FATAL=red, ERROR=red, WARN=yellow, INFO=green, DEBUG=green, TRACE=green} o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 160 ms. Found 4 JPA repository interfaces.
+10-10-2021 22:25:32.002 [background-preinit] [travel-checker-server] INFO  o.h.validator.internal.util.Version.<clinit> - HV000001: Hibernate Validator 6.1.7.Final
+10-10-2021 22:25:32.030 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStarting - Starting TravelCheckerApplication using Java 11.0.7 on lzugaj with PID 4536 (C:\Workspace\travel-checker\travel-checker-server\target\classes started by lzugaj in C:\Workspace\travel-checker\travel-checker-server)
+10-10-2021 22:25:32.032 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStartupProfileInfo - The following profiles are active: dev
+10-10-2021 22:25:33.528 [main] [travel-checker-server] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+10-10-2021 22:25:33.694 [main] [travel-checker-server] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 154 ms. Found 4 JPA repository interfaces.
+10-10-2021 22:25:34.568 [main] [travel-checker-server] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+10-10-2021 22:25:34.579 [main] [travel-checker-server] INFO  o.a.coyote.http11.Http11NioProtocol.log - Initializing ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:25:34.580 [main] [travel-checker-server] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+10-10-2021 22:25:34.580 [main] [travel-checker-server] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.43]
+10-10-2021 22:25:34.746 [main] [travel-checker-server] INFO  o.a.c.c.C.[.[.[/api/v1/travel-checker].log - Initializing Spring embedded WebApplicationContext
+10-10-2021 22:25:34.746 [main] [travel-checker-server] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 2654 ms
+10-10-2021 22:25:34.834 [main] [travel-checker-server] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+10-10-2021 22:25:34.966 [main] [travel-checker-server] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+10-10-2021 22:25:34.973 [main] [travel-checker-server] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration.lambda$h2Console$0 - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+10-10-2021 22:25:38.893 [main] [travel-checker-server] INFO  l.lockservice.StandardLockService.info - Successfully acquired change log lock
+10-10-2021 22:25:39.309 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-000-role-create.xml
+10-10-2021 22:25:39.333 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-001-user-create.xml
+10-10-2021 22:25:39.347 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-002-user-role-create.xml
+10-10-2021 22:25:39.359 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-003-coordinate-create.xml
+10-10-2021 22:25:39.371 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-004-marker-create.xml
+10-10-2021 22:25:39.383 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-005-user-marker-create.xml
+10-10-2021 22:25:39.393 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210624-006-role-insert.xml
+10-10-2021 22:25:39.403 [main] [travel-checker-server] INFO  l.changelog.DatabaseChangeLog.info - Reading resource: db/changelog/changelog/20210723-000-user-alter.xml
+10-10-2021 22:25:39.427 [main] [travel-checker-server] INFO  l.c.StandardChangeLogHistoryService.info - Creating database history table with name: PUBLIC.DATABASECHANGELOG
+10-10-2021 22:25:39.430 [main] [travel-checker-server] INFO  l.c.StandardChangeLogHistoryService.info - Reading from PUBLIC.DATABASECHANGELOG
+10-10-2021 22:25:39.515 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table role created
+10-10-2021 22:25:39.516 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-000-role-create.xml::20210624-000-1::lzugaj ran successfully in 8ms
+10-10-2021 22:25:39.536 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user created
+10-10-2021 22:25:39.536 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-001-user-create.xml::20210624-001-1::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.539 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user_role created
+10-10-2021 22:25:39.540 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-1::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.554 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (user_id)
+10-10-2021 22:25:39.555 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-2::lzugaj ran successfully in 14ms
+10-10-2021 22:25:39.559 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_role (role_id)
+10-10-2021 22:25:39.559 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-002-user-role-create.xml::20210624-002-3::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.562 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table coordinate created
+10-10-2021 22:25:39.563 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-003-coordinate-create.xml::20210624-003-1::lzugaj ran successfully in 3ms
+10-10-2021 22:25:39.566 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table marker created
+10-10-2021 22:25:39.567 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-1::lzugaj ran successfully in 3ms
+10-10-2021 22:25:39.570 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to marker (coordinate_id)
+10-10-2021 22:25:39.571 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-004-marker-create.xml::20210624-004-2::lzugaj ran successfully in 3ms
+10-10-2021 22:25:39.576 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Table user_marker created
+10-10-2021 22:25:39.576 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-1::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.580 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (user_id)
+10-10-2021 22:25:39.580 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-2::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.583 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Foreign key constraint added to user_marker (marker_id)
+10-10-2021 22:25:39.583 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-005-user-marker-create.xml::20210624-005-3::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.585 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+10-10-2021 22:25:39.586 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - New row inserted into role
+10-10-2021 22:25:39.586 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210624-006-role-insert.xml::20210624-006-1::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.589 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - Unique constraint added to user(email)
+10-10-2021 22:25:39.589 [main] [travel-checker-server] INFO  liquibase.changelog.ChangeSet.info - ChangeSet db/changelog/changelog/20210723-000-user-alter.xml::20210723-000-1::lzugaj ran successfully in 2ms
+10-10-2021 22:25:39.593 [main] [travel-checker-server] INFO  l.lockservice.StandardLockService.info - Successfully released change log lock
+10-10-2021 22:25:39.771 [main] [travel-checker-server] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [name: default]
+10-10-2021 22:25:39.834 [main] [travel-checker-server] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate ORM core version 5.4.28.Final
+10-10-2021 22:25:39.979 [main] [travel-checker-server] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10-10-2021 22:25:40.174 [main] [travel-checker-server] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+10-10-2021 22:25:41.059 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user drop constraint if exists UKob8kqyqqgmefl0aco34akdtpe
+10-10-2021 22:25:41.060 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user add constraint UKob8kqyqqgmefl0aco34akdtpe unique (email)
+10-10-2021 22:25:41.072 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table marker add constraint FKbnmlind6bxnrv9knl07q7q0mu foreign key (coordinate_id) references coordinate
+10-10-2021 22:25:41.086 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK7x0524j5apsrww33y6xddtmto foreign key (user_id) references user
+10-10-2021 22:25:41.088 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_marker add constraint FK5m5q5jdta8sowibeyqh3mafw0 foreign key (marker_id) references marker
+10-10-2021 22:25:41.110 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FKa68196081fvovjhkek5m97n3y foreign key (role_id) references role
+10-10-2021 22:25:41.113 [main] [travel-checker-server] DEBUG org.hibernate.SQL.logStatement - alter table user_role add constraint FK859n2jvi8ivhui0rl0esws6o foreign key (user_id) references user
+10-10-2021 22:25:41.115 [main] [travel-checker-server] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+10-10-2021 22:25:41.127 [main] [travel-checker-server] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+10-10-2021 22:25:41.692 [main] [travel-checker-server] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+10-10-2021 22:25:43.987 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - DB connection for DEV - H2
+10-10-2021 22:25:43.987 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Driver class name: org.h2.Driver
+10-10-2021 22:25:43.987 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - URL: jdbc:h2:mem:testdb
+10-10-2021 22:25:43.987 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Username: sa
+10-10-2021 22:25:43.988 [main] [travel-checker-server] INFO  c.l.t.c.DatabaseConfiguration.devDatabaseConnection - Password: password
+10-10-2021 22:25:44.632 [main] [travel-checker-server] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@57d827e6, org.springframework.security.web.context.SecurityContextPersistenceFilter@6e5b7446, org.springframework.security.web.header.HeaderWriterFilter@2e1bbf2a, org.springframework.web.filter.CorsFilter@44debb87, org.springframework.security.web.authentication.logout.LogoutFilter@1cc8953c, com.luv2code.travelchecker.filter.ExceptionHandlerFilter@3d225fe9, com.luv2code.travelchecker.filter.JwtAuthenticationFilter@7fa0f739, com.luv2code.travelchecker.filter.JwtAuthorizationFilter@59253557, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2ee6196f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@67fd59f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6d024898, org.springframework.security.web.session.SessionManagementFilter@3171c5e6, org.springframework.security.web.access.ExceptionTranslationFilter@1e6e59d8, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@408ad61a]
+10-10-2021 22:25:44.756 [main] [travel-checker-server] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+10-10-2021 22:25:45.377 [main] [travel-checker-server] INFO  o.a.coyote.http11.Http11NioProtocol.log - Starting ProtocolHandler ["http-nio-8080"]
+10-10-2021 22:25:45.408 [main] [travel-checker-server] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path '/api/v1/travel-checker'
+10-10-2021 22:25:45.895 [main] [travel-checker-server] INFO  c.l.t.TravelCheckerApplication.logStarted - Started TravelCheckerApplication in 14.846 seconds (JVM running for 17.741)
