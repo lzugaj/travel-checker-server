@@ -6,6 +6,7 @@ import com.luv2code.travelchecker.service.UserService;
 import com.luv2code.travelchecker.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 email = JwtUtil.extractUsername(jtwToken, SECRET);
             } catch (final Exception exception){
                 final String url = request.getRequestURL().toString();
-                if (exception instanceof MalformedJwtException){
-                    LOGGER.error("User with malformed JWT signature attempted to access URL: ´{}´.", url);
+                if(exception instanceof SignatureException){
+                    LOGGER.info("User with invalid JWT signature attempted to access URL: {}.", url);
+                } else if (exception instanceof MalformedJwtException){
+                    LOGGER.info("User with malformed JWT signature attempted to access URL: {}.", url);
                 }
 
                 throw exception;
