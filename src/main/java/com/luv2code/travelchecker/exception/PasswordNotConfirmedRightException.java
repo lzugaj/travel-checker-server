@@ -1,27 +1,15 @@
 package com.luv2code.travelchecker.exception;
 
-import lombok.EqualsAndHashCode;
-
-@EqualsAndHashCode(callSuper = true)
-public class PasswordNotConfirmedRightException extends AbstractEntityException {
+public class PasswordNotConfirmedRightException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public PasswordNotConfirmedRightException(final String entityName,
-                                              final String fieldName,
-                                              final String fieldValue) {
-        this(entityName, fieldName, fieldValue, null);
+    public PasswordNotConfirmedRightException(final String message) {
+        super(message);
     }
 
-    public PasswordNotConfirmedRightException(final String entityName,
-                                        final String fieldName,
-                                        final String fieldValue,
-                                        final Throwable cause) {
-        super(entityName, fieldName, fieldValue, createMessage(entityName, fieldName, fieldValue), cause);
-    }
-
-    private static String createMessage(final String entityName, final String fieldName, final String fieldValue) {
-        return String.format("Password for entity '%s' with '%s' value '%s' is not confirmed right.",
-                entityName, fieldName, fieldValue);
+    public PasswordNotConfirmedRightException(final String message,
+                                              final Throwable cause) {
+        super(message, cause);
     }
 }

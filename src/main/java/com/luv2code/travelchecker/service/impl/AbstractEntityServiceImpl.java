@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
@@ -26,6 +27,7 @@ public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends 
     }
 
     @Override
+    @Transactional
     public E save(final E entity) {
         final E newEntity = crudRepository.save(entity);
         LOGGER.info("Successfully created {} with id: ´{}´.", entityClass.getSimpleName(), entity.getId());
@@ -49,6 +51,7 @@ public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends 
     }
 
     @Override
+    @Transactional
     public void delete(final E entity) {
         LOGGER.info("Deleting {} with id: ´{}´.", entityClass.getSimpleName(), entity.getId());
         crudRepository.delete(entity);

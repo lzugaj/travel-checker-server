@@ -24,13 +24,13 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
                                  final FilterChain filterChain) {
         try {
             filterChain.doFilter(request, response);
-        } catch (Exception ex) {
-            if (!(ex instanceof BadCredentialsException ||
-                    ex instanceof SignatureException ||
-                    ex instanceof MalformedJwtException ||
-                    ex instanceof ExpiredJwtException ||
-                    ex instanceof EntityNotFoundException)){
-                LOGGER.error("Application error in: [" + ex.getClass().getName() + "]", ex);
+        } catch (Exception exception) {
+            if (!(exception instanceof BadCredentialsException ||
+                    exception instanceof SignatureException ||
+                    exception instanceof MalformedJwtException ||
+                    exception instanceof ExpiredJwtException ||
+                    exception instanceof EntityNotFoundException)){
+                LOGGER.error("Application error in: " + exception.getClass().getName(), exception);
                 response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             } else {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());

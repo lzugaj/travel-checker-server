@@ -35,10 +35,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
             });
 
-            return new org.springframework.security.core.userdetails.User(searchedUser.get().getEmail(), searchedUser.get().getPassword(), authorities);
+            return new org.springframework.security.core.userdetails.User(
+                    searchedUser.get().getEmail(),
+                    searchedUser.get().getPassword(),
+                    authorities
+            );
         } else {
             LOGGER.error("Cannot find User with username: ´{}´.", username);
-            throw  new EntityNotFoundException("User", "email", username);
+            throw new EntityNotFoundException("User", "email", username);
         }
     }
 }

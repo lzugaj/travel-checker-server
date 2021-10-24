@@ -32,6 +32,9 @@ build/
 ### VS Code ###
 .vscode/
 
+### DB Data ###
+*.db
+
 ### Logs ###
 logs/
 *.log

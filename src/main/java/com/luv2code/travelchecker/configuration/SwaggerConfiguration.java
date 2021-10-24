@@ -14,8 +14,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Data
-@EnableSwagger2
 @Configuration
+@EnableSwagger2
 @ConfigurationProperties(prefix = "luv2code.travel-checker.api-info")
 public class SwaggerConfiguration {
 

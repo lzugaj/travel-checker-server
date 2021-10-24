@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static com.luv2code.travelchecker.util.SecurityConstants.EXPIRATION_TIME;
+import static com.luv2code.travelchecker.util.SecurityConstants.PASSWORD_RESET_EXPIRATION_TIME;
 
 public class JwtUtil {
 
@@ -47,7 +48,15 @@ public class JwtUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
+                .compact();
+    }
+
+    public static String generateResetPasswordToken(final String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis() + PASSWORD_RESET_EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
                 .compact();
     }
 

@@ -8,8 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
-import static com.luv2code.travelchecker.util.SecurityConstants.EXPIRATION_TIME;
-import static com.luv2code.travelchecker.util.SecurityConstants.SECRET;
+import static com.luv2code.travelchecker.util.SecurityConstants.*;
 
 public class JwtTokenUtil {
 
@@ -31,6 +30,14 @@ public class JwtTokenUtil {
     public static String createAdminToken(final String email) {
         final UserDetails userDetails = new User(email, "$2a$12$WBG7PQLSfumuAHH0vUlkbuuHKLRrhYeLJ1d3FIvitkFKvuLuGX47u", adminAuthorities);
         return buildJwtToken(email, userDetails);
+    }
+
+    public static String createResetPasswordToken(final String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setExpiration(new Date(System.currentTimeMillis() + PASSWORD_RESET_EXPIRATION_TIME))
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.SECRET)
+                .compact();
     }
 
     private static String buildJwtToken(final String email, final UserDetails userDetails) {

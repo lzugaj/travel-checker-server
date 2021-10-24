@@ -48,8 +48,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilter(jwtAuthorizationFilter())
                 .addFilterBefore(new ExceptionHandlerFilter(), JwtAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers(AUTHENTICATION_URL, AUTHORIZATION_URL)
-                    .permitAll()
+                .antMatchers(
+                        AUTHENTICATION_URL,
+                        AUTHORIZATION_URL,
+                        FORGOT_PASSWORD_URL,
+                        RESET_PASSWORD_URL).permitAll()
                 .antMatchers(
                         "/v2/api-docs",
                         "/configuration/ui",
@@ -61,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .permitAll()
                 .antMatchers(USERS_URL).hasAnyRole(ADMIN_ROLE)
                 .antMatchers(AUTH_ME_URL).hasAnyRole(ADMIN_ROLE, USER_ROLE)
-                .antMatchers(PROFILES_UPDATE_ME_URL).hasAnyRole(USER_ROLE)
+                .antMatchers(PROFILES_UPDATE_ME_URL).hasAnyRole(ADMIN_ROLE, USER_ROLE)
                 .antMatchers(MARKERS_URL).hasAnyRole(USER_ROLE)
                 .antMatchers(MAPBOX_URL).hasAnyRole(USER_ROLE)
                 .anyRequest()
