@@ -52,6 +52,12 @@ public class ResponseEntityExceptionHandler {
         return createResponseMessage(unauthorized, exception, httpServletRequest);
     }
 
+    @ExceptionHandler(value = ResetPasswordTokenHasExpiredException.class)
+    public ResponseEntity<ApiResponse> handleResetPasswordTokenHasExpiredException(final ResetPasswordTokenHasExpiredException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus forbidden = HttpStatus.FORBIDDEN;
+        return createResponseMessage(forbidden, exception, httpServletRequest);
+    }
+
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<ApiResponse> handleNotFoundRequestException(final EntityNotFoundException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus notFound = HttpStatus.NOT_FOUND;
@@ -74,6 +80,18 @@ public class ResponseEntityExceptionHandler {
     public ResponseEntity<ApiResponse> handlePasswordNotConfirmedRightException(final PasswordNotConfirmedRightException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus conflict = HttpStatus.CONFLICT;
         return createResponseMessage(conflict, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = PrepareEmailContentException.class)
+    public ResponseEntity<ApiResponse> handlePrepareEmailContentException(final PrepareEmailContentException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus badGateway = HttpStatus.BAD_GATEWAY;
+        return createResponseMessage(badGateway, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = SendEmailException.class)
+    public ResponseEntity<ApiResponse> handleSendEmailException(final SendEmailException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus badGateway = HttpStatus.BAD_GATEWAY;
+        return createResponseMessage(badGateway, exception, httpServletRequest);
     }
 
     private ResponseEntity<ApiResponse> createResponseMessage(final HttpStatus httpStatus, final Exception exception, final HttpServletRequest httpServletRequest) {

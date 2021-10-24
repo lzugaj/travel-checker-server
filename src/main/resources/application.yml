@@ -6,6 +6,8 @@ server:
 spring:
   application:
     name: travel-checker-server
+  jpa:
+    open-in-view: true
   main:
     allow-bean-definition-overriding: true
   output:
@@ -31,6 +33,13 @@ luv2code:
       email: 'luka.zugaj7@gmail.com'
       license: 'Apache License Version 2.0'
       licenseUrl: 'https://www.apache.org/licenses/LICENSE-2.0'
+    template-resolver:
+      prefix: 'classpath:/templates/'
+      suffix: '.html'
+    message-helper:
+      from: 'travel.checker@gmail.com'
+      subject: 'Travel Checker'
+      resetUrl: 'http://localhost:8080/api/v1/travel-checker/reset-password?token=$resetToken'
 logging:
   file:
     path: logs

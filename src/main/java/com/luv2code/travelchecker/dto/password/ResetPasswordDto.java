@@ -1,23 +1,26 @@
 package com.luv2code.travelchecker.dto.password;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.luv2code.travelchecker.validation.Password;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class PasswordUpdateDto {
+@AllArgsConstructor
+public class ResetPasswordDto {
 
-    @NotBlank(message = "{user.password.blank}")
-    @Password(message = "{user.password.invalid}")
-    private String oldPassword;
-
+    @JsonProperty("newPassword")
     @NotBlank(message = "{user.password.blank}")
     @Password(message = "{user.password.invalid}")
     private String newPassword;
 
+    @JsonProperty("confirmedNewPassword")
     @NotBlank(message = "{user.password.blank}")
     @Password(message = "{user.password.invalid}")
     private String confirmedNewPassword;

@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "luv2code.travel-checker.mapbox")
-public class MapboxConfiguration {
+@ConfigurationProperties(prefix = "luv2code.travel-checker.template-resolver")
+public class TemplateResolverConfiguration {
 
-    private String token;
+    private String prefix;
+
+    private String suffix;
 
 }

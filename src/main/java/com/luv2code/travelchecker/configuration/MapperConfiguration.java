@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Configuration
@@ -50,6 +51,14 @@ public class MapperConfiguration {
         markerPutDtoToMarker(modelMapper);
 
         return new ModelMapper();
+    }
+
+    private Converter<?, ?> convertRandomTokenId() {
+        return new AbstractConverter<UUID, String>() {
+            protected String convert(final UUID uuid) {
+                return String.valueOf(UUID.randomUUID());
+            }
+        };
     }
 
     private Converter<?, ?> convertRoles() {

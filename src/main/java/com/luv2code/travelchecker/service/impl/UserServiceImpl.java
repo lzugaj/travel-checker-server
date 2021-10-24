@@ -27,7 +27,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     private final RoleService roleService;
 
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder; // TODO Lazy?
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
@@ -41,13 +41,12 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     @Override
     public User save(final User user) {
-        if (!user.getPassword().equals(user.getConfirmationPassword())) {
-            LOGGER.error("Password is not repeated correctly for User with email: ´{}´.", user.getEmail());
-            throw new PasswordNotConfirmedRightException(
-                    "User", "email", user.getEmail());
+        if (arePasswordsNotEquals(user.getPassword(), user.getConfirmationPassword())) {
+            LOGGER.error("Password is not confirmed correctly for User with email: ´{}´.", user.getEmail());
+            throw new PasswordNotConfirmedRightException("Password is not confirmed right for User with id: " + user.getId());
         }
 
-        if (user.getEmail() != null && isEmailAlreadyTaken(user.getEmail())) {
+        if (isEmailAlreadyTaken(user.getEmail())) {
             LOGGER.error("User already exists with email: ´{}´.", user.getEmail());
             throw new EntityAlreadyExistsException(
                     "User", "email", user.getEmail());
@@ -58,15 +57,18 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         return super.save(user);
     }
 
+    private boolean arePasswordsNotEquals(final String password, final String confirmationPassword) {
+        return !password.equals(confirmationPassword);
+    }
+
+    private boolean isEmailAlreadyTaken(final String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     private Role findUserRole() {
         final Role userRole = roleService.findByRoleType(RoleType.USER);
         LOGGER.info("Successfully founded Role with name: ´{}´.", userRole.getName().name());
         return userRole;
-    }
-
-    private boolean isEmailAlreadyTaken(final String email) {
-        return findAll().stream()
-                .anyMatch(user -> user.getEmail().equals(email));
     }
 
     @Override
@@ -89,6 +91,9 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         return super.findAll();
     }
 
+    // TODO: 2 metode => 1. Partial update User info
+    //                   2. Update User email in separate method
+
     @Override
     public User update(final String email, final User user) {
         if (checkIfEmailIsNotAlreadyTaken(email, user)) {
@@ -100,6 +105,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         }
     }
 
+    // TODO: lzugaj -> Refactor
     private boolean checkIfEmailIsNotAlreadyTaken(final String email, final User currentUser) {
         if (!currentUser.getEmail().equals(email)) {
             final List<User> users = findAll();
@@ -111,6 +117,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         return true;
     }
 
+    // TODO: lzugaj -> Refactor
     private boolean emailIsNotAlreadyTaken(final User currentUser, final User user) {
         boolean areEmailsEquals = true;
         if (!user.equals(currentUser)) {
