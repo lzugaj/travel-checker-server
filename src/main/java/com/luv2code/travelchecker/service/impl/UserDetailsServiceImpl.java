@@ -41,8 +41,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     authorities
             );
         } else {
-            LOGGER.error("Cannot find User with username: ´{}´.", username);
-            throw new EntityNotFoundException("User", "email", username);
+            LOGGER.error("User with email: " + username + " was not found.");
+            throw new EntityNotFoundException("User with email: " + username + " was not found.");
         }
     }
 }

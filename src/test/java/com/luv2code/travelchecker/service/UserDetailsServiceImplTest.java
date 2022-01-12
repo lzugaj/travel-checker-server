@@ -57,7 +57,7 @@ public class UserDetailsServiceImplTest {
                 EntityNotFoundException.class,
                 () -> userDetailsService.loadUserByUsername("test@gmail.com"));
 
-        final String expectedMessage = "Entity 'User' with 'email' value 'test@gmail.com' not founded.";
+        final String expectedMessage = "User with email: test@gmail.com was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);

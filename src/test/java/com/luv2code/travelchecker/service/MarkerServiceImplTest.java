@@ -88,7 +88,7 @@ public class MarkerServiceImplTest {
                 () -> markerService.findById(firstMarker.getId())
         );
 
-        final String expectedMessage = "Entity 'Marker' with 'id' value '1' not founded.";
+        final String expectedMessage = "Marker with id: 1 was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);

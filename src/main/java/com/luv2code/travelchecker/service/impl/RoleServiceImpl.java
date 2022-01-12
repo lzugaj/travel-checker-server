@@ -35,8 +35,9 @@ public class RoleServiceImpl extends AbstractEntityServiceImpl<Role, RoleReposit
         LOGGER.info("Searching Role with name: ´{}´.", roleType.name());
         return roleRepository.findByName(roleType)
                 .orElseThrow(() -> {
-                    LOGGER.error("Cannot find Role with name: ´{}´.", roleType.name());
-                    return new EntityNotFoundException("Role", "name", roleType.name());
+                    LOGGER.error("Role with name: ´{}´.", roleType.name() + " was not found.");
+                    return new EntityNotFoundException(
+                            "Role with name: " + roleType.name() + " was not found.");
                 });
     }
 

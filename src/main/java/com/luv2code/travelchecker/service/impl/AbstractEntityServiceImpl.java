@@ -39,8 +39,9 @@ public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends 
         LOGGER.info("Searching {} with id: ´{}´.", entityClass.getSimpleName(), id);
         return crudRepository.findById(id)
                 .orElseThrow(() -> {
-                    LOGGER.error("Cannot find {} with id: ´{}´.", entityClass.getSimpleName(), id);
-                    return new EntityNotFoundException(entityClass.getSimpleName(), "id", String.valueOf(id));
+                    LOGGER.error("{} with id: ´{}´ was not found.", entityClass.getSimpleName(), id);
+                    return new EntityNotFoundException(
+                            entityClass.getSimpleName() + " with id: " + id + " was not found.");
                 });
     }
 

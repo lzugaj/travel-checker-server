@@ -60,7 +60,7 @@ public class RoleServiceImplTest {
                 () -> roleService.findById(userRole.getId())
         );
 
-        final String expectedMessage = "Entity 'Role' with 'id' value '2' not founded.";
+        final String expectedMessage = "Role with id: 2 was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -84,7 +84,7 @@ public class RoleServiceImplTest {
                 () -> roleService.findByRoleType(RoleType.ADMIN)
         );
 
-        final String expectedMessage = "Entity 'Role' with 'name' value 'ADMIN' not founded.";
+        final String expectedMessage = "Role with name: ADMIN was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);

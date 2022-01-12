@@ -60,7 +60,7 @@ public class CoordinateServiceImplTest {
                 () -> coordinateService.findById(thirdCoordinate.getId())
         );
 
-        final String expectedMessage = "Entity 'Coordinate' with 'id' value '3' not founded.";
+        final String expectedMessage = "Coordinate with id: 3 was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);

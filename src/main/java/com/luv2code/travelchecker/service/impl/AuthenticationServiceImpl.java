@@ -15,7 +15,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         final Authentication currentAuthenticatedUser = SecurityContextHolder.getContext().getAuthentication();
         if (currentAuthenticatedUser instanceof AnonymousAuthenticationToken) {
             throw new UserNotAuthenticatedException(
-                    "User", "email", currentAuthenticatedUser.getName());
+                    "User with email: " + currentAuthenticatedUser.getName() + " is not authenticated.");
         } else {
             return currentAuthenticatedUser.getName();
         }

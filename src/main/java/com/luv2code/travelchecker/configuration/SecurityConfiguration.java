@@ -4,6 +4,7 @@ import com.luv2code.travelchecker.filter.ExceptionHandlerFilter;
 import com.luv2code.travelchecker.filter.JwtAuthenticationFilter;
 import com.luv2code.travelchecker.filter.JwtAuthorizationFilter;
 import com.luv2code.travelchecker.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.luv2code.travelchecker.util.SecurityConstants.*;
+import static com.luv2code.travelchecker.constants.SecurityConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -26,10 +27,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
+    private final JwtConfiguration jwtConfiguration;
+
+    @Value("${luv2code.travel-checker.password-encoder.bcryptRounds}")
+    private String bcryptRounds;
+
     public SecurityConfiguration(final UserService userService,
-                                 final UserDetailsService userDetailsService) {
+                                 final UserDetailsService userDetailsService,
+                                 final JwtConfiguration jwtConfiguration) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
+        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
@@ -51,8 +59,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         AUTHENTICATION_URL,
                         AUTHORIZATION_URL,
-                        FORGOT_PASSWORD_URL,
-                        RESET_PASSWORD_URL).permitAll()
+                        FORGOT_PASSWORD_URL
+                        /*RESET_PASSWORD_URL*/)
+                .permitAll()
                 .antMatchers(
                         "/v2/api-docs",
                         "/configuration/ui",
@@ -70,6 +79,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                     .authenticated()
                 .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .deleteCookies("token")
+                    .logoutSuccessUrl("/login")
+                .and()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -78,7 +94,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(BCRYPT_ROUNDS);
+        return new BCryptPasswordEncoder(Integer.parseInt(bcryptRounds));
     }
 
     @Bean
@@ -90,13 +106,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         final JwtAuthenticationFilter jwtAuthenticationFilter =
-                new JwtAuthenticationFilter(authenticationManager(), userService);
+                new JwtAuthenticationFilter(authenticationManager(), userService, jwtConfiguration);
         jwtAuthenticationFilter.setFilterProcessesUrl(AUTHENTICATION_URL);
         return jwtAuthenticationFilter;
     }
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
-        return new JwtAuthorizationFilter(authenticationManager(), userService, userDetailsService);
+        return new JwtAuthorizationFilter(authenticationManager(), userService, userDetailsService, jwtConfiguration);
     }
 }

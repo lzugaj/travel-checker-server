@@ -24,7 +24,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
                                  final FilterChain filterChain) {
         try {
             filterChain.doFilter(request, response);
-        } catch (Exception exception) {
+        } catch (final Exception exception) {
             if (!(exception instanceof BadCredentialsException ||
                     exception instanceof SignatureException ||
                     exception instanceof MalformedJwtException ||

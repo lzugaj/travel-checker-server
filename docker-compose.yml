@@ -1,5 +1,21 @@
 version: '3'
 services:
+  backend:
+    image: backend/backend
+    container_name: 'backend'
+    build:
+      context: ./
+    ports:
+      - '9090:8080'
+    depends_on:
+      - db
+    environment:
+      - TRAVEL_CHECKER_TEST_DB_URL=jdbc:mariadb://localhost:3307/travelchecker-test
+      - TRAVEL_CHECKER_TEST_DB_USERNAME=root
+      - TRAVEL_CHECKER_TEST_DB_PASSWORD=password
+  db:
+    image: mariadb
+    container_name: db
   mailhog:
     image: mailhog/mailhog
     container_name: 'mailhog'

@@ -42,14 +42,13 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     @Override
     public User save(final User user) {
         if (arePasswordsNotEquals(user.getPassword(), user.getConfirmationPassword())) {
-            LOGGER.error("Password is not confirmed correctly for User with email: ´{}´.", user.getEmail());
-            throw new PasswordNotConfirmedRightException("Password is not confirmed right for User with id: " + user.getId());
+            LOGGER.error("Password for User with email: ´{}´ is not confirmed correctly.", user.getEmail());
+            throw new PasswordNotConfirmedRightException("Password for User with id: " + user.getId() + " is not confirmed right.");
         }
 
         if (isEmailAlreadyTaken(user.getEmail())) {
-            LOGGER.error("User already exists with email: ´{}´.", user.getEmail());
-            throw new EntityAlreadyExistsException(
-                    "User", "email", user.getEmail());
+            LOGGER.error("User with email: ´{}´.", user.getEmail() + " already exists.");
+            throw new EntityAlreadyExistsException("User with email: " + user.getEmail() + " already exists.");
         }
 
         user.addRole(findUserRole());
@@ -81,8 +80,8 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         LOGGER.info("Searching User with email: ´{}´.", email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> {
-                    LOGGER.error("Cannot find User with email: ´{}´.", email);
-                    return new EntityNotFoundException("User", "email", email);
+                    LOGGER.error("User with email: " + email + " was not found.");
+                    throw new EntityNotFoundException("User with email: " + email + " was not found.");
                 });
     }
 
@@ -99,9 +98,8 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         if (checkIfEmailIsNotAlreadyTaken(email, user)) {
             return super.save(user);
         } else {
-            LOGGER.error("User already exists with email: ´{}´.", user.getEmail());
-            throw new EntityAlreadyExistsException(
-                    "User", "email", user.getEmail());
+            LOGGER.error("User with email: ´{}´ already exists.", user.getEmail());
+            throw new EntityAlreadyExistsException("User with email: " + user.getEmail() + " already exists.");
         }
     }
 

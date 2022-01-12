@@ -76,7 +76,7 @@ public class MarkerController {
     public ResponseEntity<?> update(@PathVariable final Long id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
         final Marker updatedMarker = markerService.update(modelMapper.map(markerPutDto, Marker.class));
         LOGGER.info("Successfully updated Marker with id: ´{}´.", id);
-        return new ResponseEntity<>(modelMapper.map(updatedMarker, MarkerGetDto.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(updatedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

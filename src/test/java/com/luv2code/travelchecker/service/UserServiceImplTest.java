@@ -68,6 +68,7 @@ public class UserServiceImplTest {
         Mockito.when(passwordEncoder.encode(firstUser.getPassword())).thenReturn(ENCRYPTED_PASSWORD);
         Mockito.when(userRepository.findById(secondUser.getId())).thenReturn(Optional.ofNullable(secondUser));
         Mockito.when(userRepository.findByEmail(thirdUser.getEmail())).thenReturn(Optional.ofNullable(thirdUser));
+        Mockito.when(userRepository.existsByEmail(sixthUser.getEmail())).thenReturn(true);
         Mockito.when(userRepository.findAll()).thenReturn(users);
     }
 
@@ -88,7 +89,7 @@ public class UserServiceImplTest {
                 () -> userService.save(fourthUser)
         );
 
-        final String expectedMessage = "Password for entity 'User' with 'email' value 'samblanco@gmail.com' is not confirmed right.";
+        final String expectedMessage = "Password for User with id: 1 is not confirmed right.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -101,7 +102,7 @@ public class UserServiceImplTest {
                 () -> userService.save(sixthUser)
         );
 
-        final String expectedMessage = "Entity 'User' with 'email' value 'samblanco@gmail.com' already exists.";
+        final String expectedMessage = "User with email: samblanco@gmail.com already exists.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -125,7 +126,7 @@ public class UserServiceImplTest {
                 () -> userService.findById(firstUser.getId())
         );
 
-        final String expectedMessage = "Entity 'User' with 'id' value '1' not founded.";
+        final String expectedMessage = "User with id: 1 was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -149,7 +150,7 @@ public class UserServiceImplTest {
                 () -> userService.findByEmail(firstUser.getEmail())
         );
 
-        final String expectedMessage = "Entity 'User' with 'email' value 'eholt@gmail.com' not founded.";
+        final String expectedMessage = "User with email: eholt@gmail.com was not found.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -190,7 +191,7 @@ public class UserServiceImplTest {
                 () -> userService.update(firstUser.getEmail(), fourthUser)
         );
 
-        final String expectedMessage = "Entity 'User' with 'email' value 'samblanco@gmail.com' already exists.";
+        final String expectedMessage = "User with email: samblanco@gmail.com already exists.";
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);

@@ -1,6 +1,7 @@
 package com.luv2code.travelchecker.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.luv2code.travelchecker.configuration.JwtConfiguration;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.authentication.AuthenticationDto;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
@@ -9,6 +10,8 @@ import com.luv2code.travelchecker.util.JwtUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -22,8 +25,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.luv2code.travelchecker.util.SecurityConstants.*;
+import java.time.Duration;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -31,11 +33,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private final UserService userService;
 
+    private final JwtConfiguration jwtConfiguration;
+
     @Autowired
     public JwtAuthenticationFilter(final AuthenticationManager authenticationManager,
-                                   final UserService userService) {
+                                   final UserService userService,
+                                   final JwtConfiguration jwtConfiguration) {
         setAuthenticationManager(authenticationManager);
         this.userService = userService;
+        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
@@ -53,11 +59,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         final String password = authenticationDto.getPassword();
         if (email == null || password == null) {
             LOGGER.error("Authentication attempt with incomplete data.");
-            throw new BadCredentialsException("Email and password must not be null.");
+            throw new BadCredentialsException("Email and/or password must not be null.");
         }
 
         try {
-            return super.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(email, password));
+            return super.getAuthenticationManager().authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password));
         } catch (final Exception exception) {
             if (!(exception instanceof EntityNotFoundException) &&
                     !(exception instanceof AuthenticationException)) {
@@ -65,9 +72,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             }
 
             if (exception instanceof InternalAuthenticationServiceException) {
-                LOGGER.info("Authentication attempt with unregistered email: ´{}´.", authenticationDto.getEmail());
+                LOGGER.error("Authentication attempt with unregistered email: ´{}´.", authenticationDto.getEmail());
             } else {
-                User user = userService.findByEmail(email);
+                final User user = userService.findByEmail(email);
                 LOGGER.error("Failed authentication attempt for user with id: ´{}´ using email: ´{}´.", user.getId(), authenticationDto.getEmail());
             }
 
@@ -81,10 +88,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             final FilterChain chain,
                                             final Authentication authentication) {
         final UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        final String jwtToken = JwtUtil.generateToken(userDetails, SECRET);
+        final String jwtToken = JwtUtil.generateToken(userDetails, jwtConfiguration.getSecret());
 
         final User user = userService.findByEmail(userDetails.getUsername());
         LOGGER.info("Authentication success for user with id: ´{}´.", user.getId());
-        response.addHeader(HEADER_NAME, TOKEN_PREFIX + jwtToken);
+
+        final ResponseCookie cookie = ResponseCookie.from("token", jwtToken)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(1))
+                .build();
+        response.addHeader(HttpHeaders.SET_COOKIE, String.valueOf(cookie));
     }
 }

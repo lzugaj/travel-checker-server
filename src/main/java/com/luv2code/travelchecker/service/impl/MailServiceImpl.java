@@ -42,23 +42,23 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendPasswordResetRequest(final String firstName, final String email, final String resetToken) {
-        LOGGER.info("Preparing to send email to: {}.", email);
+        LOGGER.info("Preparing to send email to: ´{}´.", email);
         final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, StandardCharsets.UTF_8.name());
             mimeMessageHelper.setFrom(messageHelperConfiguration.getFrom());
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject(messageHelperConfiguration.getSubject());
-            mimeMessage.setContent(prepareHtml(firstName, email, resetToken), MediaType.TEXT_HTML_VALUE);
+            mimeMessage.setContent(prepareHtml(firstName, resetToken), MediaType.TEXT_HTML_VALUE);
         } catch (final MessagingException exception) {
-            LOGGER.error("Error while preparing email content for User with email: {}.", email);
+            LOGGER.error("Error while preparing email content for User with email: ´{}´.", email);
             throw new PrepareEmailContentException("Email content was not prepared right.");
         }
 
         send(email, mimeMessage);
     }
 
-    private String prepareHtml(final String firstName, final String email, final String resetToken){
+    private String prepareHtml(final String firstName, final String resetToken){
         LOGGER.info("Preparing HTML email template.");
 
         final Context context = new Context();
@@ -71,16 +71,16 @@ public class MailServiceImpl implements MailService {
     }
 
     private String getResetUrl(final String resetToken) {
-        return messageHelperConfiguration.getResetUrl()
-                .replace("$resetToken", resetToken);
+        return messageHelperConfiguration.getResetUrl();
+                //.replace("$resetToken", resetToken);
     }
 
     private void send(final String to, final MimeMessage mimeMessage) {
         try {
             javaMailSender.send(mimeMessage);
-            LOGGER.info("Email successfully sent to: {}.", to);
+            LOGGER.info("Email successfully sent to: ´{}´.", to);
         } catch (final MailException exception) {
-            LOGGER.error("Error while trying to send email to: {}.", to);
+            LOGGER.error("Error while trying to send email to: ´{}´.", to);
             LOGGER.error(exception.getMessage());
             throw new SendEmailException("Email was not sent correctly.");
         }

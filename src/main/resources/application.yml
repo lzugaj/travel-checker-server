@@ -17,12 +17,6 @@ spring:
     active: dev
 luv2code:
   travel-checker:
-    mapbox:
-      token: ${TRAVEL_CHECKER_MAPBOX_TOKEN}
-    locale:
-      baseName: classpath:messages
-      defaultLocale: en
-      defaultEncoding: UTF-8
     api-info:
       title: 'Travel Checker API'
       description: 'Spring Boot REST API for Travel Checker'
@@ -33,13 +27,25 @@ luv2code:
       email: 'luka.zugaj7@gmail.com'
       license: 'Apache License Version 2.0'
       licenseUrl: 'https://www.apache.org/licenses/LICENSE-2.0'
-    template-resolver:
-      prefix: 'classpath:/templates/'
-      suffix: '.html'
+    jwt:
+      secret: 'm5jKHPO7Z2aqWYPdujYeoCnPNiUmgTRlfIBqCwU8HpRQ3fZQ55uk6jRPeA6pWkkVhSWXycBhD1zAI18VeebwKVzfYPoy70UCaMA9k2OhJ2x7Ldo1b5kxVpxV8BvcbrzWTWXdbS7FpKKep7TAI7KEvOLs4lMPJ7HWbcCWzwHoWP9dPe2hvUHE9C2ZEQHnG5MKMInfqptK3OS7xKDAgsoQrFmqpqXYUrfbThOqDTGr8kfWsOn2TyaENGkZsHI6CZOi'
+      expirationTime: 31556952000  #1 year in milliseconds
+      passwordResetExpirationTime: 86400000 #1 day in milliseconds
+    locale:
+      baseName: classpath:messages
+      defaultLocale: en
+      defaultEncoding: UTF-8
+    mapbox:
+      token: ${TRAVEL_CHECKER_MAPBOX_TOKEN}
     message-helper:
       from: 'travel.checker@gmail.com'
       subject: 'Travel Checker'
-      resetUrl: 'http://localhost:8080/api/v1/travel-checker/reset-password?token=$resetToken'
+      resetUrl: 'http://localhost:3000/registration'  #'http://localhost:8080/api/v1/travel-checker/reset-password?token=$resetToken'
+    password-encoder:
+      bcryptRounds: 12
+    template-resolver:
+      prefix: 'classpath:/templates/'
+      suffix: '.html'
 logging:
   file:
     path: logs

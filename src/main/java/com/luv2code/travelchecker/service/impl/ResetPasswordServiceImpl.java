@@ -1,5 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
+import com.luv2code.travelchecker.configuration.JwtConfiguration;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ResetPasswordDto;
 import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
@@ -7,7 +8,6 @@ import com.luv2code.travelchecker.exception.ResetPasswordTokenHasExpiredExceptio
 import com.luv2code.travelchecker.service.ResetPasswordService;
 import com.luv2code.travelchecker.service.UserService;
 import com.luv2code.travelchecker.util.JwtUtil;
-import com.luv2code.travelchecker.util.SecurityConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +25,15 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final JwtConfiguration jwtConfiguration;
+
     @Autowired
     public ResetPasswordServiceImpl(final UserService userService,
-                                    final PasswordEncoder passwordEncoder) {
+                                    final PasswordEncoder passwordEncoder,
+                                    final JwtConfiguration jwtConfiguration) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
@@ -44,17 +48,17 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
             throw new PasswordNotConfirmedRightException("Password is not confirmed right while resetting password.");
         }
 
-        final String subject = JwtUtil.extractUsername(token, SecurityConstants.SECRET);
+        final String subject = JwtUtil.extractUsername(token, jwtConfiguration.getSecret());
         final User searchedUser = userService.findByEmail(subject);
-        LOGGER.info("Successfully founded User with id: {}.", searchedUser.getId());
+        LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
 
         searchedUser.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
         userService.update(subject, searchedUser);
-        LOGGER.info("Successfully updated password for User with id: {}.", searchedUser.getId());
+        LOGGER.info("Successfully updated password for User with id: ´{}´.", searchedUser.getId());
     }
 
     private boolean isTokenExpired(final String token) {
-        final Date expirationDate = JwtUtil.extractExpiration(token, SecurityConstants.SECRET);
+        final Date expirationDate = JwtUtil.extractExpiration(token, jwtConfiguration.getSecret());
         return expirationDate.before(new Date());
     }
 

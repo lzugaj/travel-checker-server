@@ -1,5 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
+import com.luv2code.travelchecker.configuration.JwtConfiguration;
 import com.luv2code.travelchecker.domain.ResetPasswordToken;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ForgetPasswordDto;
@@ -24,26 +25,30 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
+    private final JwtConfiguration jwtConfiguration;
+
     @Autowired
     public ForgetPasswordServiceImpl(final UserService userService,
                                      final MailService mailService,
-                                     final PasswordResetTokenRepository passwordResetTokenRepository) {
+                                     final PasswordResetTokenRepository passwordResetTokenRepository,
+                                     final JwtConfiguration jwtConfiguration) {
         this.userService = userService;
         this.mailService = mailService;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.jwtConfiguration = jwtConfiguration;
     }
 
     @Override
     public void requestPasswordReset(final ForgetPasswordDto forgetPasswordDto) {
         final User searchedUser = userService.findByEmail(forgetPasswordDto.getEmail());
-        LOGGER.info("Successfully founded User with id: {}.", searchedUser.getId());
+        LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
 
-        final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail());
-        LOGGER.info("Successfully generated password reset token for User with id: {}.", searchedUser.getId());
+        final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), jwtConfiguration.getSecret());
+        LOGGER.info("Successfully generated password reset token for User with id: ´{}´.", searchedUser.getId());
 
         final ResetPasswordToken resetPasswordToken = buildPasswordResetToken(resetToken, searchedUser);
         passwordResetTokenRepository.save(resetPasswordToken);
-        LOGGER.info("Successfully created new password reset token for User with id: {}.", searchedUser.getId());
+        LOGGER.info("Successfully created new password reset token for User with id: ´{}´.", searchedUser.getId());
 
         mailService.sendPasswordResetRequest(
                 searchedUser.getFirstName(),

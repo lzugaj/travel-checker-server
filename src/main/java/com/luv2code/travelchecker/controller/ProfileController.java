@@ -46,6 +46,6 @@ public class ProfileController {
 
         final User updatedUser = userService.update(email, mappedUser);
         LOGGER.info("Successfully finished updating process for User with id: ´{}´.", updatedUser.getId());
-        return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.CREATED);
+        return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.OK);
     }
 }

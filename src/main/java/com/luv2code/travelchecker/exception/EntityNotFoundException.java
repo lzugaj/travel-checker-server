@@ -1,24 +1,15 @@
 package com.luv2code.travelchecker.exception;
 
-public class EntityNotFoundException extends AbstractEntityException {
+public class EntityNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public EntityNotFoundException(final String entityName,
-                                   final String fieldName,
-                                   final String fieldValue) {
-        this(entityName, fieldName, fieldValue, null);
+    public EntityNotFoundException(final String message) {
+        super(message);
     }
 
-    public EntityNotFoundException(final String entityName,
-                                   final String fieldName,
-                                   final String fieldValue,
+    public EntityNotFoundException(final String message,
                                    final Throwable cause) {
-        super(entityName, fieldName, fieldValue, createMessage(entityName, fieldName, fieldValue), cause);
-    }
-
-    private static String createMessage(final String entityName, final String fieldName, final String fieldValue) {
-        return String.format("Entity '%s' with '%s' value '%s' not founded.",
-                entityName, fieldName, fieldValue);
+        super(message, cause);
     }
 }

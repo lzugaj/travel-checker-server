@@ -5,7 +5,6 @@ import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ForgetPasswordDto;
 import com.luv2code.travelchecker.repository.PasswordResetTokenRepository;
 import com.luv2code.travelchecker.service.impl.ForgetPasswordServiceImpl;
-import com.luv2code.travelchecker.util.JwtTokenUtil;
 import com.luv2code.travelchecker.util.UserUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,11 +34,11 @@ public class ForgetPasswordServiceImplTest {
     public void setup() {
         final User user = UserUtil.createUser(1L, "John", "Doe", "john.doe@gmail.com", "$2a$12$Gw9o/me9.BOeI5a40v7Reuxc5GyOdAMXUDWDnIWZFa6LM9HLeiyc6");
 
-        final String resetToken = JwtTokenUtil.createResetPasswordToken(user.getEmail());
+        // final String resetToken = JwtTokenUtil.createResetPasswordToken(user.getEmail());
 
         final ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
         resetPasswordToken.setId(1L);
-        resetPasswordToken.setToken(resetToken);
+        // resetPasswordToken.setToken(resetToken);
         resetPasswordToken.setUser(user);
 
         forgetPasswordDto = new ForgetPasswordDto();
