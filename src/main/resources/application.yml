@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8085
   servlet:
     context-path: /api/v1/travel-checker
     application-display-name: 'Travel Checker API'
@@ -40,7 +40,7 @@ luv2code:
     message-helper:
       from: 'travel.checker@gmail.com'
       subject: 'Travel Checker'
-      resetUrl: 'http://localhost:3000/registration'  #'http://localhost:8080/api/v1/travel-checker/reset-password?token=$resetToken'
+      resetUrl: 'http://localhost:3000/reset-password?token=$resetToken'
     password-encoder:
       bcryptRounds: 12
     template-resolver:

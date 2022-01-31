@@ -71,8 +71,7 @@ public class MailServiceImpl implements MailService {
     }
 
     private String getResetUrl(final String resetToken) {
-        return messageHelperConfiguration.getResetUrl();
-                //.replace("$resetToken", resetToken);
+        return messageHelperConfiguration.getResetUrl().replace("$resetToken", resetToken);
     }
 
     private void send(final String to, final MimeMessage mimeMessage) {
