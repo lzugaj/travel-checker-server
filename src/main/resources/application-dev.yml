@@ -12,7 +12,7 @@ spring:
     driver-class-name: org.h2.Driver
     url:  jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE #${TRAVEL_CHECKER_DEV_DB_URL}
     username: sa #${TRAVEL_CHECKER_DEV_DB_USERNAME}
-    password: password #${TRAVEL_CHECKER_DEV_DB_PASSWORD}
+    password: #${TRAVEL_CHECKER_DEV_DB_PASSWORD}
   jpa:
     show-sql: true
     generate-ddl: true
