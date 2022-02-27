@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.JwtConfiguration;
+import com.luv2code.travelchecker.configuration.JwtProperties;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ResetPasswordDto;
 import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
@@ -25,15 +25,15 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtConfiguration jwtConfiguration;
+    private final JwtProperties jwtProperties;
 
     @Autowired
     public ResetPasswordServiceImpl(final UserService userService,
                                     final PasswordEncoder passwordEncoder,
-                                    final JwtConfiguration jwtConfiguration) {
+                                    final JwtProperties jwtProperties) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.jwtConfiguration = jwtConfiguration;
+        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
             throw new PasswordNotConfirmedRightException("Password is not confirmed right while resetting password.");
         }
 
-        final String subject = JwtUtil.extractUsername(token, jwtConfiguration.getSecret());
+        final String subject = JwtUtil.extractUsername(token, jwtProperties.getSecret());
         final User searchedUser = userService.findByEmail(subject);
         LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
 
@@ -58,7 +58,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     }
 
     private boolean isTokenExpired(final String token) {
-        final Date expirationDate = JwtUtil.extractExpiration(token, jwtConfiguration.getSecret());
+        final Date expirationDate = JwtUtil.extractExpiration(token, jwtProperties.getSecret());
         return expirationDate.before(new Date());
     }
 

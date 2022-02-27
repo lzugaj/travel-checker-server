@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "luv2code.travel-checker.template-resolver")
-public class TemplateResolverConfiguration {
+public class TemplateResolverProperties {
 
     private String prefix;
 

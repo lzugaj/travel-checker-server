@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.MapboxConfiguration;
+import com.luv2code.travelchecker.configuration.MapboxProperties;
 import com.luv2code.travelchecker.service.MapboxService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,16 +12,16 @@ public class MapboxServiceImpl implements MapboxService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapboxServiceImpl.class);
 
-    private final MapboxConfiguration mapboxConfiguration;
+    private final MapboxProperties mapboxProperties;
 
     @Autowired
-    public MapboxServiceImpl(final MapboxConfiguration mapboxConfiguration) {
-        this.mapboxConfiguration = mapboxConfiguration;
+    public MapboxServiceImpl(final MapboxProperties mapboxProperties) {
+        this.mapboxProperties = mapboxProperties;
     }
 
     @Override
     public String getToken() {
         LOGGER.info("Fetching Mapbox token from configuration file.");
-        return mapboxConfiguration.getToken();
+        return mapboxProperties.getToken();
     }
 }

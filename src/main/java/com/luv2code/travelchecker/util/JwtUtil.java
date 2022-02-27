@@ -6,14 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class JwtUtil {
 
@@ -36,10 +32,6 @@ public class JwtUtil {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-    private static Boolean isTokenExpired(final String token, final String secretKey) {
-        return extractExpiration(token, secretKey).before(new Date());
-    }
-
     public static String generateToken(final UserDetails userDetails, final String secretKey) {
         final Map<String, Object> claims = new HashMap<>();
         claims.put("roles", userDetails.getAuthorities());
@@ -51,7 +43,7 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.ACCESS_TOKEN_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }
@@ -64,27 +56,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    public static boolean validateToken(final String token, final UserDetails userDetails, final String secretKey) {
-        final String email = extractUsername(token, secretKey);
-        return (email.equals(userDetails.getUsername()) && !isTokenExpired(token, secretKey));
-    }
-
-    public static Map<String, String> getJwtFromCookies(final HttpServletRequest request) {
-        final Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            return Arrays.stream(cookies)
-                    .collect(Collectors.toMap(
-                            Cookie::getName,
-                            Cookie::getValue
-                    ));
-        } else {
-            return null;
-        }
-    }
-
-    public static boolean validateJwtToken(final String authToken, final String secretKey) {
+    public static boolean validateJwtToken(final String token, final String secret) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;
         } catch (final SignatureException e) {
             LOGGER.error("Invalid JWT signature: {}", e.getMessage());

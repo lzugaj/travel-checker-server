@@ -4,8 +4,9 @@ import com.luv2code.travelchecker.domain.enums.RoleType;
 
 public class SecurityConstants {
 
-    public static final Long EXPIRATION_TIME = 31556952000L;
-    public static final Long PASSWORD_EXPIRATION_TIME = 86400000L;
+    public static final Long ACCESS_TOKEN_EXPIRATION_TIME = 300000L; // 15 minutes 900000L
+    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 600000L; // 7 days 604800000L
+    public static final Long PASSWORD_EXPIRATION_TIME = 3600000L; // 1 hour
 
     public static final String AUTHENTICATION_URL = "/authentication";
     public static final String AUTHORIZATION_URL =  "/authorization";
@@ -15,6 +16,8 @@ public class SecurityConstants {
     public static final String MARKERS_URL = "/markers/**";
     public static final String MAPBOX_URL = "/mapbox/**";
     public static final String FORGOT_PASSWORD_URL = "/forgot-password";
+    public static final String REFRESH_TOKEN_URL = "/refresh-token";
+
     // public static final String RESET_PASSWORD_URL = "/reset-password**";
 
     public static final String ADMIN_ROLE = RoleType.ADMIN.name();

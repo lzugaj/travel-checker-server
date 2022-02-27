@@ -6,13 +6,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-@ConfigurationProperties(prefix = "luv2code.travel-checker.message-helper")
-public class MessageHelperConfiguration {
+@ConfigurationProperties(prefix = "luv2code.travel-checker.mapbox")
+public class MapboxProperties {
 
-    private String from;
-
-    private String subject;
-
-    private String resetUrl;
+    private String token;
 
 }

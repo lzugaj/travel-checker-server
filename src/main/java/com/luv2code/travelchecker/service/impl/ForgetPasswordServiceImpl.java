@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.JwtConfiguration;
+import com.luv2code.travelchecker.configuration.JwtProperties;
 import com.luv2code.travelchecker.domain.ResetPasswordToken;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ForgetPasswordDto;
@@ -25,17 +25,17 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
-    private final JwtConfiguration jwtConfiguration;
+    private final JwtProperties jwtProperties;
 
     @Autowired
     public ForgetPasswordServiceImpl(final UserService userService,
                                      final MailService mailService,
                                      final PasswordResetTokenRepository passwordResetTokenRepository,
-                                     final JwtConfiguration jwtConfiguration) {
+                                     final JwtProperties jwtProperties) {
         this.userService = userService;
         this.mailService = mailService;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
-        this.jwtConfiguration = jwtConfiguration;
+        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
         final User searchedUser = userService.findByEmail(forgetPasswordDto.getEmail());
         LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
 
-        final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), jwtConfiguration.getSecret());
+        final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), jwtProperties.getSecret());
         LOGGER.info("Successfully generated password reset token for User with id: ´{}´.", searchedUser.getId());
 
         final ResetPasswordToken resetPasswordToken = buildPasswordResetToken(resetToken, searchedUser);

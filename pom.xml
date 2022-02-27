@@ -17,11 +17,10 @@
     <properties>
         <java.version>11</java.version>
 
-        <commons-lang3.version>3.11</commons-lang3.version>
-        <swagger.version>3.0.0</swagger.version>
-        <springfox-swagger-ui.version>2.9.2</springfox-swagger-ui.version>
-        <modelmapper.version>2.3.5</modelmapper.version>
-        <java-jwt.version>3.18.1</java-jwt.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
+        <springdoc-openapi-ui.version>1.6.6</springdoc-openapi-ui.version>
+        <modelmapper.version>2.4.5</modelmapper.version>
+        <java-jwt.version>3.18.3</java-jwt.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
     </properties>
 
@@ -80,23 +79,11 @@
             <version>${commons-lang3.version}</version>
         </dependency>
 
-        <!-- Swagger -->
+        <!-- OpenAPI -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${swagger.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${springfox-swagger-ui.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${springdoc-openapi-ui.version}</version>
         </dependency>
 
         <!-- ModelMapper -->
@@ -185,6 +172,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.6.4</version>
                 <configuration>
                     <excludes>
                         <exclude>

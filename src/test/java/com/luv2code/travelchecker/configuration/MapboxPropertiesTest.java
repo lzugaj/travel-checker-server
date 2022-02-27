@@ -7,20 +7,20 @@ import org.mockito.InjectMocks;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class MapboxConfigurationTest {
+public class MapboxPropertiesTest {
 
     @InjectMocks
-    private MapboxConfiguration mapboxConfiguration;
+    private MapboxProperties mapboxProperties;
 
     @BeforeEach
     public void setup() {
-        mapboxConfiguration = new MapboxConfiguration();
-        mapboxConfiguration.setToken("dsadposandoinsaidnsoanodosandoan");
+        mapboxProperties = new MapboxProperties();
+        mapboxProperties.setToken("dsadposandoinsaidnsoanodosandoan");
     }
 
     @Test
     public void should_Return_Mapbox_Token() {
-        final String mapboxToken = mapboxConfiguration.getToken();
+        final String mapboxToken = mapboxProperties.getToken();
 
         Assertions.assertEquals("dsadposandoinsaidnsoanodosandoan", mapboxToken);
     }
