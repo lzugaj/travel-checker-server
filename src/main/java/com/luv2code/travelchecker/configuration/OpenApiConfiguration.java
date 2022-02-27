@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "luv2code.travel-checker.api-info")
-public class SwaggerConfiguration {
+public class OpenApiConfiguration {
 
     public static final String BASE_CONTROLLER_PACKAGE = "com.luv2code.travelchecker.controller";
 
