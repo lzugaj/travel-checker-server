@@ -4,20 +4,34 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <changeSet id="20210624-000-1" author="lzugaj">
-        <createTable tableName="role">
+    <changeSet id="20220227-000-1" author="lzugaj">
+        <createTable tableName="refresh_token">
             <column name="id" autoIncrement="true" type="INT">
                 <constraints primaryKey="true" />
             </column>
 
-            <column name="name" type="VARCHAR(10)">
+            <column name="user_id" type="INT">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="token" type="UUID">
                 <constraints nullable="false" unique="true" />
             </column>
 
-            <column name="description" type="VARCHAR(100)">
+            <column name="expiry_date" type="TIMESTAMP">
                 <constraints nullable="false" />
             </column>
         </createTable>
+    </changeSet>
+
+    <changeSet id="20220227-000-2" author="lzugaj">
+        <addForeignKeyConstraint
+                constraintName="fk_user_refresh_token"
+                baseTableName="refresh_token"
+                baseColumnNames="user_id"
+                referencedTableName="user"
+                referencedColumnNames="id"
+        />
     </changeSet>
 
 </databaseChangeLog>

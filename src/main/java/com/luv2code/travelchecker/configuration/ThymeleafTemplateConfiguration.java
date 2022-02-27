@@ -12,11 +12,11 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 public class ThymeleafTemplateConfiguration {
 
-    private final TemplateResolverConfiguration templateResolverConfiguration;
+    private final TemplateResolverProperties templateResolverProperties;
 
     @Autowired
-    public ThymeleafTemplateConfiguration(final TemplateResolverConfiguration templateResolverConfiguration) {
-        this.templateResolverConfiguration = templateResolverConfiguration;
+    public ThymeleafTemplateConfiguration(final TemplateResolverProperties templateResolverProperties) {
+        this.templateResolverProperties = templateResolverProperties;
     }
 
     @Bean
@@ -29,8 +29,8 @@ public class ThymeleafTemplateConfiguration {
     @Bean
     public SpringResourceTemplateResolver htmlTemplateResolver() {
         final SpringResourceTemplateResolver emailTemplateResolver = new SpringResourceTemplateResolver();
-        emailTemplateResolver.setPrefix(templateResolverConfiguration.getPrefix());
-        emailTemplateResolver.setSuffix(templateResolverConfiguration.getSuffix());
+        emailTemplateResolver.setPrefix(templateResolverProperties.getPrefix());
+        emailTemplateResolver.setSuffix(templateResolverProperties.getSuffix());
         emailTemplateResolver.setTemplateMode(TemplateMode.HTML);
         emailTemplateResolver.setCharacterEncoding(StandardCharsets.UTF_8.name());
         return emailTemplateResolver;

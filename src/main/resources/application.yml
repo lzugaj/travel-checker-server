@@ -29,8 +29,8 @@ luv2code:
       licenseUrl: 'https://www.apache.org/licenses/LICENSE-2.0'
     jwt:
       secret: 'm5jKHPO7Z2aqWYPdujYeoCnPNiUmgTRlfIBqCwU8HpRQ3fZQ55uk6jRPeA6pWkkVhSWXycBhD1zAI18VeebwKVzfYPoy70UCaMA9k2OhJ2x7Ldo1b5kxVpxV8BvcbrzWTWXdbS7FpKKep7TAI7KEvOLs4lMPJ7HWbcCWzwHoWP9dPe2hvUHE9C2ZEQHnG5MKMInfqptK3OS7xKDAgsoQrFmqpqXYUrfbThOqDTGr8kfWsOn2TyaENGkZsHI6CZOi'
-      expirationTime: 31556952000  #1 year in milliseconds
-      passwordResetExpirationTime: 86400000 #1 day in milliseconds
+      expirationTime: 300000  # 15 minutes
+      passwordResetExpirationTime: 3600000 # 1 hour
     locale:
       baseName: classpath:messages
       defaultLocale: en

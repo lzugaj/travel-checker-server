@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service;
 
-import com.luv2code.travelchecker.configuration.MapboxConfiguration;
+import com.luv2code.travelchecker.configuration.MapboxProperties;
 import com.luv2code.travelchecker.service.impl.MapboxServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,13 +19,13 @@ public class MapboxServiceImplTest {
     private MapboxServiceImpl mapboxService;
 
     @Mock
-    private MapboxConfiguration mapboxConfiguration;
+    private MapboxProperties mapboxProperties;
 
     private static final String TOKEN = "dsapodpmm32k1mpofjjfmpo213po21";
 
     @BeforeEach
     public void setup() {
-        Mockito.when(mapboxConfiguration.getToken()).thenReturn(TOKEN);
+        Mockito.when(mapboxProperties.getToken()).thenReturn(TOKEN);
     }
 
     @Test

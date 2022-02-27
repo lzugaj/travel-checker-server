@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "luv2code.travel-checker.jwt")
-public class JwtConfiguration {
+public class JwtProperties {
 
     private String secret;
 

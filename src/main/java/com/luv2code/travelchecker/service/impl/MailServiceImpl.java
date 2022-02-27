@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.MessageHelperConfiguration;
+import com.luv2code.travelchecker.configuration.MessageHelperProperties;
 import com.luv2code.travelchecker.exception.PrepareEmailContentException;
 import com.luv2code.travelchecker.exception.SendEmailException;
 import com.luv2code.travelchecker.service.MailService;
@@ -29,15 +29,15 @@ public class MailServiceImpl implements MailService {
 
     private final TemplateEngine templateEngine;
 
-    private final MessageHelperConfiguration messageHelperConfiguration;
+    private final MessageHelperProperties messageHelperProperties;
 
     @Autowired
     public MailServiceImpl(final JavaMailSender javaMailSender,
                            final TemplateEngine templateEngine,
-                           final MessageHelperConfiguration messageHelperConfiguration) {
+                           final MessageHelperProperties messageHelperProperties) {
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
-        this.messageHelperConfiguration = messageHelperConfiguration;
+        this.messageHelperProperties = messageHelperProperties;
     }
 
     @Override
@@ -46,9 +46,9 @@ public class MailServiceImpl implements MailService {
         final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, StandardCharsets.UTF_8.name());
-            mimeMessageHelper.setFrom(messageHelperConfiguration.getFrom());
+            mimeMessageHelper.setFrom(messageHelperProperties.getFrom());
             mimeMessageHelper.setTo(email);
-            mimeMessageHelper.setSubject(messageHelperConfiguration.getSubject());
+            mimeMessageHelper.setSubject(messageHelperProperties.getSubject());
             mimeMessage.setContent(prepareHtml(firstName, resetToken), MediaType.TEXT_HTML_VALUE);
         } catch (final MessagingException exception) {
             LOGGER.error("Error while preparing email content for User with email: ´{}´.", email);
@@ -71,7 +71,7 @@ public class MailServiceImpl implements MailService {
     }
 
     private String getResetUrl(final String resetToken) {
-        return messageHelperConfiguration.getResetUrl().replace("$resetToken", resetToken);
+        return messageHelperProperties.getResetUrl().replace("$resetToken", resetToken);
     }
 
     private void send(final String to, final MimeMessage mimeMessage) {

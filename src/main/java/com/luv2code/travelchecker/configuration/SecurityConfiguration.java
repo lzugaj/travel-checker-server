@@ -3,6 +3,7 @@ package com.luv2code.travelchecker.configuration;
 import com.luv2code.travelchecker.filter.ExceptionHandlerFilter;
 import com.luv2code.travelchecker.filter.JwtAuthenticationFilter;
 import com.luv2code.travelchecker.filter.JwtAuthorizationFilter;
+import com.luv2code.travelchecker.service.RefreshTokenService;
 import com.luv2code.travelchecker.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,17 +28,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    private final JwtConfiguration jwtConfiguration;
+    private final RefreshTokenService refreshTokenService;
+
+    private final JwtProperties jwtProperties;
 
     @Value("${luv2code.travel-checker.password-encoder.bcryptRounds}")
     private String bcryptRounds;
 
     public SecurityConfiguration(final UserService userService,
                                  final UserDetailsService userDetailsService,
-                                 final JwtConfiguration jwtConfiguration) {
+                                 final RefreshTokenService refreshTokenService,
+                                 final JwtProperties jwtProperties) {
         this.userService = userService;
         this.userDetailsService = userDetailsService;
-        this.jwtConfiguration = jwtConfiguration;
+        this.refreshTokenService = refreshTokenService;
+        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -59,15 +64,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         AUTHENTICATION_URL,
                         AUTHORIZATION_URL,
-                        FORGOT_PASSWORD_URL
-                        /*RESET_PASSWORD_URL*/)
+                        FORGOT_PASSWORD_URL,
+                        REFRESH_TOKEN_URL)
                 .permitAll()
                 .antMatchers(
-                        "/v2/api-docs",
+                        "/swagger-ui/**",
+                        "/bus/v3/api-docs/**",
+                        "/v3/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",
                         "/configuration/security",
-                        "/swagger-ui.html",
+                        "/swagger*/**",
                         "/webjars/**",
                         "/h2-console/**")
                     .permitAll()
@@ -106,13 +113,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
         final JwtAuthenticationFilter jwtAuthenticationFilter =
-                new JwtAuthenticationFilter(authenticationManager(), userService, jwtConfiguration);
+                new JwtAuthenticationFilter(authenticationManager(), userService, refreshTokenService, jwtProperties);
         jwtAuthenticationFilter.setFilterProcessesUrl(AUTHENTICATION_URL);
         return jwtAuthenticationFilter;
     }
 
     @Bean
     public JwtAuthorizationFilter jwtAuthorizationFilter() throws Exception {
-        return new JwtAuthorizationFilter(authenticationManager(), userService, userDetailsService, jwtConfiguration);
+        return new JwtAuthorizationFilter(authenticationManager(), userDetailsService, jwtProperties);
     }
 }
