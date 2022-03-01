@@ -48,17 +48,20 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
             throw new PasswordNotConfirmedRightException("Password is not confirmed right while resetting password.");
         }
 
-        final String subject = JwtUtil.extractUsername(token, jwtProperties.getSecret());
-        final User searchedUser = userService.findByEmail(subject);
-        LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
+        final String email = JwtUtil.extractUsername(token, jwtProperties.getSecret());
+        LOGGER.debug("Extract email from JWT token. [email={}]", email);
+
+        final User searchedUser = userService.findByEmail(email);
+        LOGGER.debug("Founded searched User. [email={}]", searchedUser.getEmail());
 
         searchedUser.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
-        userService.update(subject, searchedUser);
-        LOGGER.info("Successfully updated password for User with id: ´{}´.", searchedUser.getId());
+        userService.update(email, searchedUser);
+        LOGGER.debug("Updated password for User. [email={}]", searchedUser.getEmail());
     }
 
     private boolean isTokenExpired(final String token) {
         final Date expirationDate = JwtUtil.extractExpiration(token, jwtProperties.getSecret());
+        LOGGER.debug("Extract expiration date from JWT token.");
         return expirationDate.before(new Date());
     }
 

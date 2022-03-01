@@ -43,12 +43,12 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     @Override
     public User save(final User user) {
         if (arePasswordsNotEquals(user.getPassword(), user.getConfirmationPassword())) {
-            LOGGER.error("Password for User with email: ´{}´ is not confirmed correctly.", user.getEmail());
+            LOGGER.error("Password is not confirmed correctly for User. [email={}]", user.getEmail());
             throw new PasswordNotConfirmedRightException("Password for User with id: " + user.getId() + " is not confirmed right.");
         }
 
         if (isEmailAlreadyTaken(user.getEmail())) {
-            LOGGER.error("User with email: ´{}´.", user.getEmail() + " already exists.");
+            LOGGER.error("Given email already exists for User. [email={}]", user.getEmail());
             throw new EntityAlreadyExistsException("User with email: " + user.getEmail() + " already exists.");
         }
 
@@ -67,7 +67,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     private Role findUserRole() {
         final Role userRole = roleService.findByRoleType(RoleType.USER);
-        LOGGER.info("Successfully founded Role with name: ´{}´.", userRole.getName().name());
+        LOGGER.debug("Founded searched Role. [name={}]", userRole.getName().name());
         return userRole;
     }
 
@@ -78,10 +78,9 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     @Override
     public User findByEmail(final String email) {
-        LOGGER.info("Searching User with email: ´{}´.", email);
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> {
-                    LOGGER.error("User with email: " + email + " was not found.");
+                    LOGGER.error("Cannot find searched email for User. [email={}]", email);
                     throw new EntityNotFoundException("User with email: " + email + " was not found.");
                 });
     }

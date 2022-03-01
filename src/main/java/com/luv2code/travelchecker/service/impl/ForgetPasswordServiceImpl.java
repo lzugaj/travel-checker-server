@@ -41,14 +41,14 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
     @Override
     public void requestPasswordReset(final ForgetPasswordDto forgetPasswordDto) {
         final User searchedUser = userService.findByEmail(forgetPasswordDto.getEmail());
-        LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
+        LOGGER.debug("Founded searched User. [email={}]", searchedUser.getEmail());
 
         final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), jwtProperties.getSecret());
-        LOGGER.info("Successfully generated password reset token for User with id: ´{}´.", searchedUser.getId());
+        LOGGER.debug("Generated password reset token for User. [email={}]", searchedUser.getEmail());
 
         final ResetPasswordToken resetPasswordToken = buildPasswordResetToken(resetToken, searchedUser);
         passwordResetTokenRepository.save(resetPasswordToken);
-        LOGGER.info("Successfully created new password reset token for User with id: ´{}´.", searchedUser.getId());
+        LOGGER.debug("Created password reset token for User. [email={}]", searchedUser.getEmail());
 
         mailService.sendPasswordResetRequest(
                 searchedUser.getFirstName(),
@@ -57,7 +57,6 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
     }
 
     private ResetPasswordToken buildPasswordResetToken(final String resetToken, final User user) {
-        LOGGER.info("Building new password reset token for User with id: {}.", user.getId());
         return ResetPasswordToken.builder()
                 .token(resetToken)
                 .user(user)

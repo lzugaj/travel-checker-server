@@ -21,7 +21,8 @@ public class MapboxServiceImpl implements MapboxService {
 
     @Override
     public String getToken() {
-        LOGGER.info("Fetching Mapbox token from configuration file.");
-        return mapboxProperties.getToken();
+        final String token = mapboxProperties.getToken();
+        LOGGER.debug("Retrieve Mapbox token from configuration file.");
+        return token;
     }
 }
