@@ -1,3 +1,4 @@
+/*
 package com.luv2code.travelchecker.controller;
 
 import com.luv2code.travelchecker.domain.Coordinate;
@@ -93,7 +94,7 @@ public class UserControllerTest {
         firstUser.setRoles(Collections.singleton(userRole));
         secondUser.setRoles(Collections.singleton(userRole));
         thirdUser.setRoles(Collections.singleton(userRole));
-      
+
         final List<User> users = Arrays.asList(firstUser, secondUser);
 
         // UserGetDto
@@ -113,7 +114,8 @@ public class UserControllerTest {
     @Test
     @DisplayName("GET /users/1")
     public void should_Find_User_By_Id() throws Exception {
-        /*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/" + firstUser.getId())
+        */
+/*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/" + firstUser.getId())
                 .header(HEADER_NAME, TOKEN_PREFIX + ADMIN_JWT_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -124,19 +126,23 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("id", CoreMatchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("firstName", CoreMatchers.is(firstUser.getFirstName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(firstUser.getLastName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(firstUser.getEmail())));*/
+                .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(firstUser.getEmail())));*//*
+
     }
 
     @Test
     @DisplayName("GET /users")
     public void should_Find_All_Users() throws Exception {
-        /*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users")
+        */
+/*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users")
                 .header(HEADER_NAME, TOKEN_PREFIX + ADMIN_JWT_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
 
         this.mockMvc
                 .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());*/
+                .andExpect(MockMvcResultMatchers.status().isOk());*//*
+
     }
 }
+*/

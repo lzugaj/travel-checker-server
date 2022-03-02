@@ -9,10 +9,11 @@ import com.luv2code.travelchecker.dto.user.UserPutDto;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 public class UserUtil {
 
-    public static User createUser(final Long id, final String firstName, final String lastName, final String email, final String password) {
+    public static User createUser(final UUID id, final String firstName, final String lastName, final String email, final String password) {
         final User user = new User();
         user.setId(id);
         user.setFirstName(firstName);
@@ -24,7 +25,7 @@ public class UserUtil {
         return user;
     }
 
-    public static User createUserWithWrongConfirmedPassword(final Long id, final String firstName, final String lastName, final String email, final String password, final String confirmedPassword) {
+    public static User createUserWithWrongConfirmedPassword(final UUID id, final String firstName, final String lastName, final String email, final String password, final String confirmedPassword) {
         final User user = new User();
         user.setId(id);
         user.setFirstName(firstName);
@@ -55,7 +56,7 @@ public class UserUtil {
         return userPutDto;
     }
 
-    public static UserGetDto createUserGetDto(final Long id, final String firstName, final String lastName, final String email, final List<RoleGetDto> userDtoRoles, final List<MarkerGetDto> userDtoMarkers) {
+    public static UserGetDto createUserGetDto(final UUID id, final String firstName, final String lastName, final String email, final List<RoleGetDto> userDtoRoles, final List<MarkerGetDto> userDtoMarkers) {
         final UserGetDto userGetDto = new UserGetDto();
         userGetDto.setId(id);
         userGetDto.setFirstName(firstName);

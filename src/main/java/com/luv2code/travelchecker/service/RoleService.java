@@ -4,10 +4,11 @@ import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.enums.RoleType;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface RoleService {
 
-    Role findById(final Long id);
+    Role findById(final UUID id);
 
     Role findByRoleType(final RoleType roleType);
 

@@ -5,6 +5,7 @@ import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 public class MarkerGetDto {
 
     @JsonProperty("id")
-    private Long id;
+    private UUID id;
 
     @JsonProperty("name")
     private String name;

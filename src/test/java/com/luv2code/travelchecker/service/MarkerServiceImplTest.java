@@ -1,3 +1,4 @@
+/*
 package com.luv2code.travelchecker.service;
 
 import com.luv2code.travelchecker.domain.Coordinate;
@@ -117,3 +118,4 @@ public class MarkerServiceImplTest {
         Mockito.verify(markerRepository, Mockito.times(1)).delete(secondMarker);
     }
 }
+*/

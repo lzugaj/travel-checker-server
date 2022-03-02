@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -55,6 +56,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
     }
 
     @Override
+    @Transactional
     public RefreshToken create(User user) {
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(user);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -59,7 +60,7 @@ public class MarkerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable final Long id) {
+    public ResponseEntity<?> findById(@PathVariable final UUID id) {
         final Marker searchedMarker = markerService.findById(id);
         LOGGER.info("Successfully founded Marker with id: ´{}´.", id);
         return new ResponseEntity<>(modelMapper.map(searchedMarker, MarkerGetDto.class), HttpStatus.OK);
@@ -73,14 +74,14 @@ public class MarkerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable final Long id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
+    public ResponseEntity<?> update(@PathVariable final UUID id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
         final Marker updatedMarker = markerService.update(modelMapper.map(markerPutDto, Marker.class));
         LOGGER.info("Successfully updated Marker with id: ´{}´.", id);
         return new ResponseEntity<>(modelMapper.map(updatedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable final Long id) {
+    public ResponseEntity<?> delete(@PathVariable final UUID id) {
         final Marker searchedMarker = markerService.findById(id);
         LOGGER.info("Successfully founded Marker with id: ´{}´.", id);
 

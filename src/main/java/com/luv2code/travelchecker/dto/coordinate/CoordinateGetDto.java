@@ -3,6 +3,8 @@ package com.luv2code.travelchecker.dto.coordinate;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @Builder
@@ -11,7 +13,7 @@ import lombok.*;
 public class CoordinateGetDto {
 
     @JsonProperty("id")
-    private Long id;
+    private UUID id;
 
     @JsonProperty("longitude")
     private Double longitude;

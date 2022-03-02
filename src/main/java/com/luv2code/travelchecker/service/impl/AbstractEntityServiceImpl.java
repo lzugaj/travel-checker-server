@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends AbstractEntityRepository<E>> implements AbstractEntityService<E> {
@@ -35,7 +36,7 @@ public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends 
     }
 
     @Override
-    public E findById(final Long id) {
+    public E findById(final UUID id) {
         LOGGER.info("Searching {} with id: ´{}´.", entityClass.getSimpleName(), id);
         return crudRepository.findById(id)
                 .orElseThrow(() -> {

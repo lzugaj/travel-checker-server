@@ -6,7 +6,7 @@
 
     <changeSet id="20210624-000-1" author="lzugaj">
         <createTable tableName="role">
-            <column name="id" autoIncrement="true" type="INT">
+            <column name="id" type="UUID">
                 <constraints primaryKey="true" />
             </column>
 

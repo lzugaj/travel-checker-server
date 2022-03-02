@@ -10,11 +10,11 @@
                 <constraints primaryKey="true" />
             </column>
 
-            <column name="user_id" type="INT">
+            <column name="user_id" type="UUID">
                 <constraints nullable="false" />
             </column>
 
-            <column name="marker_id" type="INT">
+            <column name="marker_id" type="UUID">
                 <constraints nullable="false" />
             </column>
         </createTable>

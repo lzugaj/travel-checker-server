@@ -1,3 +1,4 @@
+/*
 package com.luv2code.travelchecker.controller;
 
 import com.luv2code.travelchecker.domain.Role;
@@ -77,17 +78,22 @@ public class AuthenticatedUserControllerTest {
     @Test
     @DisplayName("GET /auth/me")
     public void should_Get_My_Auth_Details() throws Exception {
-        /*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/auth/me")
+        */
+/*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/auth/me")
                 .header(HEADER_NAME, TOKEN_PREFIX + USER_JWT_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON);*/
+                .accept(MediaType.APPLICATION_JSON);*//*
 
-        /*this.mockMvc
+
+        */
+/*this.mockMvc
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("id", CoreMatchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("firstName", CoreMatchers.is(me.getFirstName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(me.getLastName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(me.getEmail())));*/
+                .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(me.getEmail())));*//*
+
     }
 }
+*/
