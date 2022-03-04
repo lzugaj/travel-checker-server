@@ -30,7 +30,7 @@ public class RefreshTokenController {
                                           final HttpServletResponse response) {
         final UUID uuid = UUID.fromString(refreshToken.getRefreshToken());
         refreshTokenService.findByToken(uuid, response);
-        LOGGER.info("Refresh old token and generate new access token.");
+        LOGGER.info("Finish process of refreshing old token and generate new access token.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

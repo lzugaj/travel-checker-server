@@ -30,7 +30,7 @@ public class ForgetPasswordController {
     @PostMapping
     public ResponseEntity<?> forgetPassword(@Valid @RequestBody final ForgetPasswordDto forgetPasswordDto) {
         forgetPasswordService.requestPasswordReset(forgetPasswordDto);
-        LOGGER.info("User requested password reset. [email={}]", forgetPasswordDto.getEmail());
+        LOGGER.info("Finish process of sending password reset request.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

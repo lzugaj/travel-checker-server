@@ -38,34 +38,36 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
     @Override
     public void resetPassword(final String token, final ResetPasswordDto resetPasswordDto) {
+        LOGGER.info("Begin process of updating User password.");
         if (isTokenExpired(token)) {
             LOGGER.error("Reset password token has expired.");
             throw new ResetPasswordTokenHasExpiredException("Reset password token has expired.");
         }
 
         if (!arePasswordsEquals(resetPasswordDto)) {
-            LOGGER.error("Password is not confirmed right.");
+            LOGGER.error("Password is not confirmed right while resetting password.");
             throw new PasswordNotConfirmedRightException("Password is not confirmed right while resetting password.");
         }
 
         final String email = JwtUtil.extractUsername(token, jwtProperties.getSecret());
-        LOGGER.debug("Extract email from JWT token. [email={}]", email);
+        LOGGER.debug("Successfully extracted email from JWT token.");
 
         final User searchedUser = userService.findByEmail(email);
-        LOGGER.debug("Founded searched User. [email={}]", searchedUser.getEmail());
+        LOGGER.debug("Successfully founded searched User. [id={}]", searchedUser.getId());
 
         searchedUser.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
         userService.update(email, searchedUser);
-        LOGGER.debug("Updated password for User. [email={}]", searchedUser.getEmail());
     }
 
     private boolean isTokenExpired(final String token) {
+        LOGGER.debug("Checking if given token has expired.");
         final Date expirationDate = JwtUtil.extractExpiration(token, jwtProperties.getSecret());
         LOGGER.debug("Extract expiration date from JWT token.");
         return expirationDate.before(new Date());
     }
 
     private boolean arePasswordsEquals(final ResetPasswordDto resetPasswordDto) {
+        LOGGER.debug("Checking are given passwords equal.");
         return resetPasswordDto.getNewPassword().equals(resetPasswordDto.getConfirmedNewPassword());
     }
 }

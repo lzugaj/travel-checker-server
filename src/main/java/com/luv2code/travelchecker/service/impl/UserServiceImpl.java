@@ -42,14 +42,19 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     @Override
     public User save(final User user) {
+        LOGGER.info("Begin process of saving new User.");
         if (arePasswordsNotEquals(user.getPassword(), user.getConfirmationPassword())) {
-            LOGGER.error("Password is not confirmed correctly for User. [email={}]", user.getEmail());
-            throw new PasswordNotConfirmedRightException("Password for User with id: " + user.getId() + " is not confirmed right.");
+            LOGGER.error("Password is not confirmed correctly for User. [id={}]", user.getId());
+            throw new PasswordNotConfirmedRightException(
+                    String.format("Password is not confirmed correctly for User. [id=%s]", user.getId())
+            );
         }
 
         if (isEmailAlreadyTaken(user.getEmail())) {
-            LOGGER.error("Given email already exists for User. [email={}]", user.getEmail());
-            throw new EntityAlreadyExistsException("User with email: " + user.getEmail() + " already exists.");
+            LOGGER.error("User try to use email that is already taken. [id={}]", user.getId());
+            throw new EntityAlreadyExistsException(
+                    String.format("User try to use email that is already taken. [id=%s]", user.getId())
+            );
         }
 
         user.addRole(findUserRole());
@@ -58,10 +63,12 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     }
 
     private boolean arePasswordsNotEquals(final String password, final String confirmationPassword) {
+        LOGGER.debug("Checking are entered passwords not equal.");
         return !password.equals(confirmationPassword);
     }
 
     private boolean isEmailAlreadyTaken(final String email) {
+        LOGGER.debug("Checking is entered email already taken.");
         return userRepository.existsByEmail(email);
     }
 
@@ -73,6 +80,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     @Override
     public User findById(final UUID id) {
+        LOGGER.debug("Searching User with given id. [id={}]", id);
         return super.findById(id);
     }
 
@@ -80,48 +88,47 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     public User findByEmail(final String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> {
-                    LOGGER.error("Cannot find searched email for User. [email={}]", email);
-                    throw new EntityNotFoundException("User with email: " + email + " was not found.");
+                    LOGGER.error("Cannot find searched User by given email. [email={}]", email);
+                    throw new EntityNotFoundException(
+                            String.format("Cannot find searched User by given email. [email=%s]", email)
+                    );
                 });
     }
 
     @Override
     public List<User> findAll() {
+        LOGGER.debug("Searching all Users.");
         return super.findAll();
     }
 
-    // TODO: 2 metode => 1. Partial update User info
-    //                   2. Update User email in separate method
-
     @Override
     public User update(final String email, final User user) {
-        if (checkIfEmailIsNotAlreadyTaken(email, user)) {
+        LOGGER.info("Begin process of updating User. [id={}]", user.getId());
+        if (checkEmailAvailability(email, user)) {
             return super.save(user);
         } else {
-            LOGGER.error("User with email: ´{}´ already exists.", user.getEmail());
-            throw new EntityAlreadyExistsException("User with email: " + user.getEmail() + " already exists.");
+            LOGGER.error("User with given email already exists. [id={}]", user.getId());
+            throw new EntityAlreadyExistsException(
+                    String.format("User with given email already exists. [id=%s]", user.getId())
+            );
         }
     }
 
-    // TODO: lzugaj -> Refactor
-    private boolean checkIfEmailIsNotAlreadyTaken(final String email, final User currentUser) {
+    private boolean checkEmailAvailability(final String email, final User currentUser) {
+        LOGGER.debug("Checking is given email available provided by User. [id={}]", currentUser.getId());
         if (!currentUser.getEmail().equals(email)) {
             final List<User> users = findAll();
-            for (User user : users) {
-                if (emailIsNotAlreadyTaken(currentUser, user)) return false;
-            }
+            LOGGER.debug("Successfully founded all Users.");
+            return users.stream()
+                    .findFirst()
+                    .map(user -> isEmailAvailable(user, currentUser))
+                    .orElse(false);
         }
 
         return true;
     }
 
-    // TODO: lzugaj -> Refactor
-    private boolean emailIsNotAlreadyTaken(final User currentUser, final User user) {
-        boolean areEmailsEquals = true;
-        if (!user.equals(currentUser)) {
-            areEmailsEquals = user.getEmail().equals(currentUser.getEmail());
-        }
-
-        return areEmailsEquals;
+    private boolean isEmailAvailable(final User currentUser, final User user) {
+        return user.equals(currentUser) || user.getEmail().equals(currentUser.getEmail());
     }
 }

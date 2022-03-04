@@ -18,10 +18,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String getAuthenticatedEmail() {
         final Authentication currentAuthenticatedUser = SecurityContextHolder.getContext().getAuthentication();
         if (currentAuthenticatedUser instanceof AnonymousAuthenticationToken) {
-            LOGGER.warn("Request to REST API was rejected because user is not authenticated. [email={}]", currentAuthenticatedUser.getName());
+            LOGGER.warn("Request is rejected because user is not authenticated. [email={}]", currentAuthenticatedUser.getName());
             throw new UserNotAuthenticatedException(
-                    "User with email: " + currentAuthenticatedUser.getName() + " is not authenticated.");
+                    String.format("Request is rejected because user is not authenticated. [email=%s]",
+                            currentAuthenticatedUser.getName())
+            );
         } else {
+            LOGGER.debug("Found currently authenticated User.");
             return currentAuthenticatedUser.getName();
         }
     }

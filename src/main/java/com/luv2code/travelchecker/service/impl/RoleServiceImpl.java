@@ -35,14 +35,16 @@ public class RoleServiceImpl extends AbstractEntityServiceImpl<Role, RoleReposit
     public Role findByRoleType(final RoleType roleType) {
         return roleRepository.findByName(roleType)
                 .orElseThrow(() -> {
-                    LOGGER.error("Role was not founded. [name={}]", roleType.name());
+                    LOGGER.error("Cannot find Role by given name. [name={}]", roleType.name());
                     return new EntityNotFoundException(
-                            "Role with name: " + roleType.name() + " was not found.");
+                            String.format("Cannot find Role by given name. [name=%s]", roleType.name())
+                    );
                 });
     }
 
     @Override
     public List<Role> findAll() {
+        LOGGER.debug("Searching all Roles.");
         return super.findAll();
     }
 }

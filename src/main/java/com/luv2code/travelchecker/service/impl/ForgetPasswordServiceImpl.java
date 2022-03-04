@@ -40,15 +40,17 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
 
     @Override
     public void requestPasswordReset(final ForgetPasswordDto forgetPasswordDto) {
+        LOGGER.info("Begin process of sending password reset request.");
+
         final User searchedUser = userService.findByEmail(forgetPasswordDto.getEmail());
-        LOGGER.debug("Founded searched User. [email={}]", searchedUser.getEmail());
+        LOGGER.debug("Found searched User. [id={}]", searchedUser.getId());
 
         final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), jwtProperties.getSecret());
-        LOGGER.debug("Generated password reset token for User. [email={}]", searchedUser.getEmail());
+        LOGGER.debug("Generate password reset token for User. [id={}]", searchedUser.getId());
 
         final ResetPasswordToken resetPasswordToken = buildPasswordResetToken(resetToken, searchedUser);
         passwordResetTokenRepository.save(resetPasswordToken);
-        LOGGER.debug("Created password reset token for User. [email={}]", searchedUser.getEmail());
+        LOGGER.debug("Create password reset token for User. [id={}]", searchedUser.getId());
 
         mailService.sendPasswordResetRequest(
                 searchedUser.getFirstName(),

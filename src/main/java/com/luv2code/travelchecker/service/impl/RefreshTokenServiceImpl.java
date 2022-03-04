@@ -39,7 +39,6 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         this.jwtProperties = jwtProperties;
     }
 
-    // TODO: Refactor
     @Override
     public void findByToken(final UUID token, final HttpServletResponse response) {
         final User user = refreshTokenRepository.findByToken(token)
@@ -51,36 +50,40 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
                 });
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
-        LOGGER.debug("Founded searched User details. [email={}]", userDetails.getUsername());
+        LOGGER.debug("Founded searched User details.");
 
         final String jwtToken = JwtUtil.generateToken(userDetails, jwtProperties.getSecret());
-        LOGGER.debug("Generated access token for User. [email={}]", userDetails.getUsername());
+        LOGGER.debug("Generated access token for User.");
 
-        response.addHeader("access-token", "Bearer " + jwtToken);
-        response.addHeader("refresh-token", token.toString());
+        response.addHeader("access-token", SecurityConstants.BEARER_TOKEN_PREFIX + jwtToken);
+        response.addHeader("refresh-token", String.valueOf(token));
     }
 
     @Override
     @Transactional
     public RefreshToken create(final User user) {
-        // TODO: Refactor
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(user);
-        refreshToken.setExpiryDate(LocalDateTime.from(Instant.now().plusMillis(SecurityConstants.REFRESH_TOKEN_EXPIRATION_TIME)));
-        refreshToken.setToken(UUID.randomUUID());
+        LOGGER.info("Begin process of creating new refresh token for User. [id={}]", user.getId());
+        RefreshToken refreshToken = RefreshToken.builder()
+                .user(user)
+                .expiryDate(LocalDateTime.from(Instant.now().plusMillis(SecurityConstants.REFRESH_TOKEN_EXPIRATION_TIME)))
+                .token(UUID.randomUUID())
+                .build();
 
         refreshToken = refreshTokenRepository.save(refreshToken);
-        LOGGER.debug("Created refresh token for User. [email={}]", user.getEmail());
+        LOGGER.debug("Created refresh token for User. [id={}]", user.getId());
         return refreshToken;
     }
 
     @Override
     public RefreshToken verifyExpiration(final RefreshToken refreshToken) {
+        LOGGER.debug("Verifying expiration date for refresh token.");
         if (refreshToken.getExpiryDate().compareTo(LocalDateTime.now()) < 0) {
             refreshTokenRepository.delete(refreshToken);
-            LOGGER.debug("Deleted refresh token for User. [email={}]", refreshToken.getUser().getEmail());
-            LOGGER.error("Refresh token has expired for User. [email={}]", refreshToken.getUser().getEmail());
-            throw new TokenRefreshException("Refresh token has expired.");
+            LOGGER.debug("Delete refresh token for User. [id={}]", refreshToken.getUser().getId());
+            LOGGER.error("Refresh token has expired for User. [id={}]", refreshToken.getUser().getId());
+            throw new TokenRefreshException(
+                    String.format("Refresh token has expired for User. [id=%s]", refreshToken.getUser().getId())
+            );
         }
 
         return refreshToken;

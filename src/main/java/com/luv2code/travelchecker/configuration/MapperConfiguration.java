@@ -123,8 +123,6 @@ public class MapperConfiguration {
                 .addMapping(UserPostDto::getMarkers, User::setMarkers);
     }
 
-
-
     private void userPutDtoToUser(final ModelMapper modelMapper) {
         modelMapper.createTypeMap(UserPutDto.class, User.class)
                 .addMapping(UserPutDto::getId, User::setId)

@@ -38,10 +38,8 @@ public class AuthenticatedUserController {
     @GetMapping("/me")
     public ResponseEntity<?> getMyAuthDetails() {
         final String email = authenticationService.getAuthenticatedEmail();
-        LOGGER.debug("Founded currently logged in User. [email={}]", email);
-
         final User searchedUser = userService.findByEmail(email);
-        LOGGER.info("Founded searched User. [email={}]", searchedUser.getEmail());
+        LOGGER.info("Founded currently logged in User. [id={}]", searchedUser.getId());
         return new ResponseEntity<>(modelMapper.map(searchedUser, UserGetDto.class), HttpStatus.OK);
     }
 }

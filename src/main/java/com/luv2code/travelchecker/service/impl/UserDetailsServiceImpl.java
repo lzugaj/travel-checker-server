@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
         final Optional<User> searchedUser = userRepository.findByEmail(email);
         if (searchedUser.isPresent()) {
-            LOGGER.debug("Founded searched User. [email={}]", searchedUser.get().getEmail());
+            LOGGER.debug("Founded searched User. [id={}]", searchedUser.get().getId());
             final Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             searchedUser.get().getRoles().forEach(role -> {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
@@ -42,8 +42,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     authorities
             );
         } else {
-            LOGGER.error("User was not founded. [email={}]", email);
-            throw new EntityNotFoundException("User with email: " + email + " was not found.");
+            LOGGER.error("Cannot find searched User by given email. [email={}]", email);
+            throw new EntityNotFoundException(
+                    String.format("Cannot find searched User by given email. [email=%s]", email)
+            );
         }
     }
 }

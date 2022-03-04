@@ -30,32 +30,28 @@ public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends 
     @Override
     @Transactional
     public E save(final E entity) {
-        final E newEntity = crudRepository.save(entity);
-        LOGGER.info("Successfully created {} with id: ´{}´.", entityClass.getSimpleName(), entity.getId());
-        return newEntity;
+        return crudRepository.save(entity);
     }
 
     @Override
     public E findById(final UUID id) {
-        LOGGER.info("Searching {} with id: ´{}´.", entityClass.getSimpleName(), id);
         return crudRepository.findById(id)
                 .orElseThrow(() -> {
-                    LOGGER.error("{} with id: ´{}´ was not found.", entityClass.getSimpleName(), id);
+                    LOGGER.error("Cannot find searched {} by given id. [id={}]", entityClass.getSimpleName(), id);
                     return new EntityNotFoundException(
-                            entityClass.getSimpleName() + " with id: " + id + " was not found.");
+                            String.format("Cannot find searched %s by given id. [id=%s]", entityClass.getSimpleName(), id)
+                    );
                 });
     }
 
     @Override
     public List<E> findAll() {
-        LOGGER.info("Searching all {}.", entityClass.getSimpleName());
         return crudRepository.findAll();
     }
 
     @Override
     @Transactional
     public void delete(final E entity) {
-        LOGGER.info("Deleting {} with id: ´{}´.", entityClass.getSimpleName(), entity.getId());
         crudRepository.delete(entity);
     }
 }
