@@ -6,13 +6,13 @@
 
     <changeSet id="20210624-006-1" author="lzugaj" >
         <insert tableName="role">
-            <column name="id" value="1" />
+            <column name="id" valueComputed="random_uuid()" />
             <column name="name" value="ADMIN" />
             <column name="description" value="ADMIN role have the highest permission in application hierarchy" />
         </insert>
 
         <insert tableName="role">
-            <column name="id" value="2" />
+            <column name="id" valueComputed="random_uuid()" />
             <column name="name" value="USER" />
             <column name="description" value="USER role could READ and WRITE data which is assigned only to them" />
         </insert>

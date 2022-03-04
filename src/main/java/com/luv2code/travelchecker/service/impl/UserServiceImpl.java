@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserRepository> implements UserService {
@@ -71,7 +72,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
     }
 
     @Override
-    public User findById(final Long id) {
+    public User findById(final UUID id) {
         return super.findById(id);
     }
 

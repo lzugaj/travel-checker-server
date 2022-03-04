@@ -4,9 +4,11 @@ import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
 import com.luv2code.travelchecker.dto.coordinate.CoordinatePostDto;
 
+import java.util.UUID;
+
 public class CoordinateUtil {
 
-    public static Coordinate createCoordinate(final Long id, final Double longitude, final Double latitude) {
+    public static Coordinate createCoordinate(final UUID id, final Double longitude, final Double latitude) {
         final Coordinate coordinate = new Coordinate();
         coordinate.setId(id);
         coordinate.setLongitude(longitude);
@@ -14,7 +16,7 @@ public class CoordinateUtil {
         return coordinate;
     }
 
-    public static CoordinateGetDto createCoordinateGetDto(final Long id, final Double longitude, final Double latitude) {
+    public static CoordinateGetDto createCoordinateGetDto(final UUID id, final Double longitude, final Double latitude) {
         final CoordinateGetDto coordinateGetDto = new CoordinateGetDto();
         coordinateGetDto.setId(id);
         coordinateGetDto.setLongitude(longitude);

@@ -6,6 +6,7 @@ import com.luv2code.travelchecker.dto.role.RoleGetDto;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ import java.util.List;
 public class UserGetDto {
 
     @JsonProperty("id")
-    private Long id;
+    private UUID id;
 
     @JsonProperty("firstName")
     private String firstName;

@@ -10,10 +10,11 @@ import com.luv2code.travelchecker.dto.marker.MarkerPutDto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class MarkerUtil {
 
-    public static Marker createMarker(final Long id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final LocalDateTime createdAt, final Coordinate coordinate) {
+    public static Marker createMarker(final UUID id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final LocalDateTime createdAt, final Coordinate coordinate) {
         final Marker marker = new Marker();
         marker.setId(id);
         marker.setName(name);
@@ -27,7 +28,7 @@ public class MarkerUtil {
         return marker;
     }
 
-    public static MarkerGetDto createMarkerGetDto(final Long id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final CoordinateGetDto coordinateGetDto) {
+    public static MarkerGetDto createMarkerGetDto(final UUID id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final CoordinateGetDto coordinateGetDto) {
         final MarkerGetDto markerGetDto = new MarkerGetDto();
         markerGetDto.setId(id);
         markerGetDto.setName(name);
@@ -51,7 +52,7 @@ public class MarkerUtil {
         return markerPostDto;
     }
 
-    public static MarkerPutDto createMarkerPutDto(final Long id, final String name, final String description, final LocalDate eventDate, final int grade, final Boolean shouldVisitAgain, final Coordinate coordinate) {
+    public static MarkerPutDto createMarkerPutDto(final UUID id, final String name, final String description, final LocalDate eventDate, final int grade, final Boolean shouldVisitAgain, final Coordinate coordinate) {
         final MarkerPutDto markerPutDto = new MarkerPutDto();
         markerPutDto.setId(id);
         markerPutDto.setName(name);

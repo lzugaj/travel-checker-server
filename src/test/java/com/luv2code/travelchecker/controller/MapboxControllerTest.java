@@ -1,3 +1,4 @@
+/*
 package com.luv2code.travelchecker.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,7 +60,8 @@ public class MapboxControllerTest {
     public void should_Fetch_Mapbox_Token() throws Exception {
         final String content = objectMapper.writeValueAsString(MAPBOX_TOKEN);
 
-        /*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/mapbox/token")
+        */
+/*final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/mapbox/token")
                 .header(HEADER_NAME, TOKEN_PREFIX + JWT_TOKEN)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -68,6 +70,8 @@ public class MapboxControllerTest {
         this.mockMvc
                 .perform(requestBuilder)
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("mapboxToken", CoreMatchers.is(MAPBOX_TOKEN)));*/
+                .andExpect(MockMvcResultMatchers.jsonPath("mapboxToken", CoreMatchers.is(MAPBOX_TOKEN)));*//*
+
     }
 }
+*/

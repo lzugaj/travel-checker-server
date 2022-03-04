@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MarkerServiceImpl extends AbstractEntityServiceImpl<Marker, MarkerRepository> implements MarkerService {
@@ -25,7 +26,7 @@ public class MarkerServiceImpl extends AbstractEntityServiceImpl<Marker, MarkerR
     }
 
     @Override
-    public Marker findById(final Long id) {
+    public Marker findById(final UUID id) {
         return super.findById(id);
     }
 

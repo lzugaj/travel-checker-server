@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RoleServiceImpl extends AbstractEntityServiceImpl<Role, RoleRepository> implements RoleService {
@@ -26,7 +27,7 @@ public class RoleServiceImpl extends AbstractEntityServiceImpl<Role, RoleReposit
     }
 
     @Override
-    public Role findById(final Long id) {
+    public Role findById(final UUID id) {
         return super.findById(id);
     }
 

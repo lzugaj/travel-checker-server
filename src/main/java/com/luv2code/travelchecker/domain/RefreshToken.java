@@ -4,7 +4,7 @@ import com.luv2code.travelchecker.domain.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -24,6 +24,6 @@ public class RefreshToken extends BaseEntity {
     private UUID token;
 
     @Column(name = "expiry_date")
-    private Instant expiryDate;
+    private LocalDateTime expiryDate;
 
 }
