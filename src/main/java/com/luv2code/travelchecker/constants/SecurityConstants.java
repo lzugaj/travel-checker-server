@@ -8,6 +8,8 @@ public class SecurityConstants {
     public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 600000L; // 7 days 604800000L
     public static final Long PASSWORD_EXPIRATION_TIME = 3600000L; // 1 hour
 
+    public static final String BEARER_TOKEN_PREFIX = "Bearer ";
+
     public static final String AUTHENTICATION_URL = "/authentication";
     public static final String AUTHORIZATION_URL =  "/authorization";
     public static final String AUTH_ME_URL =  "/auth/me";

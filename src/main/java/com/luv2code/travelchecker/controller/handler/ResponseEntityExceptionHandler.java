@@ -19,11 +19,14 @@ import java.util.List;
 @RestControllerAdvice
 public class ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {
-            RuntimeException.class,
-            NullPointerException.class
-    })
+    @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<ApiResponse> handleRuntimeException(final RuntimeException exception, final HttpServletRequest httpServletRequest) {
+        final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        return createResponseMessage(badRequest, exception, httpServletRequest);
+    }
+
+    @ExceptionHandler(value = NullPointerException.class)
+    public ResponseEntity<ApiResponse> handleNullPointerException(final NullPointerException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         return createResponseMessage(badRequest, exception, httpServletRequest);
     }

@@ -49,44 +49,44 @@ public class MarkerController {
     @PostMapping
     public ResponseEntity<?> save(@Valid @RequestBody final MarkerPostDto markerPostDto) {
         final String currentlyAuthenticatedUser = authenticationService.getAuthenticatedEmail();
-        LOGGER.info("Currently authenticated User with email: ´{}´.", currentlyAuthenticatedUser);
+        LOGGER.debug("Found currently authenticated User.");
 
         final User searchedUser = userService.findByEmail(currentlyAuthenticatedUser);
-        LOGGER.info("Successfully founded User with email: ´{}´.", searchedUser.getEmail());
+        LOGGER.debug("Found searched User. [id={}]", searchedUser.getId());
 
         final Marker marker = markerService.save(searchedUser, modelMapper.map(markerPostDto, Marker.class));
-        LOGGER.info("Successfully created new Marker with id: ´{}´.", marker.getId());
+        LOGGER.info("Finish process of creating new Marker for User. [id={}]", searchedUser.getId());
         return new ResponseEntity<>(modelMapper.map(marker, MarkerGetDto.class), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable final UUID id) {
         final Marker searchedMarker = markerService.findById(id);
-        LOGGER.info("Successfully founded Marker with id: ´{}´.", id);
+        LOGGER.info("Found searched Marker. [id={}]", id);
         return new ResponseEntity<>(modelMapper.map(searchedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<?> findAll() {
         final List<Marker> searchedMarkers = markerService.findAll();
-        LOGGER.info("Successfully founded ´{}´ Markers.", searchedMarkers.size());
+        LOGGER.info("Found all searched Markers. [size={}]", searchedMarkers.size());
         return new ResponseEntity<>(mapList(searchedMarkers), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable final UUID id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
         final Marker updatedMarker = markerService.update(modelMapper.map(markerPutDto, Marker.class));
-        LOGGER.info("Successfully updated Marker with id: ´{}´.", id);
+        LOGGER.info("Finish process of updating existing Marker. [id={}]", id);
         return new ResponseEntity<>(modelMapper.map(updatedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable final UUID id) {
         final Marker searchedMarker = markerService.findById(id);
-        LOGGER.info("Successfully founded Marker with id: ´{}´.", id);
+        LOGGER.debug("Found searched Marker. [id={}]", id);
 
         markerService.delete(searchedMarker);
-        LOGGER.info("Successfully deleted Marker with id: ´{}´.", id);
+        LOGGER.info("Finish process of deleting existing Marker. [id={}]", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

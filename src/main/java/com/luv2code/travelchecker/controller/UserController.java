@@ -38,14 +38,14 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable final UUID id) {
         final User searchedUser = userService.findById(id);
-        LOGGER.info("Successfully founded User with id: ´{}´.", searchedUser.getId());
+        LOGGER.info("Found searched User. [id={}]", searchedUser.getId());
         return new ResponseEntity<>(modelMapper.map(searchedUser, UserGetDto.class), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<?> findAll() {
         final List<User> users = userService.findAll();
-        LOGGER.info("Successfully founded ´{}´ users.", users.size());
+        LOGGER.info("Found all searched Users. [size={}]", users.size());
         return new ResponseEntity<>(mapList(users), HttpStatus.OK);
     }
 

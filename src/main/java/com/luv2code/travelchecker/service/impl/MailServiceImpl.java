@@ -42,25 +42,25 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public void sendPasswordResetRequest(final String firstName, final String email, final String resetToken) {
-        LOGGER.info("Preparing to send email to: ´{}´.", email);
+        LOGGER.info("Begin process of sending email to: ´{}´.", email);
         final MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
+            LOGGER.debug("Preparing email content.");
             final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, StandardCharsets.UTF_8.name());
             mimeMessageHelper.setFrom(messageHelperProperties.getFrom());
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject(messageHelperProperties.getSubject());
             mimeMessage.setContent(prepareHtml(firstName, resetToken), MediaType.TEXT_HTML_VALUE);
         } catch (final MessagingException exception) {
-            LOGGER.error("Error while preparing email content for User with email: ´{}´.", email);
-            throw new PrepareEmailContentException("Email content was not prepared right.");
+            LOGGER.error("Error while preparing email content for User. [email={}].", email);
+            throw new PrepareEmailContentException("Error while preparing email content.");
         }
 
         send(email, mimeMessage);
     }
 
     private String prepareHtml(final String firstName, final String resetToken){
-        LOGGER.info("Preparing HTML email template.");
-
+        LOGGER.debug("Preparing HTML email template.");
         final Context context = new Context();
         context.setLocale(Locale.getDefault());
         context.setVariable("firstName", firstName);
@@ -71,15 +71,16 @@ public class MailServiceImpl implements MailService {
     }
 
     private String getResetUrl(final String resetToken) {
+        LOGGER.debug("Replacing reset url with generated token.");
         return messageHelperProperties.getResetUrl().replace("$resetToken", resetToken);
     }
 
     private void send(final String to, final MimeMessage mimeMessage) {
         try {
             javaMailSender.send(mimeMessage);
-            LOGGER.info("Email successfully sent to: ´{}´.", to);
+            LOGGER.info("Email has been sent to User. [email={}]", to);
         } catch (final MailException exception) {
-            LOGGER.error("Error while trying to send email to: ´{}´.", to);
+            LOGGER.error("Error while trying to send email to User. [email={}].", to);
             LOGGER.error(exception.getMessage());
             throw new SendEmailException("Email was not sent correctly.");
         }

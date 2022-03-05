@@ -39,13 +39,11 @@ public class ProfileController {
     @PatchMapping("/me")
     public ResponseEntity<?> updateMyProfile(@Valid @RequestBody final UserPutDto userPutDto) {
         final String email = authenticationService.getAuthenticatedEmail();
-        LOGGER.info("Successfully founded currently logged in User with email: ´{}´.", email);
+        LOGGER.debug("Found currently logged in User.");
 
         final User mappedUser = modelMapper.map(userPutDto, User.class);
-        LOGGER.info("Successfully mapped UserPutDto to User.");
-
         final User updatedUser = userService.update(email, mappedUser);
-        LOGGER.info("Successfully finished updating process for User with id: ´{}´.", updatedUser.getId());
+        LOGGER.info("Finish updating profile process for existing User. [id={}]", updatedUser.getId());
         return new ResponseEntity<>(modelMapper.map(updatedUser, UserGetDto.class), HttpStatus.OK);
     }
 }

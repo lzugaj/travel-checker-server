@@ -28,7 +28,7 @@ public class ResetPasswordController {
     public ResponseEntity<?> resetPassword(@RequestParam(required = false) final String token,
                                            @Valid @RequestBody final ResetPasswordDto resetPasswordDto) {
         resetPasswordService.resetPassword(token, resetPasswordDto);
-        LOGGER.info("Successfully finished update password process.");
+        LOGGER.info("Finish process of sending password reset request.");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
