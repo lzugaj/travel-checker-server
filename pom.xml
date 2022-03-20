@@ -22,10 +22,6 @@
         <modelmapper.version>2.4.5</modelmapper.version>
         <java-jwt.version>3.18.3</java-jwt.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
-
-        <sonar.organization>lzugaj</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
     </properties>
 
     <dependencies>
@@ -192,23 +188,28 @@
 
     <profiles>
         <profile>
-            <id>coverage</id>
+            <id>sonar</id>
+            <properties>
+                <sonar.sources>.</sonar.sources>
+                <sonar.inclusions>src/main/java/**,src/main/resources/**</sonar.inclusions>
+                <!--<sonar.exclusions>${code.coverage.exclusions}</sonar.exclusions>-->
+                <sonar.organization>lzugaj</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+                <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>prepare-agent</id>
+                                <phase>verify</phase>
                                 <goals>
-                                    <goal>prepare-agent</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>report</id>
-                                <goals>
-                                    <goal>report</goal>
+                                    <goal>sonar</goal>
                                 </goals>
                             </execution>
                         </executions>
