@@ -36,7 +36,7 @@ luv2code:
       defaultLocale: en
       defaultEncoding: UTF-8
     mapbox:
-      token: ${TRAVEL_CHECKER_MAPBOX_TOKEN}
+      token: ${TRAVEL_CHECKER_MAPBOX_TOKEN:pk.eyJ1IjoibHp1Z2FqIiwiYSI6ImNrbHpnbGhvMjFraW0ybnBsdzR3OXN6bDAifQ.dBuHMH1r6dH22MsrXrCRUQ}
     message-helper:
       from: 'travel.checker@gmail.com'
       subject: 'Travel Checker'
