@@ -2,7 +2,7 @@ name: Travel Checker Pipeline
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
   pull_request:
     branches: [ develop ]
 
@@ -21,6 +21,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
   sonar:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Cache SonarCloud packages
