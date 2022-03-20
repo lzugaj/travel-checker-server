@@ -13,6 +13,6 @@ public class JwtProperties {
 
     private Long expirationTime;
 
-    private Long passwordResetExpirationTime;
+    private Long resetPasswordExpirationTime;
 
 }

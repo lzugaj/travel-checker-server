@@ -1,18 +1,21 @@
-/*
 package com.luv2code.travelchecker.service;
 
+import com.luv2code.travelchecker.constants.SecurityConstants;
 import com.luv2code.travelchecker.domain.ResetPasswordToken;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ForgetPasswordDto;
+import com.luv2code.travelchecker.mock.ForgetPasswordMock;
+import com.luv2code.travelchecker.mock.ResetPasswordTokenMock;
+import com.luv2code.travelchecker.mock.UserMock;
 import com.luv2code.travelchecker.repository.PasswordResetTokenRepository;
 import com.luv2code.travelchecker.service.impl.ForgetPasswordServiceImpl;
-import com.luv2code.travelchecker.util.UserUtil;
+import com.luv2code.travelchecker.util.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.UUID;
 
 @SpringBootTest
 public class ForgetPasswordServiceImplTest {
@@ -33,25 +36,29 @@ public class ForgetPasswordServiceImplTest {
 
     @BeforeEach
     public void setup() {
-        final User user = UserUtil.createUser(1L, "John", "Doe", "john.doe@gmail.com", "$2a$12$Gw9o/me9.BOeI5a40v7Reuxc5GyOdAMXUDWDnIWZFa6LM9HLeiyc6");
+        // User
+        final User user = UserMock.createUser(UUID.randomUUID(), "John", "Doe", "john.doe@gmail.com", "$2a$12$Gw9o/me9.BOeI5a40v7Reuxc5GyOdAMXUDWDnIWZFa6LM9HLeiyc6");
 
-        // final String resetToken = JwtTokenUtil.createResetPasswordToken(user.getEmail());
+        // ResetPasswordToken
+        final String resetToken = JwtUtil.generateResetPasswordToken(user.getEmail(), SecurityConstants.SECRET);
+        final ResetPasswordToken resetPasswordToken = ResetPasswordTokenMock.createResetPasswordToken(UUID.randomUUID(), resetToken, user);
 
-        final ResetPasswordToken resetPasswordToken = new ResetPasswordToken();
-        resetPasswordToken.setId(1L);
-        // resetPasswordToken.setToken(resetToken);
-        resetPasswordToken.setUser(user);
+        // ForgetPasswordDto
+        forgetPasswordDto = ForgetPasswordMock.forgetPasswordDto(user.getEmail());
 
-        forgetPasswordDto = new ForgetPasswordDto();
-        forgetPasswordDto.setEmail(user.getEmail());
+        try (MockedStatic<JwtUtil> mockedStatic = Mockito.mockStatic(JwtUtil.class)) {
+            mockedStatic.when(() -> JwtUtil.generateResetPasswordToken(user.getEmail(), SecurityConstants.SECRET)).thenReturn(resetToken);
+        }
 
-        Mockito.when(userService.findByEmail(user.getEmail())).thenReturn(user);
-        Mockito.when(passwordResetTokenRepository.save(resetPasswordToken)).thenReturn(resetPasswordToken);
+        BDDMockito.given(userService.findByEmail(user.getEmail())).willReturn(user);
+        BDDMockito.given(passwordResetTokenRepository.save(resetPasswordToken)).willReturn(resetPasswordToken);
+        BDDMockito.doNothing().when(mailService).sendPasswordResetRequest(user.getFirstName(), user.getEmail(), resetToken);
     }
 
     @Test
     public void should_Request_Password_Reset() {
         forgetPasswordService.requestPasswordReset(forgetPasswordDto);
+
+        Mockito.verify(mailService).sendPasswordResetRequest(Mockito.anyString(), Mockito.anyString(), Mockito.anyString());
     }
 }
-*/

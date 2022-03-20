@@ -68,8 +68,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         try {
             return super.getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(email, password));
         } catch (final Exception e) {
-            if (!(e instanceof EntityNotFoundException) &&
-                    !(e instanceof AuthenticationException)) {
+            if (!(e instanceof EntityNotFoundException) && !(e instanceof AuthenticationException)) {
                 throw e;
             }
 
@@ -96,6 +95,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         final RefreshToken refreshToken = refreshTokenService.create(user);
         LOGGER.info("Authentication success for user with id: ´{}´.", user.getId());
         response.addHeader("access-token", "Bearer " + jwtToken);
-        response.addHeader("refresh-token", refreshToken.getToken().toString());
+        response.addHeader("refresh-token", String.valueOf(refreshToken.getToken()));
     }
 }

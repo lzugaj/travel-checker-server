@@ -1,4 +1,4 @@
-package com.luv2code.travelchecker.util;
+package com.luv2code.travelchecker.mock;
 
 import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.domain.Marker;
@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class MarkerUtil {
+public class MarkerMock {
 
     public static Marker createMarker(final UUID id, final String name, final String description, final LocalDate eventDate, final Integer grade, final Boolean shouldVisitAgain, final LocalDateTime createdAt, final Coordinate coordinate) {
         final Marker marker = new Marker();

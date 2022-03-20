@@ -4,11 +4,12 @@ import com.luv2code.travelchecker.domain.enums.RoleType;
 
 public class SecurityConstants {
 
-    public static final Long ACCESS_TOKEN_EXPIRATION_TIME = 300000L; // 15 minutes 900000L
-    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 600000L; // 7 days 604800000L
-    public static final Long PASSWORD_EXPIRATION_TIME = 3600000L; // 1 hour
+    public static final Long ACCESS_TOKEN_EXPIRATION_TIME = 900_000L; // 15 minutes
+    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 604_800_000L; // 7 days
+    public static final Long RESET_PASSWORD_EXPIRATION_TIME = 3_600_000L; // 1 hour
 
     public static final String BEARER_TOKEN_PREFIX = "Bearer ";
+    public static final String SECRET = "m5jKHPO7Z2aqWYPdujYeoCnPNiUmgTRlfIBqCwU8HpRQ3fZQ55uk6jRPeA6pWkkVhSWXycBhD1zAI18VeebwKVzfYPoy70UCaMA9k2OhJ2x7Ldo1b5kxVpxV8BvcbrzWTWXdbS7FpKKep7TAI7KEvOLs4lMPJ7HWbcCWzwHoWP9dPe2hvUHE9C2ZEQHnG5MKMInfqptK3OS7xKDAgsoQrFmqpqXYUrfbThOqDTGr8kfWsOn2TyaENGkZsHI6CZOi";
 
     public static final String AUTHENTICATION_URL = "/authentication";
     public static final String AUTHORIZATION_URL =  "/authorization";

@@ -1,12 +1,12 @@
-/*
 package com.luv2code.travelchecker.service;
 
+import com.luv2code.travelchecker.constants.SecurityConstants;
 import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.enums.RoleType;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
 import com.luv2code.travelchecker.repository.RoleRepository;
 import com.luv2code.travelchecker.service.impl.RoleServiceImpl;
-import com.luv2code.travelchecker.util.RoleUtil;
+import com.luv2code.travelchecker.mock.RoleMock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @SpringBootTest
 public class RoleServiceImplTest {
@@ -33,8 +34,8 @@ public class RoleServiceImplTest {
 
     @BeforeEach
     public void setup() {
-        adminRole = RoleUtil.createRole(1L, RoleType.ADMIN, "ADMIN role have the highest permission in application hierarchy");
-        userRole = RoleUtil.createRole(2L, RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
+        adminRole = RoleMock.createRole(UUID.randomUUID(), RoleType.ADMIN, "ADMIN role have the highest permission in application hierarchy");
+        userRole = RoleMock.createRole(UUID.fromString("1aa1b7ae-ec30-431b-9473-07e9a5bb0651"), RoleType.USER, "USER role could READ and WRITE data which is assigned only to them");
 
         final List<Role> roles = Collections.singletonList(userRole);
 
@@ -61,7 +62,7 @@ public class RoleServiceImplTest {
                 () -> roleService.findById(userRole.getId())
         );
 
-        final String expectedMessage = "Role with id: 2 was not found.";
+        final String expectedMessage = String.format("Cannot find searched Role by given id. [id=%s]", "1aa1b7ae-ec30-431b-9473-07e9a5bb0651");
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -85,7 +86,7 @@ public class RoleServiceImplTest {
                 () -> roleService.findByRoleType(RoleType.ADMIN)
         );
 
-        final String expectedMessage = "Role with name: ADMIN was not found.";
+        final String expectedMessage = String.format("Cannot find Role by given name. [name=%s]", SecurityConstants.ADMIN_ROLE);
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -99,4 +100,3 @@ public class RoleServiceImplTest {
         Assertions.assertNotNull(searchedRoles);
     }
 }
-*/

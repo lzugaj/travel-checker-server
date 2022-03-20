@@ -1,4 +1,4 @@
-package com.luv2code.travelchecker.util;
+package com.luv2code.travelchecker.mock;
 
 import com.luv2code.travelchecker.domain.Role;
 import com.luv2code.travelchecker.domain.enums.RoleType;
@@ -6,7 +6,7 @@ import com.luv2code.travelchecker.dto.role.RoleGetDto;
 
 import java.util.UUID;
 
-public class RoleUtil {
+public class RoleMock {
 
     public static Role createRole(final UUID id, final RoleType roleType, final String description) {
         final Role role = new Role();

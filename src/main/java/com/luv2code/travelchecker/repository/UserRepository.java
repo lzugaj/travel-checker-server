@@ -10,6 +10,4 @@ public interface UserRepository extends AbstractEntityRepository<User> {
 
     Optional<User> findByEmail(final String email);
 
-    Boolean existsByEmail(final String email);
-
 }

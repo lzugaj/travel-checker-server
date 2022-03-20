@@ -1,6 +1,5 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.JwtProperties;
 import com.luv2code.travelchecker.constants.SecurityConstants;
 import com.luv2code.travelchecker.domain.RefreshToken;
 import com.luv2code.travelchecker.domain.User;
@@ -29,14 +28,10 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
 
     private final UserDetailsService userDetailsService;
 
-    private final JwtProperties jwtProperties;
-
     public RefreshTokenServiceImpl(final RefreshTokenRepository refreshTokenRepository,
-                                   final UserDetailsService userDetailsService,
-                                   final JwtProperties jwtProperties) {
+                                   final UserDetailsService userDetailsService) {
         this.refreshTokenRepository = refreshTokenRepository;
         this.userDetailsService = userDetailsService;
-        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -52,7 +47,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         LOGGER.debug("Founded searched User details.");
 
-        final String jwtToken = JwtUtil.generateToken(userDetails, jwtProperties.getSecret());
+        final String jwtToken = JwtUtil.generateToken(userDetails, SecurityConstants.SECRET);
         LOGGER.debug("Generated access token for User.");
 
         response.addHeader("access-token", SecurityConstants.BEARER_TOKEN_PREFIX + jwtToken);

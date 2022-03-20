@@ -1,17 +1,16 @@
-/*
 package com.luv2code.travelchecker.service;
 
 import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.exception.EntityNotFoundException;
+import com.luv2code.travelchecker.mock.CoordinateMock;
 import com.luv2code.travelchecker.repository.CoordinateRepository;
 import com.luv2code.travelchecker.service.impl.CoordinateServiceImpl;
-import com.luv2code.travelchecker.util.CoordinateUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
@@ -28,18 +27,19 @@ public class CoordinateServiceImplTest {
     private CoordinateRepository coordinateRepository;
 
     private Coordinate firstCoordinate;
+    private Coordinate secondCoordinate;
     private Coordinate thirdCoordinate;
 
     @BeforeEach
     public void setup() {
-        firstCoordinate = CoordinateUtil.createCoordinate(1L, 45.232132232, 15.123123123);
-        Coordinate secondCoordinate = CoordinateUtil.createCoordinate(2L, 32.876543211, 18.123456789);
-        thirdCoordinate = CoordinateUtil.createCoordinate(3L, 49.888777333, 21.762123456);
+        firstCoordinate = CoordinateMock.createCoordinate(45.232132232, 15.123123123);
+        secondCoordinate = CoordinateMock.createCoordinate(32.876543211, 18.123456789);
+        thirdCoordinate = CoordinateMock.createCoordinate(49.888777333, 21.762123456);
 
         final List<Coordinate> coordinates = Arrays.asList(firstCoordinate, secondCoordinate, thirdCoordinate);
 
-        Mockito.when(coordinateRepository.findById(firstCoordinate.getId())).thenReturn(java.util.Optional.ofNullable(firstCoordinate));
-        Mockito.when(coordinateRepository.findAll()).thenReturn(coordinates);
+        BDDMockito.given(coordinateRepository.findById(firstCoordinate.getId())).willReturn(java.util.Optional.ofNullable(firstCoordinate));
+        BDDMockito.given(coordinateRepository.findAll()).willReturn(coordinates);
     }
 
     @Test
@@ -53,15 +53,14 @@ public class CoordinateServiceImplTest {
 
     @Test
     public void should_Throw_Exception_When_Id_Is_Not_Valid() {
-        Mockito.when(coordinateRepository.findById(thirdCoordinate.getId()))
-                .thenReturn(Optional.empty());
+        BDDMockito.given(coordinateRepository.findById(thirdCoordinate.getId())).willReturn(Optional.empty());
 
         final Exception exception = Assertions.assertThrows(
                 EntityNotFoundException.class,
                 () -> coordinateService.findById(thirdCoordinate.getId())
         );
 
-        final String expectedMessage = "Coordinate with id: 3 was not found.";
+        final String expectedMessage = String.format("Cannot find searched Coordinate by given id. [id=%s]", thirdCoordinate.getId());
         final String actualMessage = exception.getMessage();
 
         Assertions.assertEquals(expectedMessage, actualMessage);
@@ -75,4 +74,3 @@ public class CoordinateServiceImplTest {
         Assertions.assertEquals(3, coordinates.size());
     }
 }
-*/

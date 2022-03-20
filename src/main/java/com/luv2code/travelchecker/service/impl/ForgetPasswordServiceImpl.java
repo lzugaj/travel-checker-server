@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.JwtProperties;
+import com.luv2code.travelchecker.constants.SecurityConstants;
 import com.luv2code.travelchecker.domain.ResetPasswordToken;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ForgetPasswordDto;
@@ -25,17 +25,13 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
 
-    private final JwtProperties jwtProperties;
-
     @Autowired
     public ForgetPasswordServiceImpl(final UserService userService,
                                      final MailService mailService,
-                                     final PasswordResetTokenRepository passwordResetTokenRepository,
-                                     final JwtProperties jwtProperties) {
+                                     final PasswordResetTokenRepository passwordResetTokenRepository) {
         this.userService = userService;
         this.mailService = mailService;
         this.passwordResetTokenRepository = passwordResetTokenRepository;
-        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -43,9 +39,10 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
         LOGGER.info("Begin process of sending password reset request.");
 
         final User searchedUser = userService.findByEmail(forgetPasswordDto.getEmail());
-        LOGGER.debug("Found searched User. [id={}]", searchedUser.getId());
+        LOGGER.debug("Find searched User. [id={}]", searchedUser.getId());
 
-        final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), jwtProperties.getSecret());
+        // TODO: SecurityConstants.SECRET
+        final String resetToken = JwtUtil.generateResetPasswordToken(searchedUser.getEmail(), SecurityConstants.SECRET);
         LOGGER.debug("Generate password reset token for User. [id={}]", searchedUser.getId());
 
         final ResetPasswordToken resetPasswordToken = buildPasswordResetToken(resetToken, searchedUser);
@@ -58,6 +55,7 @@ public class ForgetPasswordServiceImpl implements ForgetPasswordService {
                 resetToken);
     }
 
+    // TODO: Model mapper?
     private ResetPasswordToken buildPasswordResetToken(final String resetToken, final User user) {
         return ResetPasswordToken.builder()
                 .token(resetToken)

@@ -5,9 +5,9 @@ import com.luv2code.travelchecker.service.impl.MapboxServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -25,7 +25,7 @@ public class MapboxServiceImplTest {
 
     @BeforeEach
     public void setup() {
-        Mockito.when(mapboxProperties.getToken()).thenReturn(TOKEN);
+        BDDMockito.given(mapboxProperties.getToken()).willReturn(TOKEN);
     }
 
     @Test

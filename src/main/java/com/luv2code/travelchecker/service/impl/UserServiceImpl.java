@@ -28,7 +28,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     private final RoleService roleService;
 
-    private final PasswordEncoder passwordEncoder; // TODO Lazy?
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
@@ -52,6 +52,8 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
         if (isEmailAlreadyTaken(user.getEmail())) {
             LOGGER.error("User try to use email that is already taken. [id={}]", user.getId());
+
+            // TODO: Rename exception -> EmailAlreadyExistsException
             throw new EntityAlreadyExistsException(
                     String.format("User try to use email that is already taken. [id=%s]", user.getId())
             );
@@ -69,7 +71,10 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     private boolean isEmailAlreadyTaken(final String email) {
         LOGGER.debug("Checking is entered email already taken.");
-        return userRepository.existsByEmail(email);
+        final List<User> users = findAll();
+        LOGGER.debug("Founded all Users.");
+        return users.stream()
+                .anyMatch(user -> user.getEmail().equals(email));
     }
 
     private Role findUserRole() {
@@ -103,7 +108,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     @Override
     public User update(final String email, final User user) {
-        LOGGER.info("Begin process of updating User. [id={}]", user.getId());
+        LOGGER.info("Begin process of updating existing User. [id={}]", user.getId());
         if (checkEmailAvailability(email, user)) {
             return super.save(user);
         } else {
@@ -118,17 +123,15 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
         LOGGER.debug("Checking is given email available provided by User. [id={}]", currentUser.getId());
         if (!currentUser.getEmail().equals(email)) {
             final List<User> users = findAll();
-            LOGGER.debug("Successfully founded all Users.");
+            LOGGER.debug("Founded all Users.");
             return users.stream()
-                    .findFirst()
-                    .map(user -> isEmailAvailable(user, currentUser))
-                    .orElse(false);
+                    .allMatch(user -> isEmailAvailable(user, currentUser));
         }
 
         return true;
     }
 
-    private boolean isEmailAvailable(final User currentUser, final User user) {
-        return user.equals(currentUser) || user.getEmail().equals(currentUser.getEmail());
+    private boolean isEmailAvailable(final User user, final User currentUser) {
+        return !user.getEmail().equals(currentUser.getEmail());
     }
 }

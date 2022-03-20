@@ -51,7 +51,7 @@ public class JwtUtil {
     public static String generateResetPasswordToken(final String username, final String secretKey) {
         return Jwts.builder()
                 .setSubject(username)
-                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.PASSWORD_EXPIRATION_TIME))
+                .setExpiration(new Date(System.currentTimeMillis() + SecurityConstants.RESET_PASSWORD_EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
     }

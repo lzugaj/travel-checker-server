@@ -1,4 +1,4 @@
-package com.luv2code.travelchecker.util;
+package com.luv2code.travelchecker.mock;
 
 import com.luv2code.travelchecker.domain.Coordinate;
 import com.luv2code.travelchecker.dto.coordinate.CoordinateGetDto;
@@ -6,11 +6,11 @@ import com.luv2code.travelchecker.dto.coordinate.CoordinatePostDto;
 
 import java.util.UUID;
 
-public class CoordinateUtil {
+public class CoordinateMock {
 
-    public static Coordinate createCoordinate(final UUID id, final Double longitude, final Double latitude) {
+    public static Coordinate createCoordinate(final Double longitude, final Double latitude) {
         final Coordinate coordinate = new Coordinate();
-        coordinate.setId(id);
+        coordinate.setId(UUID.randomUUID());
         coordinate.setLongitude(longitude);
         coordinate.setLatitude(latitude);
         return coordinate;

@@ -1,6 +1,6 @@
 package com.luv2code.travelchecker.service.impl;
 
-import com.luv2code.travelchecker.configuration.JwtProperties;
+import com.luv2code.travelchecker.constants.SecurityConstants;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ResetPasswordDto;
 import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
@@ -25,15 +25,11 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtProperties jwtProperties;
-
     @Autowired
     public ResetPasswordServiceImpl(final UserService userService,
-                                    final PasswordEncoder passwordEncoder,
-                                    final JwtProperties jwtProperties) {
+                                    final PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
-        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -49,11 +45,11 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
             throw new PasswordNotConfirmedRightException("Password is not confirmed right while resetting password.");
         }
 
-        final String email = JwtUtil.extractUsername(token, jwtProperties.getSecret());
-        LOGGER.debug("Successfully extracted email from JWT token.");
+        final String email = JwtUtil.extractUsername(token, SecurityConstants.SECRET);
+        LOGGER.debug("Extract email from JWT token.");
 
         final User searchedUser = userService.findByEmail(email);
-        LOGGER.debug("Successfully founded searched User. [id={}]", searchedUser.getId());
+        LOGGER.debug("Find searched User. [id={}]", searchedUser.getId());
 
         searchedUser.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
         userService.update(email, searchedUser);
@@ -61,7 +57,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
 
     private boolean isTokenExpired(final String token) {
         LOGGER.debug("Checking if given token has expired.");
-        final Date expirationDate = JwtUtil.extractExpiration(token, jwtProperties.getSecret());
+        final Date expirationDate = JwtUtil.extractExpiration(token, SecurityConstants.SECRET);
         LOGGER.debug("Extract expiration date from JWT token.");
         return expirationDate.before(new Date());
     }
