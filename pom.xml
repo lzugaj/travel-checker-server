@@ -174,7 +174,7 @@
     <profiles>
         <profile>
             <id>sonar</id>
-            <properties>
+            <!--<properties>
                 <sonar.sources>.</sonar.sources>
                 <sonar.inclusions>src/main/java/**,src/main/resources/**</sonar.inclusions>
                 <sonar.projectKey>${sonar.projectKey}</sonar.projectKey>
@@ -200,7 +200,7 @@
                         </executions>
                     </plugin>
                 </plugins>
-            </build>
+            </build>-->
         </profile>
     </profiles>
 
