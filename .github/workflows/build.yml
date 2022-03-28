@@ -27,7 +27,7 @@ jobs:
         run: mvn clean install
   sonar:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
