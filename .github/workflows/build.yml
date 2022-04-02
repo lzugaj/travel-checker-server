@@ -47,6 +47,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.host.url=https://sonarcloud.io -X \
-          -D.sonar.login=${ SONAR_TOKEN } \
+          -D.sonar.login=$SONAR_TOKEN \
           -Dsonar.projectKey=com.luv2code:travel-checker \
           -Dsonar.organization:lzugaj \
