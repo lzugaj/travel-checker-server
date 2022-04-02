@@ -15,16 +15,32 @@
     <description>Travel checker server side application</description>
 
     <properties>
+        <!-- Java Properties -->
         <java.version>11</java.version>
 
+        <!-- Commons Properties -->
         <commons-lang3.version>3.12.0</commons-lang3.version>
+
+        <!-- OpenAPI Properties -->
         <springdoc-openapi-ui.version>1.6.6</springdoc-openapi-ui.version>
+
+        <!-- Model mapper Properties -->
         <modelmapper.version>3.0.0</modelmapper.version>
+
+        <!-- JWT Properties -->
         <java-jwt.version>3.19.0</java-jwt.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
 
+        <!-- Sonar Properties -->
         <sonar.organization>lzugaj</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+        <!-- JaCoCo Properties -->
+        <jacoco.version>0.8.6</jacoco.version>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
+        <sonar.language>java</sonar.language>
     </properties>
 
     <dependencies>
@@ -132,6 +148,13 @@
             <artifactId>thymeleaf-layout-dialect</artifactId>
         </dependency>
 
+        <!-- Jacoco -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>${jacoco.version}</version>
+        </dependency>
+
         <!-- Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -173,8 +196,31 @@
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.0.2</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                    <executions>
+                        <execution>
+                            <id>jacoco-initialize</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>jacoco-site</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <profiles>
+    </profiles>
 
 </project>
