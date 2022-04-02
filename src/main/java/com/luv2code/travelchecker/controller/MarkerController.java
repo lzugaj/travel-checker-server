@@ -47,7 +47,7 @@ public class MarkerController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@Valid @RequestBody final MarkerPostDto markerPostDto) {
+    public ResponseEntity<MarkerGetDto> save(@Valid @RequestBody final MarkerPostDto markerPostDto) {
         final String currentlyAuthenticatedUser = authenticationService.getAuthenticatedEmail();
         LOGGER.debug("Found currently authenticated User.");
 
@@ -60,28 +60,28 @@ public class MarkerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable final UUID id) {
+    public ResponseEntity<MarkerGetDto> findById(@PathVariable final UUID id) {
         final Marker searchedMarker = markerService.findById(id);
         LOGGER.info("Found searched Marker. [id={}]", id);
         return new ResponseEntity<>(modelMapper.map(searchedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<List<MarkerGetDto>> findAll() {
         final List<Marker> searchedMarkers = markerService.findAll();
         LOGGER.info("Found all searched Markers. [size={}]", searchedMarkers.size());
         return new ResponseEntity<>(mapList(searchedMarkers), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable final UUID id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
+    public ResponseEntity<MarkerGetDto> update(@PathVariable final UUID id, @Valid @RequestBody final MarkerPutDto markerPutDto) {
         final Marker updatedMarker = markerService.update(modelMapper.map(markerPutDto, Marker.class));
         LOGGER.info("Finish process of updating existing Marker. [id={}]", id);
         return new ResponseEntity<>(modelMapper.map(updatedMarker, MarkerGetDto.class), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable final UUID id) {
+    public ResponseEntity<Void> delete(@PathVariable final UUID id) {
         final Marker searchedMarker = markerService.findById(id);
         LOGGER.debug("Found searched Marker. [id={}]", id);
 

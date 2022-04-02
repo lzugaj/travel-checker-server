@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthenticatedUserController {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(AuthenticatedUserController.class);
 
     private final UserService userService;
 
@@ -36,7 +36,7 @@ public class AuthenticatedUserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<?> getMyAuthDetails() {
+    public ResponseEntity<UserGetDto> getMyAuthDetails() {
         final String email = authenticationService.getAuthenticatedEmail();
         final User searchedUser = userService.findByEmail(email);
         LOGGER.info("Founded currently logged in User. [id={}]", searchedUser.getId());

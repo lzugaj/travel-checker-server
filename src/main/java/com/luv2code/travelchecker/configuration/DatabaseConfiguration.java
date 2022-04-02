@@ -14,6 +14,10 @@ import org.springframework.context.annotation.Profile;
 public class DatabaseConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    
+    public static final String DRIVER_CLASS_NAME = "Driver class name: {}";
+    public static final String URL = "URL: {}";
+    public static final String USERNAME = "Username: {}";
 
     private String driverClassName;
     private String url;
@@ -24,9 +28,9 @@ public class DatabaseConfiguration {
     @Profile("dev")
     public void devDatabaseConnection() {
         LOGGER.info("DB connection for DEV - H2");
-        LOGGER.info("Driver class name: {}", getDriverClassName());
-        LOGGER.info("URL: {}", getUrl());
-        LOGGER.info("Username: {}", getUsername());
+        LOGGER.info(DRIVER_CLASS_NAME, getDriverClassName());
+        LOGGER.info(URL, getUrl());
+        LOGGER.info(USERNAME, getUsername());
         LOGGER.info("Password: {}", getPassword());
     }
 
@@ -34,9 +38,9 @@ public class DatabaseConfiguration {
     @Profile("test")
     public void testDatabaseConnection() {
         LOGGER.info("DB connection for TEST - MariaDB");
-        LOGGER.info("Driver class name: {}", getDriverClassName());
-        LOGGER.info("URL: {}", getUrl());
-        LOGGER.info("Username: {}", getUsername());
+        LOGGER.info(DRIVER_CLASS_NAME, getDriverClassName());
+        LOGGER.info(URL, getUrl());
+        LOGGER.info(USERNAME, getUsername());
         LOGGER.info("Password: {}", getPassword());
     }
 
@@ -44,9 +48,9 @@ public class DatabaseConfiguration {
     @Profile("prod")
     public void prodDatabaseConnection() {
         LOGGER.info("DB connection for PROD - Postgres");
-        LOGGER.info("Driver class name: {}", getDriverClassName());
-        LOGGER.info("URL: {}", getUrl());
-        LOGGER.info("Username: {}", getUsername());
+        LOGGER.info(DRIVER_CLASS_NAME, getDriverClassName());
+        LOGGER.info(URL, getUrl());
+        LOGGER.info(USERNAME, getUsername());
         LOGGER.info("Password: {}", getPassword());
     }
 }

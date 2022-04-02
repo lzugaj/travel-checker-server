@@ -37,7 +37,7 @@ public class ProfileController {
     }
 
     @PatchMapping("/me")
-    public ResponseEntity<?> updateMyProfile(@Valid @RequestBody final UserPutDto userPutDto) {
+    public ResponseEntity<UserGetDto> updateMyProfile(@Valid @RequestBody final UserPutDto userPutDto) {
         final String email = authenticationService.getAuthenticatedEmail();
         LOGGER.debug("Found currently logged in User.");
 

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerFilter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionHandlerFilter.class);
 
     @Override
     public void doFilterInternal(final HttpServletRequest request,

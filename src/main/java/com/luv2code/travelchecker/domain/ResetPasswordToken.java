@@ -35,4 +35,17 @@ public class ResetPasswordToken extends BaseEntity {
         return resetPasswordToken.token.equals(((ResetPasswordToken) other).token)
                 && resetPasswordToken.getUser().equals(((ResetPasswordToken) other).user);
     }
+
+    @Override
+    public final int hashCode() {
+        int result = 17;
+        if (token != null) {
+            result = 31 * result + token.hashCode();
+        }
+        if (user != null) {
+            result = 31 * result + user.hashCode();
+        }
+
+        return result;
+    }
 }

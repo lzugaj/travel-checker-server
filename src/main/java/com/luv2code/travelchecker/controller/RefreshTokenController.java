@@ -26,7 +26,7 @@ public class RefreshTokenController {
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@Valid @RequestBody final RefreshTokenDto refreshToken,
+    public ResponseEntity<Void> refreshToken(@Valid @RequestBody final RefreshTokenDto refreshToken,
                                           final HttpServletResponse response) {
         final UUID uuid = UUID.fromString(refreshToken.getRefreshToken());
         refreshTokenService.findByToken(uuid, response);

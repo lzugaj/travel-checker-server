@@ -35,7 +35,7 @@ public class AuthorizationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> authorize(@Valid @RequestBody final UserPostDto userPostDto) {
+    public ResponseEntity<UserGetDto> authorize(@Valid @RequestBody final UserPostDto userPostDto) {
         final User mappedUser = modelMapper.map(userPostDto, User.class);
         final User user = userService.save(mappedUser);
         LOGGER.info("Finished process of creating new User. [id={}]", user.getId());

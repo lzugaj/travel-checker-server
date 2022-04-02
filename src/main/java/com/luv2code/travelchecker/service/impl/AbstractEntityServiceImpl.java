@@ -21,7 +21,7 @@ public abstract class AbstractEntityServiceImpl<E extends BaseEntity, R extends 
 
     private final Class<E> entityClass;
 
-    public AbstractEntityServiceImpl(final R crudRepository,
+    protected AbstractEntityServiceImpl(final R crudRepository,
                                      final Class<E> entityClass) {
         this.crudRepository = crudRepository;
         this.entityClass = entityClass;

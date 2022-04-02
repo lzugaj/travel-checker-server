@@ -25,7 +25,7 @@ public class ResetPasswordController {
     }
 
     @PostMapping
-    public ResponseEntity<?> resetPassword(@RequestParam(required = false) final String token,
+    public ResponseEntity<Void> resetPassword(@RequestParam(required = false) final String token,
                                            @Valid @RequestBody final ResetPasswordDto resetPasswordDto) {
         resetPasswordService.resetPassword(token, resetPasswordDto);
         LOGGER.info("Finish process of sending password reset request.");

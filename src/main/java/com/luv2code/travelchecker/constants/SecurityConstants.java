@@ -2,7 +2,7 @@ package com.luv2code.travelchecker.constants;
 
 import com.luv2code.travelchecker.domain.enums.RoleType;
 
-public class SecurityConstants {
+public final class SecurityConstants {
 
     public static final Long ACCESS_TOKEN_EXPIRATION_TIME = 300000L; // 15 minutes 900000L
     public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 600000L; // 7 days 604800000L

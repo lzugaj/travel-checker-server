@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class JwtUtil {
+public final class JwtUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
 

@@ -22,7 +22,7 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserRepository> implements UserService {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository userRepository;
 
@@ -74,7 +74,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
 
     private Role findUserRole() {
         final Role userRole = roleService.findByRoleType(RoleType.USER);
-        LOGGER.debug("Founded searched Role. [name={}]", userRole.getName().name());
+        LOGGER.debug("Founded searched Role. [name={}]", userRole.getName());
         return userRole;
     }
 
@@ -121,7 +121,7 @@ public class UserServiceImpl extends AbstractEntityServiceImpl<User, UserReposit
             LOGGER.debug("Successfully founded all Users.");
             return users.stream()
                     .findFirst()
-                    .map(user -> isEmailAvailable(user, currentUser))
+                    .map(user -> isEmailAvailable(currentUser, user))
                     .orElse(false);
         }
 
