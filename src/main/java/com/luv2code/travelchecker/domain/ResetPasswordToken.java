@@ -21,4 +21,18 @@ public class ResetPasswordToken extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Override
+    public boolean equals(final Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof ResetPasswordToken)) {
+            return false;
+        }
+
+        final ResetPasswordToken resetPasswordToken = (ResetPasswordToken) other;
+        return resetPasswordToken.token.equals(((ResetPasswordToken) other).token)
+                && resetPasswordToken.getUser().equals(((ResetPasswordToken) other).user);
+    }
 }

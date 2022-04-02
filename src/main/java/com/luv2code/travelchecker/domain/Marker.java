@@ -43,16 +43,8 @@ public class Marker extends BaseEntity {
     @JoinColumn(name = "coordinate_id")
     private Coordinate coordinate;
 
-    @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )
-    @JoinTable(
-            name = "user_marker",
-            joinColumns = @JoinColumn(name = "marker_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "user_marker", joinColumns = @JoinColumn(name = "marker_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
     public void addUser(final User user) {
