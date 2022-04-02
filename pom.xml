@@ -20,12 +20,11 @@
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <springdoc-openapi-ui.version>1.6.6</springdoc-openapi-ui.version>
         <modelmapper.version>3.0.0</modelmapper.version>
-        <java-jwt.version>3.18.3</java-jwt.version>
+        <java-jwt.version>3.19.0</java-jwt.version>
         <jsonwebtoken.version>0.9.1</jsonwebtoken.version>
 
         <sonar.organization>lzugaj</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <sonar.projectKey>${project.groupId}:${project.artifactId}</sonar.projectKey>
     </properties>
 
     <dependencies>
@@ -117,7 +116,6 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
@@ -129,7 +127,6 @@
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
         </dependency>
-
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
@@ -151,19 +148,16 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
