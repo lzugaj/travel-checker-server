@@ -25,11 +25,6 @@ public class RoleServiceImpl extends AbstractEntityServiceImpl<Role, RoleReposit
         this.roleRepository = roleRepository;
     }
 
-    /*@Override
-    public Role findById(final UUID id) {
-        return super.findById(id);
-    }*/
-
     @Override
     public Role findByRoleType(final RoleType roleType) {
         return roleRepository.findByName(roleType)

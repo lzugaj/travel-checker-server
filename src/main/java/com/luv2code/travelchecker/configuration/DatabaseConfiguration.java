@@ -14,10 +14,11 @@ import org.springframework.context.annotation.Profile;
 public class DatabaseConfiguration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfiguration.class);
-    
+
     public static final String DRIVER_CLASS_NAME = "Driver class name: {}";
-    public static final String URL = "URL: {}";
-    public static final String USERNAME = "Username: {}";
+    public static final String DATABASE_URL = "URL: {}";
+    public static final String DATABASE_USERNAME = "Username: {}";
+    public static final String DATABASE_PASSWORD = "Password: {}";
 
     private String driverClassName;
     private String url;
@@ -29,9 +30,9 @@ public class DatabaseConfiguration {
     public void devDatabaseConnection() {
         LOGGER.info("DB connection for DEV - H2");
         LOGGER.info(DRIVER_CLASS_NAME, getDriverClassName());
-        LOGGER.info(URL, getUrl());
-        LOGGER.info(USERNAME, getUsername());
-        LOGGER.info("Password: {}", getPassword());
+        LOGGER.info(DATABASE_URL, getUrl());
+        LOGGER.info(DATABASE_USERNAME, getUsername());
+        LOGGER.info(DATABASE_PASSWORD, getPassword());
     }
 
     @Bean
@@ -39,9 +40,9 @@ public class DatabaseConfiguration {
     public void testDatabaseConnection() {
         LOGGER.info("DB connection for TEST - MariaDB");
         LOGGER.info(DRIVER_CLASS_NAME, getDriverClassName());
-        LOGGER.info(URL, getUrl());
-        LOGGER.info(USERNAME, getUsername());
-        LOGGER.info("Password: {}", getPassword());
+        LOGGER.info(DATABASE_URL, getUrl());
+        LOGGER.info(DATABASE_USERNAME, getUsername());
+        LOGGER.info(DATABASE_PASSWORD, getPassword());
     }
 
     @Bean
@@ -49,8 +50,8 @@ public class DatabaseConfiguration {
     public void prodDatabaseConnection() {
         LOGGER.info("DB connection for PROD - Postgres");
         LOGGER.info(DRIVER_CLASS_NAME, getDriverClassName());
-        LOGGER.info(URL, getUrl());
-        LOGGER.info(USERNAME, getUsername());
-        LOGGER.info("Password: {}", getPassword());
+        LOGGER.info(DATABASE_URL, getUrl());
+        LOGGER.info(DATABASE_USERNAME, getUsername());
+        LOGGER.info(DATABASE_PASSWORD, getPassword());
     }
 }

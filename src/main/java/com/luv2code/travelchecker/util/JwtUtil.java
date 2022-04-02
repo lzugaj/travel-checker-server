@@ -13,6 +13,10 @@ import java.util.function.Function;
 
 public final class JwtUtil {
 
+    private JwtUtil() {
+        // PMD
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtil.class);
 
     public static String extractUsername(final String token, final String secretKey) {
