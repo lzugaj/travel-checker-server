@@ -10,7 +10,7 @@ spring:
         web-allow-others: true
   datasource:
     driver-class-name: org.h2.Driver
-    url: ${TRAVEL_CHECKER_DEV_DB_URL:jdbc:h2:file:C:/Workspace/travel-checker/travel-checker-server/src/main/resources/db/data/travelchecker;AUTO_SERVER=true} # jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: ${TRAVEL_CHECKER_DEV_DB_URL:jdbc:h2:file:C:/Workspace/travel-checker/travel-checker-server/src/main/resources/db/data/travelchecker;AUTO_SERVER=true}
     username: ${TRAVEL_CHECKER_DEV_DB_USERNAME:sa}
     password: ${TRAVEL_CHECKER_DEV_DB_PASSWORD:password}
   jpa:

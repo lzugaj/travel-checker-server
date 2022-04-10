@@ -1,12 +1,12 @@
 spring:
   config:
     activate:
-      on-profile: prod
+      on-profile: test
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: ${TRAVEL_CHECKER_TEST_DB_URL}
-    username: ${TRAVEL_CHECKER_TEST_DB_USERNAME}
-    password: ${TRAVEL_CHECKER_TEST_DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    url: 'jdbc:postgresql://localhost:5432/travel-checker-test'
+    username: 'postgres'
+    password: 'postgres'
   jpa:
     show-sql: true
     hibernate:
