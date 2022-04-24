@@ -32,9 +32,7 @@ public class MailServiceImpl implements MailService {
     private final MessageHelperProperties messageHelperProperties;
 
     @Autowired
-    public MailServiceImpl(final JavaMailSender javaMailSender,
-                           final TemplateEngine templateEngine,
-                           final MessageHelperProperties messageHelperProperties) {
+    public MailServiceImpl(final JavaMailSender javaMailSender, final TemplateEngine templateEngine, final MessageHelperProperties messageHelperProperties) {
         this.javaMailSender = javaMailSender;
         this.templateEngine = templateEngine;
         this.messageHelperProperties = messageHelperProperties;
@@ -59,7 +57,7 @@ public class MailServiceImpl implements MailService {
         send(email, mimeMessage);
     }
 
-    private String prepareHtml(final String firstName, final String resetToken){
+    private String prepareHtml(final String firstName, final String resetToken) {
         LOGGER.debug("Preparing HTML email template.");
         final Context context = new Context();
         context.setLocale(Locale.getDefault());

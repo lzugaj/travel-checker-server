@@ -55,12 +55,6 @@ public class ResponseEntityExceptionHandler {
         return createResponseMessage(unauthorized, exception, httpServletRequest);
     }
 
-    @ExceptionHandler(value = ResetPasswordTokenHasExpiredException.class)
-    public ResponseEntity<ApiResponse> handleResetPasswordTokenHasExpiredException(final ResetPasswordTokenHasExpiredException exception, final HttpServletRequest httpServletRequest) {
-        final HttpStatus forbidden = HttpStatus.FORBIDDEN;
-        return createResponseMessage(forbidden, exception, httpServletRequest);
-    }
-
     @ExceptionHandler(value = EntityNotFoundException.class)
     public ResponseEntity<ApiResponse> handleNotFoundRequestException(final EntityNotFoundException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus notFound = HttpStatus.NOT_FOUND;
@@ -69,12 +63,6 @@ public class ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = EntityAlreadyExistsException.class)
     public ResponseEntity<ApiResponse> handleAlreadyExistsException(final EntityAlreadyExistsException exception, final HttpServletRequest httpServletRequest) {
-        final HttpStatus conflict = HttpStatus.CONFLICT;
-        return createResponseMessage(conflict, exception, httpServletRequest);
-    }
-
-    @ExceptionHandler(value = PasswordNotEnteredRightException.class)
-    public ResponseEntity<ApiResponse> handlePasswordNotEnteredRightException(final PasswordNotEnteredRightException exception, final HttpServletRequest httpServletRequest) {
         final HttpStatus conflict = HttpStatus.CONFLICT;
         return createResponseMessage(conflict, exception, httpServletRequest);
     }

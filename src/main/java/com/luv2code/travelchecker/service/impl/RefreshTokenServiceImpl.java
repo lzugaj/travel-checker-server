@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -34,6 +33,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         this.userDetailsService = userDetailsService;
     }
 
+    // TODO: Razdvojiti? Metoda radi više funckija!?
     @Override
     public void findByToken(final UUID token, final HttpServletResponse response) {
         final User user = refreshTokenRepository.findByToken(token)
@@ -60,7 +60,7 @@ public class RefreshTokenServiceImpl implements RefreshTokenService {
         LOGGER.info("Begin process of creating new refresh token for User. [id={}]", user.getId());
         RefreshToken refreshToken = RefreshToken.builder()
                 .user(user)
-                .expiryDate(LocalDateTime.from(Instant.now().plusMillis(SecurityConstants.REFRESH_TOKEN_EXPIRATION_TIME)))
+                .expiryDate(LocalDateTime.now().plusDays(SecurityConstants.REFRESH_TOKEN_EXPIRATION_TIME))
                 .token(UUID.randomUUID())
                 .build();
 

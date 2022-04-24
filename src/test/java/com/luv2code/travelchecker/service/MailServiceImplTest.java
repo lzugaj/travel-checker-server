@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.thymeleaf.TemplateEngine;
 
+import javax.mail.internet.MimeMessage;
+
 @SpringBootTest
 class MailServiceImplTest {
 
@@ -23,6 +25,8 @@ class MailServiceImplTest {
 
     @Mock
     private MessageHelperProperties messageHelperProperties;
+
+    private MimeMessage mimeMessage;
 
     @BeforeEach
     public void setup() {

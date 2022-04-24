@@ -19,8 +19,8 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject, secretKey);
     }
 
-    public static Date extractExpiration(final String token, final String secretKey) {
-        return extractClaim(token, Claims::getExpiration, secretKey);
+    public static void extractExpiration(final String token, final String secretKey) {
+        extractClaim(token, Claims::getExpiration, secretKey);
     }
 
     public static <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver, final String secretKey) {

@@ -38,8 +38,10 @@ public class CoordinateServiceImplTest {
 
         final List<Coordinate> coordinates = Arrays.asList(firstCoordinate, secondCoordinate, thirdCoordinate);
 
-        BDDMockito.given(coordinateRepository.findById(firstCoordinate.getId())).willReturn(java.util.Optional.ofNullable(firstCoordinate));
-        BDDMockito.given(coordinateRepository.findAll()).willReturn(coordinates);
+        BDDMockito.given(coordinateRepository.findById(firstCoordinate.getId()))
+                .willReturn(java.util.Optional.ofNullable(firstCoordinate));
+        BDDMockito.given(coordinateRepository.findAll())
+                .willReturn(coordinates);
     }
 
     @Test
@@ -53,7 +55,8 @@ public class CoordinateServiceImplTest {
 
     @Test
     public void should_Throw_Exception_When_Id_Is_Not_Valid() {
-        BDDMockito.given(coordinateRepository.findById(thirdCoordinate.getId())).willReturn(Optional.empty());
+        BDDMockito.given(coordinateRepository.findById(thirdCoordinate.getId()))
+                .willReturn(Optional.empty());
 
         final Exception exception = Assertions.assertThrows(
                 EntityNotFoundException.class,

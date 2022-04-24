@@ -102,5 +102,5 @@ public class AuthenticatedUserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("firstName", CoreMatchers.is(me.getFirstName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("lastName", CoreMatchers.is(me.getLastName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("email", CoreMatchers.is(me.getEmail())));
-        }
+    }
 }

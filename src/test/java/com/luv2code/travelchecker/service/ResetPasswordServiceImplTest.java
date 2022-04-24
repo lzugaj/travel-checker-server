@@ -34,7 +34,7 @@ public class ResetPasswordServiceImplTest {
     private static final Long EXPIRATION = 1_500_000L; // 25 minutes
 
     @Test
-    public void should_Reset_Password() {
+    public void should_Reset_Password_When_Data_Is_Valid() {
         // ResetPasswordDto
         final ResetPasswordDto resetPasswordDto = ResetPasswordMock.resetPasswordDto("#Testanovich1234", "#Testanovich1234");
 
@@ -55,6 +55,8 @@ public class ResetPasswordServiceImplTest {
         resetPasswordService.resetPassword(resetPasswordToken, resetPasswordDto);
 
         Mockito.verify(userService).update(user.getEmail(), user);
+
+        // TODO: Assertion
     }
 
     @Test

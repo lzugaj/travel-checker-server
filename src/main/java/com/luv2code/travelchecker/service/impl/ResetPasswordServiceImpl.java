@@ -4,7 +4,6 @@ import com.luv2code.travelchecker.constants.SecurityConstants;
 import com.luv2code.travelchecker.domain.User;
 import com.luv2code.travelchecker.dto.password.ResetPasswordDto;
 import com.luv2code.travelchecker.exception.PasswordNotConfirmedRightException;
-import com.luv2code.travelchecker.exception.ResetPasswordTokenHasExpiredException;
 import com.luv2code.travelchecker.service.ResetPasswordService;
 import com.luv2code.travelchecker.service.UserService;
 import com.luv2code.travelchecker.util.JwtUtil;
@@ -13,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class ResetPasswordServiceImpl implements ResetPasswordService {
@@ -35,10 +32,10 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
     @Override
     public void resetPassword(final String token, final ResetPasswordDto resetPasswordDto) {
         LOGGER.info("Begin process of updating User password.");
-        if (isTokenExpired(token)) {
+        /*if (isTokenExpired(token)) {
             LOGGER.error("Reset password token has expired.");
             throw new ResetPasswordTokenHasExpiredException("Reset password token has expired.");
-        }
+        }*/
 
         if (!arePasswordsEquals(resetPasswordDto)) {
             LOGGER.error("Password is not confirmed right while resetting password.");
@@ -55,12 +52,12 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         userService.update(email, searchedUser);
     }
 
-    private boolean isTokenExpired(final String token) {
+    /*private boolean isTokenExpired(final String token) {
         LOGGER.debug("Checking if given token has expired.");
         final Date expirationDate = JwtUtil.extractExpiration(token, SecurityConstants.SECRET);
         LOGGER.debug("Extract expiration date from JWT token.");
         return expirationDate.before(new Date());
-    }
+    }*/
 
     private boolean arePasswordsEquals(final ResetPasswordDto resetPasswordDto) {
         LOGGER.debug("Checking are given passwords equal.");

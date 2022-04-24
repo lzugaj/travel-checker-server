@@ -35,8 +35,10 @@ public class AuthenticationServiceImplTest {
 
     @Test
     public void should_Return_Authenticated_User() {
-        BDDMockito.given(securityContext.getAuthentication()).willReturn(authentication);
-        BDDMockito.given(authentication.getName()).willReturn("user@test.net");
+        BDDMockito.given(securityContext.getAuthentication())
+                .willReturn(authentication);
+        BDDMockito.given(authentication.getName())
+                .willReturn("user@test.net");
 
         final String authenticatedUser = authenticationService.getAuthenticatedEmail();
 
@@ -45,7 +47,8 @@ public class AuthenticationServiceImplTest {
 
     @Test
     public void should_Throw_Exception_When_User_Is_Not_Authenticated() {
-        BDDMockito.given(securityContext.getAuthentication()).willReturn(anonymousAuthenticationToken);
+        BDDMockito.given(securityContext.getAuthentication())
+                .willReturn(anonymousAuthenticationToken);
 
         final Exception exception = Assertions.assertThrows(
                 UserNotAuthenticatedException.class,
