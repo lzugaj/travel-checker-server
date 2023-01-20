@@ -94,7 +94,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         final User user = userService.findByEmail(userDetails.getUsername());
         final RefreshToken refreshToken = refreshTokenService.create(user);
         LOGGER.info("Authentication success for user with id: ´{}´.", user.getId());
-        response.addHeader("access-token", "Bearer " + jwtToken);
+        response.addHeader("access-token", String.format("Bearer %s", jwtToken));
         response.addHeader("refresh-token", String.valueOf(refreshToken.getToken()));
     }
 }

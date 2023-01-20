@@ -69,8 +69,10 @@ public class UserServiceImplTest {
 
         BDDMockito.given(roleService.findByRoleType(RoleType.USER)).willReturn(userRole);
         BDDMockito.given(passwordEncoder.encode(firstUser.getPassword())).willReturn(ENCRYPTED_PASSWORD);
+
         BDDMockito.given(userRepository.findById(secondUser.getId())).willReturn(Optional.ofNullable(secondUser));
         BDDMockito.given(userRepository.findByEmail(thirdUser.getEmail())).willReturn(Optional.ofNullable(thirdUser));
+
         BDDMockito.given(userRepository.findAll()).willReturn(users);
     }
 
@@ -114,8 +116,8 @@ public class UserServiceImplTest {
     public void should_Return_User_When_Id_Is_Present() {
         final User searchedUser = userService.findById(secondUser.getId());
 
-        Assertions.assertEquals("3211b7ae-ec30-431b-9473-07e9a5bb0651", String.valueOf(searchedUser.getId()));
         Assertions.assertNotNull(searchedUser);
+        Assertions.assertEquals("3211b7ae-ec30-431b-9473-07e9a5bb0651", String.valueOf(searchedUser.getId()));
     }
 
     @Test

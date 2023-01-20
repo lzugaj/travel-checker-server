@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface RoleRepository extends AbstractEntityRepository<Role> {
-
+    
     Optional<Role> findByName(final RoleType roleType);
 
 }

@@ -72,8 +72,10 @@ public class AuthorizationControllerTest {
         // UserPostDto
         userPostDto = UserMock.createUserPostDto(user.getFirstName(), user.getLastName(), user.getEmail(), "#Password1234", LocalDateTime.now());
 
-        BDDMockito.given(modelMapper.map(Mockito.any(), Mockito.any())).willReturn(user).willReturn(userGetDto);
-        BDDMockito.given(userService.save(user)).willReturn(user);
+        BDDMockito.given(modelMapper.map(Mockito.any(), Mockito.any()))
+                .willReturn(user).willReturn(userGetDto);
+        BDDMockito.given(userService.save(user))
+                .willReturn(user);
     }
 
     @Test

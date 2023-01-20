@@ -48,8 +48,8 @@ public class RoleServiceImplTest {
     public void should_Return_Role_When_Id_Is_Present() {
         final Role searchedRole = roleService.findById(adminRole.getId());
 
-        Assertions.assertEquals("ADMIN", searchedRole.getName().name());
         Assertions.assertNotNull(searchedRole);
+        Assertions.assertEquals("ADMIN", searchedRole.getName().name());
     }
 
     @Test
@@ -72,8 +72,8 @@ public class RoleServiceImplTest {
     public void should_Return_Role_When_Name_Is_Present() {
         final Role searchedRole = roleService.findByRoleType(RoleType.USER);
 
-        Assertions.assertEquals("USER", searchedRole.getName().name());
         Assertions.assertNotNull(searchedRole);
+        Assertions.assertEquals("USER", searchedRole.getName().name());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class RoleServiceImplTest {
     public void should_Find_All_Roles() {
         final List<Role> searchedRoles = roleService.findAll();
 
-        Assertions.assertEquals(1, searchedRoles.size());
         Assertions.assertNotNull(searchedRoles);
+        Assertions.assertEquals(1, searchedRoles.size());
     }
 }

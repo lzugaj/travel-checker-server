@@ -10,7 +10,7 @@
                 <constraints primaryKey="true" />
             </column>
 
-            <column name="user_id" type="INT">
+            <column name="user_id" type="UUID">
                 <constraints nullable="false" />
             </column>
 

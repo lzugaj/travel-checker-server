@@ -49,6 +49,7 @@ public class ResetPasswordServiceImpl implements ResetPasswordService {
         LOGGER.debug("Find searched User. [id={}]", searchedUser.getId());
 
         searchedUser.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
+        searchedUser.setConfirmationPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
         userService.update(email, searchedUser);
     }
 
